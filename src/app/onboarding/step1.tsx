@@ -27,7 +27,7 @@ export default function Step1() {
   };
 
   return (
-    <SafeAreaView className="px-6 flex-1 justify-center pb-48">
+    <SafeAreaView className="px-4 flex-1 justify-center pb-48">
       <View className="bg-divider-light pb-1 rounded-xl overflow-hidden">
         <View className="bg-white rounded-xl p-4 gap-4">
           <Text className="text-xl font-semibold text-ink-light">

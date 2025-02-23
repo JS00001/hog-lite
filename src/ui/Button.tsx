@@ -10,11 +10,13 @@ import {
   View,
 } from "react-native";
 import classNames from "classnames";
+import Feather from "@expo/vector-icons/Feather";
 
 import Text from "@/ui/Text";
 
-interface Props extends TouchableOpacityProps {
+export interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
+  icon?: keyof typeof Feather.glyphMap;
   size?: keyof typeof SizeClasses;
   color?: keyof typeof ColorClasses;
 }
@@ -25,10 +27,12 @@ const SizeClasses = {
   sm: {
     container: "min-w-20 h-10 px-4",
     text: "text-base",
+    icon: 16,
   },
   lg: {
     container: "min-w-32 h-14 px-6",
     text: "text-lg",
+    icon: 20,
   },
 };
 
@@ -65,8 +69,9 @@ export default function Button({
   disabled = false,
   size = "lg",
   color = "primary",
+  icon,
   ...props
-}: Props) {
+}: ButtonProps) {
   disabled = disabled || loading;
 
   const offset = useSharedValue(BUTTON_ANIMATION_OFFSET);
@@ -86,8 +91,9 @@ export default function Button({
   };
 
   const containerClasses = classNames(
-    "items-center justify-center rounded-xl",
-    SizeClasses[size].container
+    "items-center rounded-xl flex-row gap-2",
+    SizeClasses[size].container,
+    icon ? "justify-between" : "justify-center"
   );
 
   const containerStyles = {
@@ -98,12 +104,14 @@ export default function Button({
   const textClasses = classNames(
     "font-semibold",
     SizeClasses[size].text,
-    loading && "opacity-0"
+    loading && "opacity-10"
   );
 
   const textStyles = {
     color: ColorClasses[color].text,
   };
+
+  const iconClasses = classNames(loading && "opacity-10");
 
   /**
    * When the button is pressed in and out, animate the button to make it look
@@ -132,6 +140,15 @@ export default function Button({
           <Text style={textStyles} className={textClasses}>
             {children}
           </Text>
+
+          {icon && (
+            <Feather
+              name={icon}
+              size={SizeClasses[size].icon}
+              color={ColorClasses[color].text}
+              className={iconClasses}
+            />
+          )}
         </View>
 
         {loading && (

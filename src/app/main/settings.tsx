@@ -1,17 +1,110 @@
-import useAuthStore from "@/store/auth";
+import { useMemo } from "react";
+
 import Button from "@/ui/Button";
-import SafeAreaView from "@/ui/SafeAreaView";
+import Select from "@/ui/Select";
+import alert from "@/lib/alert";
+import TextInput from "@/ui/TextInput";
+import useAuthStore from "@/store/auth";
+import Layout from "@/components/Layout";
+import useClientStore from "@/store/client";
+import { ISelectOption } from "@/ui/Select/@types";
 
-interface Props {}
+export default function Settings() {
+  const authStore = useAuthStore();
+  const clientStore = useClientStore();
 
-export default function Settings({}: Props) {
-  const logout = useAuthStore((state) => state.logout);
+  const organizations = authStore.user!.organizations;
+  const projects = authStore.user!.organization.projects;
+
+  /**
+   * All of the projects that the user can switch to, within
+   * the currently selected organization.
+   */
+  const projectSelectOptions: ISelectOption[] = useMemo(() => {
+    return projects.map((project) => ({
+      label: project.name,
+      value: `${project.id}`,
+    }));
+  }, [authStore.user]);
+
+  /**
+   * All of the organizations that the user can switch to.
+   */
+  const organizationSelectOptions: ISelectOption[] = useMemo(() => {
+    return organizations.map((organization) => ({
+      label: organization.name,
+      value: `${organization.id}`,
+    }));
+  }, [authStore.user]);
+
+  /**
+   * The users api key, masked for security. Only show the first 12 characters, then
+   * fill the rest with *'s to hide the rest of the key.
+   */
+  const maskedApiKey = useMemo(() => {
+    const apiKey = authStore.apiKey!;
+    return `${apiKey.slice(0, 12)}${"*".repeat(apiKey.length - 12)}`;
+  }, [authStore.apiKey]);
+
+  /**
+   * Log the user out after prompting them with a confirmation dialog.
+   */
+  const onLogout = () => {
+    alert({
+      title: "Are you sure?",
+      message:
+        "Are you sure you want to logout? You will need to re-enter your API key to login again.",
+      buttons: [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: authStore.logout,
+        },
+      ],
+    });
+  };
 
   return (
-    <SafeAreaView className="p-6">
-      <Button color="danger" onPress={logout}>
+    <Layout title="Settings" scrollable>
+      {/* Selections */}
+      <Select
+        size="sm"
+        label="Project"
+        placeholder="Select project"
+        value={clientStore.project}
+        options={projectSelectOptions}
+        onChange={(value) => clientStore.setField("project", value)}
+      />
+      <Select
+        size="sm"
+        label="Organization"
+        placeholder="Select organization"
+        value={clientStore.organization}
+        options={organizationSelectOptions}
+        onChange={(value) => clientStore.setField("organization", value)}
+      />
+
+      {/* Form Fields */}
+      <TextInput disabled label="API Key" placeholder={maskedApiKey} />
+      <TextInput disabled label="Email" placeholder={authStore.user!.email} />
+      <TextInput
+        disabled
+        label="First Name"
+        placeholder={authStore.user!.first_name}
+      />
+      <TextInput
+        disabled
+        label="Last Name"
+        placeholder={authStore.user!.last_name}
+      />
+
+      <Button color="danger" onPress={onLogout}>
         Logout
       </Button>
-    </SafeAreaView>
+    </Layout>
   );
 }

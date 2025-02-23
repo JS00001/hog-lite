@@ -1,5 +1,11 @@
-interface Props {}
+import { View } from "react-native";
 
-export default function Insights({}: Props) {
-  return <></>;
+import Layout from "@/components/Layout";
+
+export default function Insights() {
+  return (
+    <Layout title="Insights">
+      <View />
+    </Layout>
+  );
 }
