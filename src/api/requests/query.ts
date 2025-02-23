@@ -1,5 +1,5 @@
 import axios from "@/lib/axios";
-import { GetQueryRequest } from "@/@types";
+import { GetQueryRequest, GetQueryResponse } from "@/@types";
 
 /**
  * Request:     POST /api/environments/:project_id/query
@@ -11,7 +11,7 @@ export const getQuery = async (data: GetQueryRequest) => {
   // Posthog doesnt accept extra payload fields, remove our internal fields
   delete data.project_id;
 
-  const response = await axios.post(url, data);
+  const response = await axios.post<GetQueryResponse>(url, data);
 
   return response.data;
 };

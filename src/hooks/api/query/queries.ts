@@ -46,9 +46,11 @@ export const useGetEvents = () => {
       };
 
       const res = await getQuery(finalPayload);
-      if ("error" in res) throw res;
       return res;
     },
+    // Each update causes a new search with a new isLoading state
+    // so we need to prevent this state by using the previous response.
+    placeholderData: (prev) => prev,
   });
 
   return query;

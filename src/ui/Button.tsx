@@ -82,7 +82,7 @@ export default function Button({
 
   const shadowClasses = classNames(
     "border rounded-xl",
-    disabled && "opacity-65"
+    disabled && "opacity-50"
   );
 
   const shadowStyles = {

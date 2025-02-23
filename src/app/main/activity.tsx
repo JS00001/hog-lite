@@ -5,13 +5,15 @@ import Text from "@/ui/Text";
 import Button from "@/ui/Button";
 import Switch from "@/ui/Switch";
 import Select from "@/ui/Select";
+import { timeAgo } from "@/lib/utils";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
 import { ISelectOption } from "@/ui/Select/@types";
 import { useGetEvents } from "@/hooks/api/query";
+import Event from "@/ui/Event";
 
 export default function Activity() {
-  // const query = useGetEvents();
+  const query = useGetEvents();
   const clientStore = useClientStore();
 
   const timePeriodOptions: ISelectOption[] = [
@@ -27,6 +29,12 @@ export default function Activity() {
     { label: "All time", value: "all" },
   ];
 
+  const onRefetch = () => {
+    query.refetch();
+  };
+
+  if (query.isLoading) return null;
+
   return (
     <Layout title="Activity">
       <View className="flex-row gap-2 justify-between">
@@ -35,9 +43,15 @@ export default function Activity() {
           placeholder="Select time period"
           options={timePeriodOptions}
           value={clientStore.timePeriod}
+          disabled={query.isLoading || query.isRefetching}
           onChange={clientStore.setField.bind(null, "timePeriod")}
         />
-        <Button size="sm" icon="rotate-cw">
+        <Button
+          size="sm"
+          icon="rotate-cw"
+          disabled={query.isLoading || query.isRefetching}
+          onPress={onRefetch}
+        >
           Reload
         </Button>
       </View>
@@ -54,24 +68,22 @@ export default function Activity() {
         className="flex-1 rounded-xl border border-divider-light bg-white"
         showsVerticalScrollIndicator={false}
         contentContainerClassName="bg-divider-light gap-px rounded-xl"
-        data={new Array(20).fill(0)}
+        data={query.data!.results}
         ListHeaderComponent={() => (
           <View className="p-4 bg-white flex-row justify-between items-center">
-            <Text className="text-sm font-semibold text-ink-light">EVENT</Text>
-            <Text className="text-sm font-semibold text-ink-light">
+            <Text className="text-sm font-semibold text-ink-light flex-1">
+              EVENT
+            </Text>
+            <Text className="text-sm font-semibold text-ink-light flex-[2]">
               URL / SCREEN
             </Text>
-            <Text className="text-sm font-semibold text-ink-light">TIME</Text>
+            <Text className="text-sm font-semibold text-ink-light flex-1">
+              TIME
+            </Text>
+            <View className="w-6" />
           </View>
         )}
-        renderItem={({ item }) => (
-          <View className="p-4 bg-white flex-row justify-between items-center">
-            <Text>Pageleave</Text>
-            <Text>/tools/matrix-solver</Text>
-            <Text>17 hours ago</Text>
-            <Feather name="maximize-2" />
-          </View>
-        )}
+        renderItem={({ item }) => <Event event={item} />}
       />
     </Layout>
   );

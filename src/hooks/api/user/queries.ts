@@ -14,7 +14,6 @@ export const useGetUser = () => {
     queryKey: [GET_USER_KEY],
     queryFn: async () => {
       const res = await getUser();
-      if ("error" in res) throw res;
       return res;
     },
   });
