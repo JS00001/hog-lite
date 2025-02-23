@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import { IUser } from "@/@types";
 import PersistedAsyncStorage from "@/lib/async-store";
 
 /**
@@ -9,6 +10,7 @@ import PersistedAsyncStorage from "@/lib/async-store";
 interface IAuthState {
   hydrated: boolean;
   apiKey: string | null;
+  user: IUser | null;
 }
 
 /**
@@ -16,6 +18,7 @@ interface IAuthState {
  */
 interface IAuthStore extends IAuthState {
   setHydrated: () => void;
+  setUser: (user: IUser) => void;
   logout: () => void;
   login: (apiKey: string) => void;
 }
@@ -25,6 +28,7 @@ const useAuthStore = create<IAuthStore>()(
     (set, get) => {
       const initialState = {
         apiKey: null,
+        user: null,
         hydrated: false,
       };
 
@@ -40,8 +44,8 @@ const useAuthStore = create<IAuthStore>()(
         set({ hydrated: true });
       };
 
-      const clear = () => {
-        set({ apiKey: null });
+      const setUser = (user: IUser) => {
+        set({ user });
       };
 
       return {
@@ -49,6 +53,7 @@ const useAuthStore = create<IAuthStore>()(
         login,
         logout,
         setHydrated,
+        setUser,
       };
     },
     {
