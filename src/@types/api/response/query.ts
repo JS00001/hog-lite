@@ -5,5 +5,6 @@ export interface GetQueryResponse {
   columns: string[];
   limit: number;
   offset: number;
+  hasMore: boolean;
   results: IEvent[];
 }

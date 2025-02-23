@@ -1,16 +1,18 @@
-import { FlatList, View } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
+import { useCallback } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
 
 import Text from "@/ui/Text";
+import Event from "@/ui/Event";
 import Button from "@/ui/Button";
 import Switch from "@/ui/Switch";
 import Select from "@/ui/Select";
-import { timeAgo } from "@/lib/utils";
+import Skeleton from "@/ui/Skeleton";
+import { EventData } from "@/@types";
+import { colors } from "@/lib/tailwind";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
-import { ISelectOption } from "@/ui/Select/@types";
 import { useGetEvents } from "@/hooks/api/query";
-import Event from "@/ui/Event";
+import { ISelectOption } from "@/ui/Select/@types";
 
 export default function Activity() {
   const query = useGetEvents();
@@ -29,11 +31,73 @@ export default function Activity() {
     { label: "All time", value: "all" },
   ];
 
+  /**
+   * When the refetch button is pressed, we want to refetch the data
+   * from the server.
+   */
   const onRefetch = () => {
     query.refetch();
   };
 
-  if (query.isLoading) return null;
+  /**
+   *
+   */
+  const onEndReached = () => {
+    if (!query.hasNextPage) return;
+    if (query.isFetchingNextPage) return;
+    query.fetchNextPage();
+  };
+
+  /**
+   * Show a loading state if that is the reason for the empty data,
+   * otherwise show a message to the user that no results were found.
+   * TODO: Add a cute hedgehog image here
+   */
+  const ListEmptyComponent = useCallback(() => {
+    if (query.isLoading) {
+      return (
+        <View className="items-center bg-white">
+          {new Array(15).fill(0).map((_, index) => (
+            <View className="py-1.5 px-2 w-full" key={index}>
+              <Skeleton key={index} className="w-full h-8" />
+            </View>
+          ))}
+        </View>
+      );
+    }
+
+    return (
+      <View className="items-center py-48 bg-white">
+        <Text className="text-ink-light text-xl font-medium">
+          No events found
+        </Text>
+        <Text className="text-ink-light">
+          Try changing your filters, or reloading the page.
+        </Text>
+      </View>
+    );
+  }, [query.isLoading]);
+
+  /**
+   * Show a spinner at the end of the list if we are fetching more data.
+   */
+  const ListFooterComponent = useCallback(() => {
+    if (query.isFetchingNextPage) {
+      return (
+        <ActivityIndicator
+          size="small"
+          className="w-full bg-white p-4"
+          color={colors.gray[500]}
+        />
+      );
+    }
+
+    return null;
+  }, [query.isFetchingNextPage]);
+
+  const data = query.data?.results || [];
+
+  console.log(data.length);
 
   return (
     <Layout title="Activity">
@@ -65,10 +129,14 @@ export default function Activity() {
       </View>
 
       <FlatList
-        className="flex-1 rounded-xl border border-divider-light bg-white"
+        data={data}
+        onEndReachedThreshold={0.75}
         showsVerticalScrollIndicator={false}
         contentContainerClassName="bg-divider-light gap-px rounded-xl"
-        data={query.data!.results}
+        className="flex-1 rounded-xl border border-divider-light bg-white"
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
+        onEndReached={onEndReached}
         ListHeaderComponent={() => (
           <View className="p-4 bg-white flex-row justify-between items-center">
             <Text className="text-sm font-semibold text-ink-light flex-1">
@@ -84,6 +152,16 @@ export default function Activity() {
           </View>
         )}
         renderItem={({ item }) => <Event event={item} />}
+        // List optimization
+        removeClippedSubviews
+        initialNumToRender={25}
+        maxToRenderPerBatch={25}
+        keyExtractor={(item) => item[EventData.All].uuid}
+        getItemLayout={(_, index) => ({
+          index,
+          length: 40,
+          offset: 40 * index,
+        })}
       />
     </Layout>
   );

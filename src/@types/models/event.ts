@@ -17,6 +17,7 @@ export enum EventData {
 export type IEvent = [
   // All data
   {
+    uuid: string;
     created_at: string;
     distinct_id: string;
     event: string;

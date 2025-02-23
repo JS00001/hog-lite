@@ -55,12 +55,14 @@ export type RequestRefresh =
 export interface GetQueryRequest {
   /** The project id to query */
   project_id?: string;
-  /** The amount to limit to */
-  limit?: number;
   /** A client-generated query id to fetch results later on */
   client_query_id: string;
   /** The query to run */
   query: {
+    /** The amount to limit to */
+    limit?: number;
+    /** The amount to offset by */
+    offset?: number;
     /** The type of query */
     kind: "EventsQuery";
     /** Limit to results within a specific time range */

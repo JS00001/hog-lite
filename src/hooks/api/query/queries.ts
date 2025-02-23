@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { GET_QUERY_KEY } from "../keys";
 
@@ -8,8 +8,11 @@ import useClientStore from "@/store/client";
 import { GetQueryRequest } from "@/@types";
 
 export const useGetEvents = () => {
+  const PAGINIATION_LIMIT = 100;
+
   const clientStore = useClientStore();
 
+  // Craft the payload that we will send to the server
   const payload: Omit<GetQueryRequest, "client_query_id"> = {
     project_id: clientStore.project!,
     query: {
@@ -34,24 +37,42 @@ export const useGetEvents = () => {
     clientStore.filterTestAccounts,
   ];
 
-  const query = useQuery({
+  const query = useInfiniteQuery({
     staleTime: Infinity,
-    enabled: true,
+    initialPageParam: 0,
     queryKey: queryKey,
-    queryFn: async () => {
-      // Generate a unique query id for each request
-      const finalPayload: GetQueryRequest = {
+    queryFn: async ({ pageParam = 0 }) => {
+      // Generate a unique query id for each request, add the pagination
+      // updates, then query
+      const res = await getQuery({
         ...payload,
         client_query_id: createUUID(),
-      };
+        query: {
+          ...payload.query,
+          limit: PAGINIATION_LIMIT,
+          offset: pageParam * PAGINIATION_LIMIT,
+        },
+      });
 
-      const res = await getQuery(finalPayload);
       return res;
     },
-    // Each update causes a new search with a new isLoading state
-    // so we need to prevent this state by using the previous response.
-    placeholderData: (prev) => prev,
+    // If we have more pages to fetch, return the next offset
+    getNextPageParam: (lastPage) => {
+      if (lastPage.hasMore) {
+        return lastPage.offset + 1;
+      }
+    },
   });
 
-  return query;
+  // Combine all of the results into one flat array
+  const pages = query.data?.pages || [];
+  const results = pages.flatMap((page) => page.results);
+
+  return {
+    ...query,
+    data: {
+      ...query.data,
+      results,
+    },
+  };
 };
