@@ -1,3 +1,3 @@
-import { IUser } from "@/@types";
+import { API, IUser } from "@/@types";
 
-export type GetUserResponse = IUser;
+export type GetUserResponse = API.Response<IUser>;

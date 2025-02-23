@@ -3,9 +3,9 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { GET_QUERY_KEY } from "../keys";
 
 import { getQuery } from "@/api";
-import { createUUID } from "@/lib/utils";
-import useClientStore from "@/store/client";
 import { GetQueryRequest } from "@/@types";
+import useClientStore from "@/store/client";
+import { createUUID, validateResponse } from "@/lib/utils";
 
 export const useGetEvents = () => {
   const PAGINIATION_LIMIT = 100;
@@ -54,7 +54,7 @@ export const useGetEvents = () => {
         },
       });
 
-      return res;
+      return validateResponse(res);
     },
     // If we have more pages to fetch, return the next offset
     getNextPageParam: (lastPage) => {

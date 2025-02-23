@@ -5,6 +5,7 @@ import { GET_USER_KEY } from "../keys";
 
 import { getUser } from "@/api";
 import useAuthStore from "@/store/auth";
+import { validateResponse } from "@/lib/utils";
 
 export const useGetUser = () => {
   const authStore = useAuthStore();
@@ -14,7 +15,7 @@ export const useGetUser = () => {
     queryKey: [GET_USER_KEY],
     queryFn: async () => {
       const res = await getUser();
-      return res;
+      return validateResponse(res);
     },
   });
 

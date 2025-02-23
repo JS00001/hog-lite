@@ -4,9 +4,8 @@ import Feather from "@expo/vector-icons/Feather";
 import { TouchableOpacity, View } from "react-native";
 
 import Text from "@/ui/Text";
-import DetailText from "@/ui/DetailText";
+import { timeAgo } from "@/lib/utils";
 import { EventData, IEvent } from "@/@types";
-import { formatDate, timeAgo } from "@/lib/utils";
 
 interface Props {
   event: IEvent;
@@ -71,9 +70,9 @@ export default function Event({ event }: Props) {
         <Text className="text-sm flex-[2]" numberOfLines={1}>
           {eventUrl}
         </Text>
-        <DetailText details={formatDate(eventTimestamp)} className="flex-1">
+        <Text className="flex-1 text-gray-500 text-sm">
           {timeAgo(eventTimestamp)}
-        </DetailText>
+        </Text>
 
         <TouchableOpacity className={toggleClasses} onPress={toggleExpanded}>
           <Feather name={iconName} />

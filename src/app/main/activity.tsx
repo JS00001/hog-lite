@@ -97,8 +97,6 @@ export default function Activity() {
 
   const data = query.data?.results || [];
 
-  console.log(data.length);
-
   return (
     <Layout title="Activity">
       <View className="flex-row gap-2 justify-between">
@@ -120,7 +118,7 @@ export default function Activity() {
         </Button>
       </View>
 
-      <View className="h-12 px-4 rounded-xl bg-white  border border-divider-light items-center justify-between flex-row">
+      <View className="h-12 px-4 rounded-xl bg-white border border-divider-light items-center justify-between flex-row">
         <Text className="font-medium">Filter out internal and test users</Text>
         <Switch
           value={clientStore.filterTestAccounts}
@@ -132,7 +130,7 @@ export default function Activity() {
         data={data}
         onEndReachedThreshold={0.75}
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="bg-divider-light gap-px rounded-xl"
+        contentContainerClassName="bg-divider-light gap-px"
         className="flex-1 rounded-xl border border-divider-light bg-white"
         ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={ListFooterComponent}

@@ -1,3 +1,4 @@
+import { API } from "@/@types";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 
@@ -42,4 +43,19 @@ export const formatDate = (date: string) => {
   };
 
   return d.toLocaleString("en-US", options);
+};
+
+/**
+ * Check if an api response is an error
+ */
+export const validateResponse = <T extends any>(res: API.Response<T>) => {
+  if (typeof res !== "object" || !res) {
+    return res as T;
+  }
+
+  if ("type" in res && "code" in res && "detail" in res) {
+    throw res;
+  }
+
+  return res as T;
 };

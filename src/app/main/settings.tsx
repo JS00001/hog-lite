@@ -8,13 +8,16 @@ import useAuthStore from "@/store/auth";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
 import { ISelectOption } from "@/ui/Select/@types";
+import { useGetOrganization } from "@/hooks/api/organization";
 
 export default function Settings() {
+  const organizationQuery = useGetOrganization();
+
   const authStore = useAuthStore();
   const clientStore = useClientStore();
 
   const organizations = authStore.user!.organizations;
-  const projects = authStore.user!.organization.projects;
+  const projects = organizationQuery.data?.projects || [];
 
   /**
    * All of the projects that the user can switch to, within
@@ -25,7 +28,7 @@ export default function Settings() {
       label: project.name,
       value: `${project.id}`,
     }));
-  }, [authStore.user]);
+  }, [authStore.user, projects]);
 
   /**
    * All of the organizations that the user can switch to.
@@ -77,6 +80,7 @@ export default function Settings() {
         placeholder="Select project"
         value={clientStore.project}
         options={projectSelectOptions}
+        disabled={organizationQuery.isLoading}
         onChange={(value) => clientStore.setField("project", value)}
       />
       <Select
@@ -85,6 +89,7 @@ export default function Settings() {
         placeholder="Select organization"
         value={clientStore.organization}
         options={organizationSelectOptions}
+        loading={organizationQuery.isLoading}
         onChange={(value) => clientStore.setField("organization", value)}
       />
 

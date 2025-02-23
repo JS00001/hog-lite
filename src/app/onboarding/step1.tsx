@@ -1,15 +1,16 @@
 import { router } from "expo-router";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 
 import Button from "@/ui/Button";
 import useForm from "@/hooks/useForm";
 import TextInput from "@/ui/TextInput";
 import useAuthStore from "@/store/auth";
-import SafeAreaView from "@/ui/SafeAreaView";
+import Layout from "@/components/Layout";
 import validators from "@/lib/validators";
+import { useLogin } from "@/hooks/api/user";
 
 export default function Step1() {
-  const authStore = useAuthStore();
+  const login = useLogin();
 
   const form = useForm({
     validators: {
@@ -17,23 +18,18 @@ export default function Step1() {
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const isValid = form.validateState();
 
     if (!isValid) return;
 
-    authStore.login(form.state.apiKey.value);
-    router.push("/main/insights");
+    await login.mutateAsync({ apiKey: form.state.apiKey.value });
   };
 
   return (
-    <SafeAreaView className="px-4 flex-1 justify-center pb-48">
+    <Layout title="Get Started">
       <View className="bg-divider-light pb-1 rounded-xl overflow-hidden">
         <View className="bg-white rounded-xl p-4 gap-4">
-          <Text className="text-xl font-semibold text-ink-light">
-            Get Started with MobileHog
-          </Text>
-
           <TextInput
             autoCorrect={false}
             autoComplete="off"
@@ -44,11 +40,17 @@ export default function Step1() {
             onChangeText={(apiKey) => form.setValue("apiKey", apiKey)}
           />
 
-          <Button size="lg" color="accent" onPress={onSubmit}>
+          <Button
+            size="lg"
+            color="accent"
+            loading={login.isPending}
+            disabled={!form.state.apiKey.value}
+            onPress={onSubmit}
+          >
             Login
           </Button>
         </View>
       </View>
-    </SafeAreaView>
+    </Layout>
   );
 }

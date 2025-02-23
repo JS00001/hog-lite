@@ -1,4 +1,5 @@
 import { AxiosError } from "axios";
+import Toast from "react-native-toast-message";
 
 import axios from ".";
 
@@ -31,26 +32,49 @@ const setupRequestInterceptors = () => {
   axios.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      // TODO: Handle posthog's actual errors
-      // /**
-      //  * If we *successfully* handle a common error, we want to return the
-      //  * response. This is so we dont have to use catch blocks in every
-      //  * API call. Instead, we can add a check for errors:
-      //  */
-      // const errorHandledResponse = {
-      //   data: responseData,
-      // };
+      const response = error.response;
+      // const data = error.response?.data as API.Error;
 
-      // /** 401 - EXPIRED_TOKEN */
-      // if (errorDetails.message === "EXPIRED_TOKEN") {
-      //   return handleExpiredTokenResponse(originalRequest, error);
-      // }
+      /** No network connection */
+      if (!response) {
+        Toast.show({
+          type: "error",
+          text1: "Network Error",
+          text2: "Please check your internet connection and try again.",
+        });
 
-      // /** 401 - UNAUTHORIZED */
-      // if (errorDetails.message === "UNAUTHORIZED") {
-      //   useAuthStore.getState().logout();
-      //   return Promise.resolve(errorHandledResponse);
-      // }
+        return Promise.reject(error);
+      }
+
+      /** 401 - Unauthorized Error */
+      if (response.status === 401) {
+        Toast.show({
+          type: "error",
+          text1: "Authorization Failed",
+          text2: "Your API key is invalid or has expired.",
+        });
+
+        useAuthStore.getState().logout();
+      }
+
+      /** 429 - Rate Limit Exceeded */
+      if (response.status === 429) {
+        Toast.show({
+          type: "error",
+          text1: "Rate Limit Exceeded",
+          text2:
+            "PostHog has rate limits in place that we cannot control. Please wait before trying again.",
+        });
+      }
+
+      /** 500 - Internal Server Error */
+      if (response.status >= 500) {
+        Toast.show({
+          type: "error",
+          text1: "Internal Server Error",
+          text2: "An unexpected error occurred. Please try again later.",
+        });
+      }
 
       return Promise.reject(error);
     }
