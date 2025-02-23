@@ -11,5 +11,7 @@ export type IndividualSheetData<T extends IndividualSheetName> = {
 };
 
 export interface IndividualSheetProps {
+  CREATE_API_KEY: undefined;
   NETWORK_LOGGER: undefined;
+  DATA_SECURITY: undefined;
 }

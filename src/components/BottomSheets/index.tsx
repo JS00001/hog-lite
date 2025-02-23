@@ -2,6 +2,8 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import { IndividualSheetName } from "./@types";
 
+import DataSecuritySheet from "./DataSecurity";
+import CreateApiKeySheet from "./CreateApiKey";
 import NetworkLoggerSheet from "./DevTools/NetworkLogger";
 
 import useBottomSheetStore from "@/store/bottom-sheets";
@@ -11,6 +13,8 @@ import useBottomSheetStore from "@/store/bottom-sheets";
  */
 const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   NETWORK_LOGGER: NetworkLoggerSheet,
+  DATA_SECURITY: DataSecuritySheet,
+  CREATE_API_KEY: CreateApiKeySheet,
 };
 
 /**

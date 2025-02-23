@@ -9,7 +9,7 @@ interface Props {}
 export default function Layout({}: Props) {
   const apiKey = useAuthStore((state) => state.apiKey);
 
-  if (!apiKey) return <Redirect href="/onboarding/step1" />;
+  if (!apiKey) return <Redirect href="/onboarding" />;
 
   return (
     <Tabs

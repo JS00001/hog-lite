@@ -7,6 +7,7 @@ import {
   ViewStyle,
 } from "react-native";
 import classNames from "classnames";
+import * as Haptic from "expo-haptics";
 import { useCallback, useMemo, useState } from "react";
 
 import { ISelectOption } from "./@types";
@@ -17,6 +18,7 @@ import Button, { ButtonProps } from "@/ui/Button";
 
 const HEIGHT = Dimensions.get("window").height;
 
+// TODO: Cleanup this JSX
 interface Props extends Omit<ButtonProps, "children"> {
   label?: string;
   value: string | null;
@@ -55,7 +57,10 @@ export default function Select({
   }, [value, options, placeholder]);
 
   const toggleOpen = () => {
-    setOpen((prev) => !prev);
+    setOpen((prev) => {
+      if (!prev) Haptic.selectionAsync();
+      return !prev;
+    });
   };
 
   const onValueChange = (value: string) => {
@@ -75,12 +80,14 @@ export default function Select({
     "border border-[#CCCCCC] bg-[#E1DDDD]"
   );
 
+  const icon = open ? "chevron-up" : "chevron-down";
+
   return (
     <>
       <View ref={onElementLoad} className="gap-1.5">
         {label && <Text className="font-medium text-ink-light">{label}</Text>}
 
-        <Button {...props} icon="chevron-down" onPress={toggleOpen}>
+        <Button {...props} icon={icon} onPress={toggleOpen}>
           {selectedLabel}
         </Button>
       </View>
