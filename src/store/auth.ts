@@ -15,9 +15,9 @@ interface IAuthState {
  * Auth store functions and metadata
  */
 interface IAuthStore extends IAuthState {
-  clear: () => void;
   setHydrated: () => void;
-  setApiKey: (apiKey: string) => void;
+  logout: () => void;
+  login: (apiKey: string) => void;
 }
 
 const useAuthStore = create<IAuthStore>()(
@@ -28,8 +28,12 @@ const useAuthStore = create<IAuthStore>()(
         hydrated: false,
       };
 
-      const setApiKey = (apiKey: string) => {
+      const login = (apiKey: string) => {
         set({ apiKey });
+      };
+
+      const logout = () => {
+        set({ apiKey: null });
       };
 
       const setHydrated = () => {
@@ -42,9 +46,9 @@ const useAuthStore = create<IAuthStore>()(
 
       return {
         ...initialState,
-        setApiKey,
+        login,
+        logout,
         setHydrated,
-        clear,
       };
     },
     {
