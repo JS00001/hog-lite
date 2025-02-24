@@ -14,8 +14,8 @@ const colorPalette = {
     gray: "#6A7282",
     shadowPrimary: "#E1DDDD",
     shadowAccent: "#B17816",
-    shadowDanger: "#E96B30",
-    borderDanger: "#F4A178",
+    borderDanger: "#E96B30",
+    shadowDanger: "#F4A178",
   },
   dark: {
     ink: "#EEEFE9",
@@ -30,8 +30,8 @@ const colorPalette = {
     gray: "#D1D5DC",
     shadowPrimary: "#323232",
     shadowAccent: "#926826",
-    shadowDanger: "#C44003",
-    borderDanger: "#84300B",
+    borderDanger: "#C44003",
+    shadowDanger: "#84300B",
   },
 };
 

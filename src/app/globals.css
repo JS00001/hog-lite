@@ -15,8 +15,8 @@
   --color-gray: #6a7282;
   --color-shadow-primary: #e1dddd;
   --color-shadow-accent: #b17816;
-  --color-shadow-danger: #e96b30;
-  --color-border-danger: #f4a178;
+  --color-border-danger: #e96b30;
+  --color-shadow-danger: #f4a178;
 }
 
 .dark {
@@ -32,6 +32,6 @@
   --color-gray: #d1d5dc;
   --color-shadow-primary: #323232;
   --color-shadow-accent: #926826;
-  --color-shadow-danger: #c44003;
-  --color-border-danger: #84300b;
+  --color-border-danger: #c44003;
+  --color-shadow-danger: #84300b;
 }

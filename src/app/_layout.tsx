@@ -39,8 +39,8 @@ export default function RootLayout() {
               <ThemeProvider>
                 <BottomSheetModalProvider>
                   <GestureDetectorProvider>
-                    <BottomSheetComponent />
                     <Slot />
+                    <BottomSheetComponent />
                   </GestureDetectorProvider>
                 </BottomSheetModalProvider>
                 <Toast config={toastConfig} />
