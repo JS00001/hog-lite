@@ -20,38 +20,6 @@ export type TimePeriod =
   /** Results from all time */
   | "all";
 
-export type RequestRefresh =
-  /**
-   * Calculate synchronously (returning only when the query is done),
-   * UNLESS there are very fresh results in the cache
-   */
-  | "blocking"
-  /**
-   * Kick off background calculation (returning immediately with a query status)
-   * UNLESS there are very fresh results in the cache
-   */
-  | "async"
-  /**
-   * Kick off background calculation, UNLESS there are somewhat fresh results
-   * in the cache
-   */
-  | "lazy_async"
-  /**
-   * Calculate synchronously, even if fresh results are already cached, essentially
-   * a "force refresh"
-   */
-  | "force_blocking"
-  /**
-   * Kick off background calculation, even if fresh results are already cached, essentially
-   * an async force refresh
-   */
-  | "force_async"
-  /**
-   * Return cached data or a cache miss; always completes immediately as it never calculates
-   * Background calculation can be tracked using the query_status response field.
-   */
-  | "force_cache";
-
 export interface GetQueryRequest {
   /** The project id to query */
   project_id?: string;

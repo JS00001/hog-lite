@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import { GET_DASHBOARD_KEY } from "../keys";
+import { GET_DASHBOARD_KEY, GET_DASHBOARDS_KEY } from "../keys";
 
-import { getDashboards } from "@/api";
 import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
+import { getDashboard, getDashboards } from "@/api";
 
 export const useGetDashboards = () => {
   const setField = useClientStore((state) => state.setField);
@@ -14,7 +14,7 @@ export const useGetDashboards = () => {
 
   const query = useQuery({
     enabled: !!project,
-    queryKey: [GET_DASHBOARD_KEY, project],
+    queryKey: [GET_DASHBOARDS_KEY, project],
     queryFn: async () => {
       const res = await getDashboards({ project_id: project!, limit: 2000 });
       return validateResponse(res);
@@ -35,4 +35,21 @@ export const useGetDashboards = () => {
   }, [query.data]);
 
   return query;
+};
+
+export const useGetDashboard = () => {
+  const project = useClientStore((state) => state.project);
+  const dashboard = useClientStore((state) => state.dashboard);
+
+  return useQuery({
+    enabled: !!project && !!dashboard,
+    queryKey: [GET_DASHBOARD_KEY, project, dashboard],
+    queryFn: async () => {
+      const res = await getDashboard({
+        dashboard_id: dashboard!,
+        project_id: project!,
+      });
+      return validateResponse(res);
+    },
+  });
 };

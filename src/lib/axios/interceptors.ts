@@ -3,6 +3,7 @@ import Toast from "react-native-toast-message";
 
 import axios from ".";
 
+import { API } from "@/@types";
 import useAuthStore from "@/store/auth";
 import { httpLogger } from "@/lib/logger";
 import useClientStore from "@/store/client";
@@ -37,7 +38,7 @@ const setupRequestInterceptors = () => {
     (response) => response,
     (error: AxiosError) => {
       const response = error.response;
-      // const data = error.response?.data as API.Error;
+      const data = error.response?.data as API.Error;
 
       /** No network connection */
       if (!response) {

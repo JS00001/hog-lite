@@ -26,10 +26,7 @@ export default function Layout({
     className
   );
 
-  const titleClasses = classNames(
-    "text-4xl font-semibold mb-2 text-ink",
-    className
-  );
+  const titleClasses = classNames("text-4xl font-semibold mb-2 text-ink");
 
   const ContainerComponent = useMemo(() => {
     if (scrollable) {

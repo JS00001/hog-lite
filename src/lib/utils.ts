@@ -28,6 +28,13 @@ export const timeAgo = (date: string) => {
 };
 
 /**
+ * Format a number to a readable string
+ */
+export const formatNumber = (num: number) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+/**
  * Format date as January 1, 2021 11:00 AM
  */
 export const formatDate = (date: string) => {
@@ -58,24 +65,4 @@ export const validateResponse = <T extends any>(res: API.Response<T>) => {
   }
 
   return res as T;
-};
-
-/**
- * Copy the vars function from nativewind because
- * its currently broken
- */
-export const vars = <T extends Record<`--${string}`, string | number>>(
-  variables: T
-) => {
-  const $variables: Record<string, string> = {};
-
-  for (const [key, value] of Object.entries(variables)) {
-    if (key.startsWith("--")) {
-      $variables[key] = value.toString();
-    } else {
-      $variables[`--${key}`] = value.toString();
-    }
-  }
-
-  return $variables;
 };

@@ -31,7 +31,7 @@ export default function SelectOption({
       onPress={() => onChange(value)}
     >
       <View className="p-4 flex-row items-center gap-2">
-        <View className="shrink">
+        <View className="shrink flex-1">
           <Text className="text-ink font-medium" numberOfLines={1}>
             {label}
           </Text>
