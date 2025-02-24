@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  Modal,
   Pressable,
   ScrollView,
   StyleProp,
@@ -14,8 +15,8 @@ import { ISelectOption } from "./@types";
 import SelectOption from "./SelectOption";
 
 import Text from "@/ui/Text";
-import Button, { ButtonProps } from "@/ui/Button";
 import useColors from "@/lib/theme";
+import Button, { ButtonProps } from "@/ui/Button";
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -37,7 +38,7 @@ export default function Select({
   ...props
 }: Props) {
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0, width: 0 });
   const colors = useColors();
 
   /**
@@ -47,9 +48,13 @@ export default function Select({
   const onElementLoad = useCallback((node: View | null) => {
     if (!node) return;
 
-    node.measure((x, y, _, height) => {
+    node.measure((_, __, width, height, px, py) => {
       const TOP_OFFSET = 4;
-      setPosition({ x, y: y + height + TOP_OFFSET });
+      setPosition({
+        x: px,
+        y: py + height + TOP_OFFSET,
+        width,
+      });
     });
   }, []);
 
@@ -75,6 +80,7 @@ export default function Select({
     top: position.y,
     left: position.x,
     maxHeight: HEIGHT / 2,
+    width: position.width,
   };
 
   const overlayClasses = classNames(
@@ -96,11 +102,8 @@ export default function Select({
         </Button>
       </View>
 
-      {open && (
-        <Pressable
-          className="absolute h-screen w-full z-50"
-          onPress={toggleOpen}
-        >
+      <Modal transparent animationType="none" visible={open}>
+        <Pressable className="flex-1" onPress={toggleOpen}>
           <View style={overlayStyle} className={overlayClasses}>
             <ScrollView
               showsVerticalScrollIndicator={false}
@@ -118,7 +121,7 @@ export default function Select({
             </ScrollView>
           </View>
         </Pressable>
-      )}
+      </Modal>
     </>
   );
 }

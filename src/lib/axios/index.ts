@@ -1,6 +1,5 @@
 import Axios from "axios";
 
-// TODO: Support multiple encironments from posthog
 /**
  * You must make API requests to the correct domain. On US Cloud,
  * these are https://us.i.posthog.com for public endpoints and https://us.posthog.com for private ones.

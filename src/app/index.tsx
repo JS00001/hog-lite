@@ -6,7 +6,7 @@ export default function Index() {
   const apiKey = useAuthStore((state) => state.apiKey);
 
   if (!apiKey) {
-    return <Redirect href="/onboarding" />;
+    return <Redirect href="/onboarding/landing" />;
   }
 
   return <Redirect href="/main/insights" />;

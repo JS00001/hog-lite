@@ -10,10 +10,11 @@ import useColors from "@/lib/theme";
 import Skeleton from "@/ui/Skeleton";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
-import SadHedgehog from "@/assets/SadHedgehog";
+
 import { EventData, TimePeriod } from "@/@types";
 import { useGetEvents } from "@/hooks/api/query";
 import { ISelectOption } from "@/ui/Select/@types";
+import PanickedHedgehog from "@/assets/PanickedHedgehog";
 
 enum FetchingState {
   Reloading,
@@ -86,8 +87,8 @@ export default function Activity() {
     }
 
     return (
-      <View className="items-center py-32 bg-highlight">
-        <SadHedgehog size={96} />
+      <View className="items-center py-32 bg-highlight -mb-px">
+        <PanickedHedgehog size={96} />
         <Text className="text-ink text-xl font-medium">No events found</Text>
         <Text className="text-ink">
           Try changing your filters, or reloading the page.

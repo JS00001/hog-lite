@@ -36,7 +36,9 @@ export default function Layout({
       return (
         <ScrollView contentContainerClassName={contentContainerClasses}>
           <View className="flex-row items-center gap-2">
-            {hedgehog && <HappyHedgehog size={40} />}
+            {hedgehog && (
+              <HappyHedgehog size={40} style={{ marginBottom: 10 }} />
+            )}
             <Text className={titleClasses}>{title}</Text>
           </View>
           {children}
@@ -47,7 +49,7 @@ export default function Layout({
     return (
       <View className={contentContainerClasses} style={{ flex: 1 }}>
         <View className="flex-row items-center gap-2">
-          {hedgehog && <HappyHedgehog size={40} />}
+          {hedgehog && <HappyHedgehog size={40} style={{ marginBottom: 10 }} />}
           <Text className={titleClasses}>{title}</Text>
         </View>
 

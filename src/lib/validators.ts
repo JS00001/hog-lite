@@ -13,6 +13,17 @@ const validators = {
     .regex(/phx_[a-zA-Z0-9]{5,}/, {
       message: 'Invalid API Key',
     }),
+  /**
+   * Validate a https url
+   */
+  url: z
+    .string({
+      required_error: 'URL is required',
+      invalid_type_error: 'Must be a string',
+    })
+    .url({
+      message: 'Must be a valid URL',
+    })
 };
 
 export default validators;

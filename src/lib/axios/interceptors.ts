@@ -5,6 +5,7 @@ import axios from ".";
 
 import useAuthStore from "@/store/auth";
 import { httpLogger } from "@/lib/logger";
+import useClientStore from "@/store/client";
 
 /**
  * Setup request and response interceptors for axios
@@ -16,6 +17,9 @@ const setupRequestInterceptors = () => {
    */
   axios.interceptors.request.use(async (config) => {
     const apiKey = useAuthStore.getState().apiKey;
+    const apiUrl = useClientStore.getState().apiEndpoint;
+
+    config.baseURL = apiUrl;
 
     httpLogger.debug(config.method?.toUpperCase(), config.url);
 

@@ -10,7 +10,7 @@ export default function Layout({}: Props) {
   const colors = useColors();
   const apiKey = useAuthStore((state) => state.apiKey);
 
-  if (!apiKey) return <Redirect href="/onboarding" />;
+  if (!apiKey) return <Redirect href="/onboarding/landing" />;
 
   return (
     <Tabs
