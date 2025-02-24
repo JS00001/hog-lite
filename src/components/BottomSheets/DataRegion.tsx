@@ -21,7 +21,9 @@ function Content({}: Props) {
     <BottomSheetView className="items-center">
       <TeacherHedgehogRight size={64} />
       <View className="gap-1 items-center">
-        <Text className="text-3xl text-ink">What's a data region?</Text>
+        <Text className="text-3xl text-ink font-medium">
+          What's a data region?
+        </Text>
         <Text className="text-lg text-ink text-center">
           The data region is the area where your PostHog data is stored. See the
           below chart to understand which data region is best for you.

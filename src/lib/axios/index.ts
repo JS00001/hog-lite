@@ -9,7 +9,7 @@ import Axios from "axios";
  */
 
 const axios = Axios.create({
-  baseURL: `https://us.posthog.com/api`,
+  baseURL: `https://us.posthog.com`,
 });
 
 export default axios;

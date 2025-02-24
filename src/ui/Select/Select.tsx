@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  LayoutChangeEvent,
   Modal,
   Pressable,
   ScrollView,
@@ -9,7 +10,7 @@ import {
 } from "react-native";
 import classNames from "classnames";
 import * as Haptic from "expo-haptics";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { ISelectOption } from "./@types";
 import SelectOption from "./SelectOption";
@@ -37,19 +38,20 @@ export default function Select({
   onChange,
   ...props
 }: Props) {
+  const selectRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0, width: 0 });
 
   const colors = useColors();
 
   /**
-   * When the page loads, calculate where the select dropdown
+   * When the element shifts or loads, calculate where the select dropdown
    * should be positioned
    */
-  const onElementLoad = useCallback((node: View | null) => {
-    if (!node) return;
+  const onElementLoad = useCallback(() => {
+    if (!selectRef.current) return;
 
-    node.measure((_, __, width, height, px, py) => {
+    selectRef.current.measure((_, __, width, height, px, py) => {
       const TOP_OFFSET = 4;
       setPosition({
         x: px,
@@ -59,6 +61,10 @@ export default function Select({
     });
   }, []);
 
+  /**
+   * The currently selected label based on the value for
+   * the select dropdown
+   */
   const selectedLabel = useMemo(() => {
     const option = options.find((option) => option.value === value);
     return option ? option.label : placeholder;
@@ -93,7 +99,7 @@ export default function Select({
 
   return (
     <>
-      <View ref={onElementLoad} className="gap-1.5">
+      <View ref={selectRef} onLayout={onElementLoad} className="gap-1.5">
         {label && (
           <Text className="font-medium text-[--color-ink]">{label}</Text>
         )}

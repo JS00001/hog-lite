@@ -6,7 +6,7 @@ import { GetQueryRequest, GetQueryResponse } from "@/@types";
  * Description: Query the events in the project
  */
 export const getQuery = async (data: GetQueryRequest) => {
-  const url = `/environments/${data.project_id}/query`;
+  const url = `/api/environments/${data.project_id}/query`;
 
   // Posthog doesnt accept extra payload fields, remove our internal fields
   delete data.project_id;

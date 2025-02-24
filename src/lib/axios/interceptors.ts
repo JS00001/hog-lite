@@ -17,7 +17,7 @@ const setupRequestInterceptors = () => {
    */
   axios.interceptors.request.use(async (config) => {
     const apiKey = useAuthStore.getState().apiKey;
-    const apiUrl = useClientStore.getState().apiEndpoint;
+    const apiUrl = useClientStore.getState().posthogEndpoint;
 
     config.baseURL = apiUrl;
 
@@ -55,7 +55,7 @@ const setupRequestInterceptors = () => {
         Toast.show({
           type: "error",
           text1: "Authorization Failed",
-          text2: "Your API key is invalid or has expired.",
+          text2: "Invalid API key. Maybe the wrong region?",
         });
 
         useAuthStore.getState().logout();

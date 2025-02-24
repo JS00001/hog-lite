@@ -17,7 +17,7 @@ export default function Region() {
 
   const form = useForm({
     validators: {
-      apiEndpoint: validators.url,
+      posthogEndpoint: validators.url,
       selection: validators.string.optional(),
     },
   });
@@ -33,33 +33,33 @@ export default function Region() {
     if (!isValid) return;
 
     const isCustomInput = form.state.selection.value === "custom-endpoint";
-    const isCustomInputEmpty = form.state.apiEndpoint.value === "";
+    const isCustomInputEmpty = form.state.posthogEndpoint.value === "";
 
     if (isCustomInput && isCustomInputEmpty) {
-      form.setError("apiEndpoint", "URL is required");
+      form.setError("posthogEndpoint", "URL is required");
       return;
     }
 
-    clientStore.setField("apiEndpoint", form.state.apiEndpoint.value);
+    clientStore.setField("posthogEndpoint", form.state.posthogEndpoint.value);
     router.push("/onboarding/api-key");
   };
 
   /**
-   * We store two vars, `selection` and `apiEndpoint`.
+   * We store two vars, `selection` and `posthogEndpoint`.
    * If the user selects a region from the dropdown, we set
-   * the `apiEndpoint` to the selected regions endpoint.
-   * If the user selects 'Custom Endpoint', we set the `apiEndpoint`
+   * the `posthogEndpoint` to the selected regions endpoint.
+   * If the user selects 'Custom Endpoint', we set the `posthogEndpoint`
    * to an empty string and allow the user to input their own endpoint.
    */
   const onSelectChange = (value: string) => {
     form.setValue("selection", value);
 
     if (value !== "custom-endpoint") {
-      form.setValue("apiEndpoint", value);
+      form.setValue("posthogEndpoint", value);
       return;
     }
 
-    form.setValue("apiEndpoint", "");
+    form.setValue("posthogEndpoint", "");
   };
 
   /**
@@ -71,13 +71,13 @@ export default function Region() {
   };
 
   const regionOptions: ISelectOption[] = [
-    { label: "United States", value: "https://us.posthog.com/api" },
-    { label: "European Union", value: "https://eu.posthog.com/api" },
+    { label: "United States", value: "https://us.posthog.com" },
+    { label: "European Union", value: "https://eu.posthog.com" },
     { label: "Custom Endpoint", value: "custom-endpoint" },
   ];
 
   return (
-    <Layout title="Get Started" className="justify-center" hedgehog>
+    <Layout title="Data Region" className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <Select
@@ -90,10 +90,10 @@ export default function Region() {
           {form.state.selection.value === "custom-endpoint" && (
             <TextInput
               label="Custom Endpoint"
-              placeholder="https://us.posthog.com/api"
-              value={form.state.apiEndpoint.value}
-              error={form.state.apiEndpoint.error}
-              onChangeText={(value) => form.setValue("apiEndpoint", value)}
+              placeholder="https://us.posthog.com"
+              value={form.state.posthogEndpoint.value}
+              error={form.state.posthogEndpoint.error}
+              onChangeText={(value) => form.setValue("posthogEndpoint", value)}
             />
           )}
 
@@ -101,14 +101,14 @@ export default function Region() {
             <Button
               size="sm"
               color="accent"
-              disabled={!form.state.apiEndpoint.value}
+              disabled={!form.state.posthogEndpoint.value}
               onPress={onSubmit}
             >
               Continue
             </Button>
 
             <Button size="sm" onPress={onExplain}>
-              What's this?
+              What is this?
             </Button>
           </View>
         </View>

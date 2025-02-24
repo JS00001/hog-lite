@@ -1,28 +1,95 @@
 import { forwardRef } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import { BottomSheetProps } from "../@types";
 
 import Text from "@/ui/Text";
+import Button from "@/ui/Button";
 import BottomSheet from "@/ui/BottomSheet";
-import HappyHedgehog from "@/assets/HappyHedgehog";
-import BottomSheetView from "@/ui/BottomSheet/Containers/View";
+import useClientStore from "@/store/client";
+
+import TeacherHedgehogRight from "@/assets/TeacherHedgehogRight";
+import BottomSheetScrollView from "@/ui/BottomSheet/Containers/ScrollView";
 
 type Props = BottomSheetProps;
 
 function Content({}: Props) {
+  const posthogEndpoint = useClientStore((store) => store.posthogEndpoint);
+
+  const onUserSettings = () => {
+    Linking.openURL(`${posthogEndpoint}/settings/user-api-keys`);
+  };
+
   return (
-    <BottomSheetView className="items-center">
-      <HappyHedgehog size={64} />
-      <View className="gap-1 items-center">
-        <Text className="text-3xl text-ink">Create an API Key</Text>
-        <Text className="text-lg text-ink text-center">
-          la la la this will be multistep
+    <BottomSheetScrollView contentContainerClassName="items-center">
+      <TeacherHedgehogRight size={64} />
+
+      <Text className="text-3xl font-medium text-ink ">
+        Create an account API Key
+      </Text>
+
+      <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
+        <Text className="text-lg  text-ink">
+          Start by navigating to your account settings by clicking the button
+          below.
+        </Text>
+        <Button size="sm" color="accent" onPress={onUserSettings}>
+          Go to settings
+        </Button>
+      </View>
+
+      <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
+        <Text className="text-lg text-ink">
+          Click "+ Create personal API key
         </Text>
       </View>
-    </BottomSheetView>
+
+      <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
+        <Text className="text-lg text-ink">
+          Give your key a label - this is just for you, usually to describe the
+          key's purpose.
+        </Text>
+      </View>
+
+      <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
+        <Text className="text-lg  text-ink">
+          Choose the scopes for your key. For this client to work, the API key
+          needs to have the following scopes (READONLY):
+        </Text>
+        <View className="gap-1 flex-wrap flex-row">
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            User
+          </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Query
+          </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Organization
+          </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Project
+          </Text>
+        </View>
+      </View>
+
+      <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
+        <Text className="text-lg text-ink">
+          At the top of the list, you should see your brand new key. Immediately
+          copy its value and paste it here, as you'll never be able to see it
+          again.
+        </Text>
+      </View>
+    </BottomSheetScrollView>
   );
+}
+
+function Step1() {
+  return <></>;
+}
+
+function Step2() {
+  return <></>;
 }
 
 const CreateApiKeySheet = forwardRef<BottomSheetModal, BottomSheetProps>(

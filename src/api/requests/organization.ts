@@ -7,7 +7,7 @@ import { GetOrganizationRequest, GetOrganizationResponse } from "@/@types";
  * Description: Get a users organization
  */
 export const getOrganization = async (data: GetOrganizationRequest) => {
-  const url = `/organizations/${data.id}`;
+  const url = `/api/organizations/${data.id}`;
 
   const response = await axios.get<GetOrganizationResponse>(url);
 

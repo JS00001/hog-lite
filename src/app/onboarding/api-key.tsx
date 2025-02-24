@@ -49,7 +49,7 @@ export default function Step1() {
   };
 
   return (
-    <Layout title="Get Started" className="justify-center" hedgehog>
+    <Layout title="API Key" className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <TextInput
@@ -74,7 +74,7 @@ export default function Step1() {
             </Button>
 
             <Button size="sm" onPress={onCreateApiKey}>
-              How do I create an API key?
+              How do I get this?
             </Button>
             <Button size="sm" onPress={onDataSecurity}>
               Do you store my API key?

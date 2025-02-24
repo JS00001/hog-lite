@@ -6,7 +6,7 @@ import { GetUserResponse, LoginRequest } from "@/@types";
  * Description: Get the user who owns the access token
  */
 export const getUser = async () => {
-  const url = `/users/@me`;
+  const url = `/api/users/@me`;
 
   const response = await axios.get<GetUserResponse>(url);
 
@@ -18,7 +18,7 @@ export const getUser = async () => {
  * Description: Get the user who owns the access token
  */
 export const login = async (data: LoginRequest) => {
-  const url = `/users/@me`;
+  const url = `/api/users/@me`;
 
   const response = await axios.get<GetUserResponse>(url, {
     headers: {

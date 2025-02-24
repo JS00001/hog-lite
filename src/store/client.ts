@@ -14,10 +14,7 @@ interface IClientState {
   /** The organization id that the user is currently viewing */
   organization: string | null;
   /** The endpoint that the user prefers to use */
-  apiEndpoint:
-    | "https://us.posthog.com/api"
-    | "https://eu.posthog.com/api"
-    | string;
+  posthogEndpoint: "https://us.posthog.com" | "https://eu.posthog.com" | string;
   /** The time period that the user prefers to query */
   timePeriod: TimePeriod;
   /** Whether the user prefers filtering internal users or not */
@@ -42,7 +39,7 @@ const useClientStore = create<IClientStore>()(
         organization: null,
         timePeriod: "-1dStart",
         filterTestAccounts: false,
-        apiEndpoint: "https://us.posthog.com/api",
+        posthogEndpoint: "https://us.posthog.com",
       };
 
       const setField = <T extends keyof IClientState>(
