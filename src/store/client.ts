@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import PersistedAsyncStorage from "@/lib/async-store";
 import { TimePeriod } from "@/@types";
+import PersistedAsyncStorage from "@/lib/async-store";
 
 interface IClientState {
   /** Whether the user is currently in dev mode or not */
@@ -13,10 +13,14 @@ interface IClientState {
   project: string | null;
   /** The organization id that the user is currently viewing */
   organization: string | null;
+  /** The dashboard that the user is currently viewing */
+  dashboard: string | null;
   /** The endpoint that the user prefers to use */
   posthogEndpoint: "https://us.posthog.com" | "https://eu.posthog.com" | string;
-  /** The time period that the user prefers to query */
-  timePeriod: TimePeriod;
+  /** The activity time period that the user prefers to query */
+  activityTimePeriod: TimePeriod;
+  /** The insights time period that the user prefers to query */
+  insightsTimePeriod: TimePeriod;
   /** Whether the user prefers filtering internal users or not */
   filterTestAccounts: boolean;
 }
@@ -37,7 +41,9 @@ const useClientStore = create<IClientStore>()(
         theme: "light",
         project: null,
         organization: null,
-        timePeriod: "-1dStart",
+        dashboard: null,
+        activityTimePeriod: "-1dStart",
+        insightsTimePeriod: "-7d",
         filterTestAccounts: false,
         posthogEndpoint: "https://us.posthog.com",
       };

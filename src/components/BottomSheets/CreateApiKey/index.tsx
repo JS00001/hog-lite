@@ -70,6 +70,12 @@ function Content({}: Props) {
           <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
             Project
           </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Dashboard
+          </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Insight
+          </Text>
         </View>
       </View>
 

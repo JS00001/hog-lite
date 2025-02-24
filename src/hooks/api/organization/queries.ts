@@ -8,15 +8,16 @@ import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
 
 export const useGetOrganization = () => {
-  const clientStore = useClientStore();
+  const project = useClientStore((state) => state.project);
+  const organization = useClientStore((state) => state.organization);
 
-  const id = clientStore.organization;
+  const setField = useClientStore((state) => state.setField);
 
   const query = useQuery({
-    enabled: !!id,
-    queryKey: [GET_ORGANIZATION_KEY, id],
+    enabled: !!organization,
+    queryKey: [GET_ORGANIZATION_KEY, organization],
     queryFn: async () => {
-      const res = await getOrganization({ id: id! });
+      const res = await getOrganization({ id: organization! });
       return validateResponse(res);
     },
   });
@@ -24,10 +25,13 @@ export const useGetOrganization = () => {
   // When we swap organizations, we want to set the project to be the one from the
   // new organization.
   useEffect(() => {
-    const project = query.data?.projects[0];
+    const firstProject = query.data?.projects[0];
+    const projectInOrganization = query.data?.projects.find((p) => {
+      return p.id.toString() === project;
+    });
 
-    if (project) {
-      clientStore.setField("project", project.id.toString());
+    if (firstProject && !projectInOrganization) {
+      setField("project", firstProject.id.toString());
     }
   }, [query.data]);
 

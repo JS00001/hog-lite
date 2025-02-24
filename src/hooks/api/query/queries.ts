@@ -10,15 +10,19 @@ import { createUUID, validateResponse } from "@/lib/utils";
 export const useGetEvents = () => {
   const PAGINIATION_LIMIT = 100;
 
-  const clientStore = useClientStore();
+  const project = useClientStore((state) => state.project);
+  const timePeriod = useClientStore((state) => state.activityTimePeriod);
+  const filterTestAccounts = useClientStore(
+    (state) => state.filterTestAccounts
+  );
 
   // Craft the payload that we will send to the server
   const payload: Omit<GetQueryRequest, "client_query_id"> = {
-    project_id: clientStore.project!,
+    project_id: project!,
     query: {
-      after: clientStore.timePeriod,
+      after: timePeriod,
       kind: "EventsQuery",
-      filterTestAccounts: clientStore.filterTestAccounts,
+      filterTestAccounts: filterTestAccounts,
       orderBy: ["timestamp DESC"],
       select: [
         "*",
@@ -30,12 +34,7 @@ export const useGetEvents = () => {
   };
 
   // Derive some stable query keys so we refetch when critical data changes
-  const queryKey = [
-    GET_QUERY_KEY,
-    clientStore.project,
-    clientStore.timePeriod,
-    clientStore.filterTestAccounts,
-  ];
+  const queryKey = [GET_QUERY_KEY, project, timePeriod, filterTestAccounts];
 
   const query = useInfiniteQuery({
     staleTime: Infinity,

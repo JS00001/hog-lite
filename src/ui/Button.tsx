@@ -99,7 +99,7 @@ export default function Button({
   };
 
   const textClasses = classNames(
-    "font-semibold",
+    "font-semibold shrink",
     SizeClasses[size].text,
     loading && "opacity-10"
   );
@@ -134,7 +134,7 @@ export default function Button({
         className={shadowClasses}
       >
         <View style={containerStyles} className={containerClasses}>
-          <Text style={textStyles} className={textClasses}>
+          <Text style={textStyles} className={textClasses} numberOfLines={1}>
             {children}
           </Text>
 

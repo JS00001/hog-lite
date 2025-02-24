@@ -1,9 +1,8 @@
 import {
   Dimensions,
-  LayoutChangeEvent,
+  FlatList,
   Modal,
   Pressable,
-  ScrollView,
   StyleProp,
   View,
   ViewStyle,
@@ -20,6 +19,7 @@ import useColors from "@/lib/theme";
 import Button, { ButtonProps } from "@/ui/Button";
 
 const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get("window").width;
 
 // TODO: Cleanup this JSX
 interface Props extends Omit<ButtonProps, "children"> {
@@ -87,6 +87,7 @@ export default function Select({
     top: position.y,
     left: position.x,
     maxHeight: HEIGHT / 2,
+    minWidth: WIDTH / 1.5,
     width: position.width,
   };
 
@@ -100,9 +101,7 @@ export default function Select({
   return (
     <>
       <View ref={selectRef} onLayout={onElementLoad} className="gap-1.5">
-        {label && (
-          <Text className="font-medium text-[--color-ink]">{label}</Text>
-        )}
+        {label && <Text className="font-medium text-ink">{label}</Text>}
 
         <Button {...props} icon={icon} onPress={toggleOpen}>
           {selectedLabel}
@@ -111,22 +110,32 @@ export default function Select({
 
       <Modal transparent animationType="none" visible={open}>
         <Pressable className="flex-1" onPress={toggleOpen}>
-          <View style={overlayStyle} className={overlayClasses}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              className="bg-highlight rounded-xl overflow-hidden"
-              style={{ boxShadow: `0px 1px 0px ${colors.divider}` }}
-            >
-              {options.map((option, i) => (
-                <SelectOption
-                  key={i}
-                  selected={value}
-                  onChange={onValueChange}
-                  {...option}
-                />
-              ))}
-            </ScrollView>
-          </View>
+          <FlatList
+            data={options}
+            style={overlayStyle}
+            className={overlayClasses}
+            contentContainerStyle={{
+              boxShadow: `0px 1px 0px ${colors.divider}`,
+            }}
+            contentContainerClassName="bg-highlight rounded-xl overflow-hidden"
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <SelectOption
+                selected={value}
+                onChange={onValueChange}
+                {...item}
+              />
+            )}
+            // List optimization
+            keyExtractor={(item) => item.value}
+            initialNumToRender={25}
+            maxToRenderPerBatch={25}
+            getItemLayout={(_, index) => ({
+              index,
+              length: 40,
+              offset: 40 * index,
+            })}
+          />
         </Pressable>
       </Modal>
     </>

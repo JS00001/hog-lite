@@ -16,6 +16,7 @@ export default function SelectOption({
   selected,
   label,
   value,
+  description,
   onChange,
 }: Props) {
   const colors = useColors();
@@ -30,7 +31,16 @@ export default function SelectOption({
       onPress={() => onChange(value)}
     >
       <View className="p-4 flex-row items-center gap-2">
-        <Text className="text-ink font-medium flex-1">{label}</Text>
+        <View className="shrink">
+          <Text className="text-ink font-medium" numberOfLines={1}>
+            {label}
+          </Text>
+          {description && (
+            <Text className="text-sm text-gray" numberOfLines={2}>
+              {description}
+            </Text>
+          )}
+        </View>
 
         {isSelected && <Feather name="check" color={colors.ink} size={16} />}
       </View>

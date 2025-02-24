@@ -13,8 +13,8 @@ import useClientStore from "@/store/client";
 
 import { EventData, TimePeriod } from "@/@types";
 import { useGetEvents } from "@/hooks/api/query";
-import { ISelectOption } from "@/ui/Select/@types";
 import PanickedHedgehog from "@/assets/PanickedHedgehog";
+import timePeriodOptions from "@/constants/time-periods";
 
 enum FetchingState {
   Reloading,
@@ -27,19 +27,6 @@ export default function Activity() {
   const query = useGetEvents();
   const colors = useColors();
   const clientStore = useClientStore();
-
-  const timePeriodOptions: ISelectOption[] = [
-    { label: "Today", value: "dStart" },
-    { label: "Yesterday", value: "-1dStart" },
-    { label: "Last 24 hours", value: "-24h" },
-    { label: "Last 7 days", value: "-7d" },
-    { label: "Last 30 days", value: "-30d" },
-    { label: "Last 90 days", value: "-90d" },
-    { label: "Last 180 days", value: "-180d" },
-    { label: "This month", value: "mStart" },
-    { label: "Year to date", value: "yStart" },
-    { label: "All time", value: "all" },
-  ];
 
   /**
    * When the refetch button is pressed, we want to refetch the data
@@ -66,7 +53,7 @@ export default function Activity() {
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
-    clientStore.setField("timePeriod", value as TimePeriod);
+    clientStore.setField("activityTimePeriod", value as TimePeriod);
   };
 
   /**
@@ -129,7 +116,7 @@ export default function Activity() {
           size="sm"
           placeholder="Select time period"
           options={timePeriodOptions}
-          value={clientStore.timePeriod}
+          value={clientStore.activityTimePeriod}
           loading={timePeriodLoading}
           disabled={actionsDisabled}
           onChange={onTimePeriodChange}
