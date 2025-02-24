@@ -8,7 +8,7 @@ export default function BottomSheetView({
   ...props
 }: ViewProps) {
   const containerClasses = classNames(
-    "px-6 py-4 gap-y-4 pb-16 bg-highlight",
+    "px-4 py-4 gap-y-4 pb-16 bg-highlight",
     className
   );
 

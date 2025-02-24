@@ -8,7 +8,7 @@ export default function BottomSheetScrollView({
   contentContainerClassName,
   ...props
 }: ScrollViewProps) {
-  const containerClasses = classNames("px-6 py-4", className);
+  const containerClasses = classNames("px-4 py-4", className);
   const contentContainerClasses = classNames(
     "gap-y-2 pb-16",
     contentContainerClassName

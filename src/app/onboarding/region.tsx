@@ -1,13 +1,15 @@
 import { View } from "react-native";
 import { router } from "expo-router";
 
+import Select from "@/ui/Select";
 import Button from "@/ui/Button";
 import useForm from "@/hooks/useForm";
+import TextInput from "@/ui/TextInput";
 import Layout from "@/components/Layout";
 import validators from "@/lib/validators";
 import useClientStore from "@/store/client";
+import { ISelectOption } from "@/ui/Select/@types";
 import useBottomSheetStore from "@/store/bottom-sheets";
-import Select from "@/ui/Select";
 
 export default function Region() {
   const clientStore = useClientStore();
@@ -16,30 +18,63 @@ export default function Region() {
   const form = useForm({
     validators: {
       apiEndpoint: validators.url,
+      selection: validators.string.optional(),
     },
   });
 
   /**
-   * When the form is submitted, attempt to
-   * log the user in with theior API key
+   * When the form is submitted, check if we have a valid API url
+   * to use, then set it as the clients preferred endpoint and
+   * navigate to the next step in the onboarding process
    */
   const onSubmit = async () => {
     const isValid = form.validateState();
 
     if (!isValid) return;
 
+    const isCustomInput = form.state.selection.value === "custom-endpoint";
+    const isCustomInputEmpty = form.state.apiEndpoint.value === "";
+
+    if (isCustomInput && isCustomInputEmpty) {
+      form.setError("apiEndpoint", "URL is required");
+      return;
+    }
+
     clientStore.setField("apiEndpoint", form.state.apiEndpoint.value);
     router.push("/onboarding/api-key");
   };
 
   /**
-   * When the 'How do I create an API key?' button is pressed,
-   * show the bottom sheet with the instructions on how to create
-   * an API key
+   * We store two vars, `selection` and `apiEndpoint`.
+   * If the user selects a region from the dropdown, we set
+   * the `apiEndpoint` to the selected regions endpoint.
+   * If the user selects 'Custom Endpoint', we set the `apiEndpoint`
+   * to an empty string and allow the user to input their own endpoint.
+   */
+  const onSelectChange = (value: string) => {
+    form.setValue("selection", value);
+
+    if (value !== "custom-endpoint") {
+      form.setValue("apiEndpoint", value);
+      return;
+    }
+
+    form.setValue("apiEndpoint", "");
+  };
+
+  /**
+   * When the 'What's this?' button is pressed, we open a bottom sheet
+   * that explains what the data region is and why it's important
    */
   const onExplain = () => {
-    // bottomSheetStore.open("CREATE_API_KEY");
+    bottomSheetStore.open("DATA_REGION");
   };
+
+  const regionOptions: ISelectOption[] = [
+    { label: "United States", value: "https://us.posthog.com/api" },
+    { label: "European Union", value: "https://eu.posthog.com/api" },
+    { label: "Custom Endpoint", value: "custom-endpoint" },
+  ];
 
   return (
     <Layout title="Get Started" className="justify-center" hedgehog>
@@ -48,14 +83,19 @@ export default function Region() {
           <Select
             label="Data Region"
             placeholder="Select a region"
-            onChange={(value) => form.setValue("apiEndpoint", value)}
-            value={form.state.apiEndpoint.value}
-            options={[
-              { label: "United States", value: "https://us.posthog.com/api" },
-              { label: "European Union", value: "https://eu.posthog.com/api" },
-              { label: "Custom Endpoint", value: "custom-endpoint" },
-            ]}
+            options={regionOptions}
+            value={form.state.selection.value}
+            onChange={onSelectChange}
           />
+          {form.state.selection.value === "custom-endpoint" && (
+            <TextInput
+              label="Custom Endpoint"
+              placeholder="https://us.posthog.com/api"
+              value={form.state.apiEndpoint.value}
+              error={form.state.apiEndpoint.error}
+              onChangeText={(value) => form.setValue("apiEndpoint", value)}
+            />
+          )}
 
           <View className="gap-1">
             <Button

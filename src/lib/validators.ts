@@ -23,7 +23,16 @@ const validators = {
     })
     .url({
       message: 'Must be a valid URL',
-    })
+    }),
+  /**
+   * Validate a string
+   */
+  string: z
+    .string({
+      required_error: 'Field is required',
+      invalid_type_error: 'Must be a string',
+    }),
+
 };
 
 export default validators;
