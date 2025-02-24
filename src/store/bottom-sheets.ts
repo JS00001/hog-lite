@@ -74,10 +74,19 @@ const useBottomSheetStore = create<IBottomSheetStore>((set, get) => {
   };
 
   const register = (name: IndividualSheetName, ref: BottomSheetModal) => {
-    set((state) => ({
-      ...state,
-      refs: [...state.refs, { name, ref }],
-    }));
+    set((state) => {
+      const existingIndex = state.refs.findIndex((r) => r.name === name);
+
+      // If ref name already exists, create a new array with the updated ref
+      if (existingIndex >= 0) {
+        const newRefs = [...state.refs];
+        newRefs[existingIndex] = { name, ref };
+        return { ...state, refs: newRefs };
+      }
+
+      // Otherwise, add the new ref to the array
+      return { ...state, refs: [...state.refs, { name, ref }] };
+    });
   };
 
   return {

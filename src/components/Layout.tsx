@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, ScrollView, View } from "react-native";
 
 import Text from "@/ui/Text";
 import SafeAreaView from "@/ui/SafeAreaView";
-import HedgehogSVG from "@/assets/HedgehogSVG";
+import HappyHedgehog from "@/assets/HappyHedgehog";
 
 interface Props {
   title: string;
@@ -18,7 +18,7 @@ export default function Layout({
   title,
   scrollable,
   className,
-  hedgehog = true,
+  hedgehog = false,
   children,
 }: Props) {
   const contentContainerClasses = classNames(
@@ -36,7 +36,7 @@ export default function Layout({
       return (
         <ScrollView contentContainerClassName={contentContainerClasses}>
           <View className="flex-row items-center gap-2">
-            {hedgehog && <HedgehogSVG size={40} />}
+            {hedgehog && <HappyHedgehog size={40} />}
             <Text className={titleClasses}>{title}</Text>
           </View>
           {children}
@@ -47,7 +47,7 @@ export default function Layout({
     return (
       <View className={contentContainerClasses} style={{ flex: 1 }}>
         <View className="flex-row items-center gap-2">
-          {hedgehog && <HedgehogSVG size={40} />}
+          {hedgehog && <HappyHedgehog size={40} />}
           <Text className={titleClasses}>{title}</Text>
         </View>
 

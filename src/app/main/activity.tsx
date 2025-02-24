@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 
 import Text from "@/ui/Text";
@@ -8,15 +8,22 @@ import Switch from "@/ui/Switch";
 import Select from "@/ui/Select";
 import useColors from "@/lib/theme";
 import Skeleton from "@/ui/Skeleton";
-import { EventData } from "@/@types";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
+import SadHedgehog from "@/assets/SadHedgehog";
+import { EventData, TimePeriod } from "@/@types";
 import { useGetEvents } from "@/hooks/api/query";
 import { ISelectOption } from "@/ui/Select/@types";
 
-export default function Activity() {
-  const query = useGetEvents();
+enum FetchingState {
+  Reloading,
+  TimePeriodChange,
+}
 
+export default function Activity() {
+  const [fetchState, setFetchState] = useState<FetchingState | null>(null);
+
+  const query = useGetEvents();
   const colors = useColors();
   const clientStore = useClientStore();
 
@@ -38,11 +45,13 @@ export default function Activity() {
    * from the server.
    */
   const onRefetch = () => {
+    setFetchState(FetchingState.Reloading);
     query.refetch();
   };
 
   /**
-   *
+   * When the end is reached, fetch a new page if
+   * it exists and we are not already fetching.
    */
   const onEndReached = () => {
     if (!query.hasNextPage) return;
@@ -51,9 +60,17 @@ export default function Activity() {
   };
 
   /**
+   * When the select dropdown changes, set it and refetch
+   * the data from the server.
+   */
+  const onTimePeriodChange = (value: string) => {
+    setFetchState(FetchingState.TimePeriodChange);
+    clientStore.setField("timePeriod", value as TimePeriod);
+  };
+
+  /**
    * Show a loading state if that is the reason for the empty data,
    * otherwise show a message to the user that no results were found.
-   * TODO: Add a cute hedgehog image here
    */
   const ListEmptyComponent = useCallback(() => {
     if (query.isLoading) {
@@ -69,7 +86,8 @@ export default function Activity() {
     }
 
     return (
-      <View className="items-center py-48 bg-highlight">
+      <View className="items-center py-32 bg-highlight">
+        <SadHedgehog size={96} />
         <Text className="text-ink text-xl font-medium">No events found</Text>
         <Text className="text-ink">
           Try changing your filters, or reloading the page.
@@ -97,6 +115,12 @@ export default function Activity() {
 
   const data = query.data?.results || [];
 
+  const actionsDisabled = query.isLoading || query.isRefetching;
+  const reloadLoading =
+    actionsDisabled && fetchState === FetchingState.Reloading;
+  const timePeriodLoading =
+    actionsDisabled && fetchState === FetchingState.TimePeriodChange;
+
   return (
     <Layout title="Activity">
       <View className="flex-row gap-2 justify-between">
@@ -105,13 +129,15 @@ export default function Activity() {
           placeholder="Select time period"
           options={timePeriodOptions}
           value={clientStore.timePeriod}
-          disabled={query.isLoading || query.isRefetching}
-          onChange={clientStore.setField.bind(null, "timePeriod")}
+          loading={timePeriodLoading}
+          disabled={actionsDisabled}
+          onChange={onTimePeriodChange}
         />
         <Button
           size="sm"
           icon="rotate-cw"
-          disabled={query.isLoading || query.isRefetching}
+          loading={reloadLoading}
+          disabled={actionsDisabled}
           onPress={onRefetch}
         >
           Reload

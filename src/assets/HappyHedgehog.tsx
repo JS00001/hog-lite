@@ -4,7 +4,7 @@ interface Props {
   size?: number;
 }
 
-export default function HedgehogSVG({ size = 256 }: Props) {
+export default function HappyHedgehog({ size = 256 }: Props) {
   return (
     <Svg
       width={size}

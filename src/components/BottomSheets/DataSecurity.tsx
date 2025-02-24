@@ -6,7 +6,7 @@ import { BottomSheetProps } from "./@types";
 
 import Text from "@/ui/Text";
 import BottomSheet from "@/ui/BottomSheet";
-import HedgehogSVG from "@/assets/HedgehogSVG";
+import HappyHedgehog from "@/assets/HappyHedgehog";
 import BottomSheetView from "@/ui/BottomSheet/Containers/View";
 
 type Props = BottomSheetProps;
@@ -14,7 +14,7 @@ type Props = BottomSheetProps;
 function Content({}: Props) {
   return (
     <BottomSheetView className="items-center">
-      <HedgehogSVG size={64} />
+      <HappyHedgehog size={64} />
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink">No, we store nothing!</Text>
         <Text className="text-lg text-ink text-center">

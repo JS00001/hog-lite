@@ -5,6 +5,7 @@ import useAuthStore from "@/store/auth";
 import { LoginRequest } from "@/@types";
 import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
+import { router } from "expo-router";
 
 export const useLogin = () => {
   const authStore = useAuthStore();
@@ -26,6 +27,7 @@ export const useLogin = () => {
       }
 
       authStore.login(vars.apiKey);
+      router.push("/main/insights");
     },
   });
 

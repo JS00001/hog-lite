@@ -1,6 +1,5 @@
 import { View } from "react-native";
 
-import Text from "@/ui/Text";
 import Button from "@/ui/Button";
 import useForm from "@/hooks/useForm";
 import TextInput from "@/ui/TextInput";
@@ -50,7 +49,7 @@ export default function Step1() {
   };
 
   return (
-    <Layout title="Get Started" className="justify-center">
+    <Layout title="Get Started" className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <TextInput
