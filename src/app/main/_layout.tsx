@@ -1,12 +1,13 @@
 import { Redirect, Tabs } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
-import { colors } from "@/lib/tailwind";
+import useColors from "@/lib/theme";
 import useAuthStore from "@/store/auth";
 
 interface Props {}
 
 export default function Layout({}: Props) {
+  const colors = useColors();
   const apiKey = useAuthStore((state) => state.apiKey);
 
   if (!apiKey) return <Redirect href="/onboarding" />;
@@ -15,16 +16,18 @@ export default function Layout({}: Props) {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.blue.light,
+        tabBarActiveTintColor: colors.blue,
         tabBarItemStyle: {
           marginTop: 12,
         },
         tabBarStyle: {
           position: "absolute",
+          backgroundColor: colors.highlight,
+          borderTopColor: colors.divider,
           height: 92,
         },
         sceneStyle: {
-          backgroundColor: colors.background.light,
+          backgroundColor: colors.primary,
         },
       }}
     >

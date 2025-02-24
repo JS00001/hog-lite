@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import colors from "tailwindcss/colors";
+import useColors from "@/lib/theme";
 import { Dimensions, StyleSheet } from "react-native";
 import { BottomSheetModal, BottomSheetModalProps } from "@gorhom/bottom-sheet";
 
@@ -12,8 +12,9 @@ interface Props extends BottomSheetModalProps {
 
 const BottomSheet = forwardRef<BottomSheetModal, Props>(function BottomSheet(
   { preventClose, children, maxHeight = 0.9, ...props },
-  ref,
+  ref
 ) {
+  const colors = useColors();
   const windowHeight = Dimensions.get("window").height;
   const maxDynamicContentSize = windowHeight * maxHeight;
 
@@ -21,10 +22,16 @@ const BottomSheet = forwardRef<BottomSheetModal, Props>(function BottomSheet(
     <BottomSheetModal
       ref={ref}
       enableDynamicSizing
-      backgroundStyle={styles.background}
-      handleIndicatorStyle={styles.handleIndicator}
       enablePanDownToClose={!preventClose}
       maxDynamicContentSize={maxDynamicContentSize}
+      backgroundStyle={[
+        styles.background,
+        { backgroundColor: colors.highlight },
+      ]}
+      handleIndicatorStyle={[
+        styles.handleIndicator,
+        { backgroundColor: colors.divider },
+      ]}
       backdropComponent={(props) => {
         const pressBehavior = preventClose ? "none" : "close";
         return <BottomSheetBackdrop {...props} pressBehavior={pressBehavior} />;
@@ -41,7 +48,6 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   handleIndicator: {
-    backgroundColor: colors.gray[300],
     borderRadius: 999,
     width: 56,
   },

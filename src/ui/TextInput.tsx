@@ -21,15 +21,16 @@ export default function TextInput({
   ...props
 }: Props) {
   const inputClasses = classNames(
-    "p-3 border border-divider-light rounded-lg",
+    "p-3 border border-divider rounded-lg text-ink",
+    "placeholder:text-gray",
     className
   );
 
   return (
     <View className="gap-1.5">
-      <Text className="font-medium text-ink-light">{label}</Text>
+      <Text className="font-medium text-ink">{label}</Text>
       <RNTextInput {...props} editable={!disabled} className={inputClasses} />
-      {error && <Text className="text-red-light text-sm">{error}</Text>}
+      {error && <Text className="text-red text-sm">{error}</Text>}
     </View>
   );
 }

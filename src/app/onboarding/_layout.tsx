@@ -1,11 +1,12 @@
-import { Redirect, Slot, Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 
+import useColors from "@/lib/theme";
 import useAuthStore from "@/store/auth";
-import { colors } from "@/lib/tailwind";
 
 interface Props {}
 
 export default function Layout({}: Props) {
+  const colors = useColors();
   const apiKey = useAuthStore((state) => state.apiKey);
 
   if (!apiKey) {
@@ -14,7 +15,7 @@ export default function Layout({}: Props) {
         screenOptions={{
           headerShown: false,
           contentStyle: {
-            backgroundColor: colors.background.light,
+            backgroundColor: colors.primary,
           },
         }}
       />

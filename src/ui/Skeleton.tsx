@@ -7,7 +7,7 @@ interface Props {
 
 export default function Skeleton({ className }: Props) {
   const containerClasses = classNames(
-    "bg-gray-200 rounded-xl animate-pulse",
+    "bg-gray rounded-xl animate-pulse",
     className
   );
 

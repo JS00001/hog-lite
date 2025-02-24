@@ -41,6 +41,14 @@ export default function Settings() {
   }, [authStore.user]);
 
   /**
+   * The options for the theme select input.
+   */
+  const themeSelectOptions: ISelectOption[] = [
+    { label: "Light", value: "light" },
+    { label: "Dark", value: "dark" },
+  ];
+
+  /**
    * The users api key, masked for security. Only show the first 12 characters, then
    * fill the rest with *'s to hide the rest of the key.
    */
@@ -91,6 +99,16 @@ export default function Settings() {
         options={organizationSelectOptions}
         loading={organizationQuery.isLoading}
         onChange={(value) => clientStore.setField("organization", value)}
+      />
+      <Select
+        size="sm"
+        label="Theme"
+        placeholder="Select theme"
+        value={clientStore.theme}
+        options={themeSelectOptions}
+        onChange={(value) => {
+          clientStore.setField("theme", value as "light" | "dark");
+        }}
       />
 
       {/* Form Fields */}

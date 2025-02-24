@@ -51,8 +51,8 @@ export default function Step1() {
 
   return (
     <Layout title="Get Started" className="justify-center">
-      <View className="bg-divider-light pb-1 rounded-xl overflow-hidden">
-        <View className="bg-white rounded-xl p-4 gap-4">
+      <View className="bg-divider pb-1 rounded-xl overflow-hidden">
+        <View className="bg-highlight rounded-xl p-4 gap-4">
           <TextInput
             autoCorrect={false}
             autoComplete="off"

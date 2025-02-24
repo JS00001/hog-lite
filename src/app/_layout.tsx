@@ -1,4 +1,5 @@
 import { Slot } from "expo-router";
+
 import Toast from "react-native-toast-message";
 import * as SplashScreen from "expo-splash-screen";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ import "@/app/globals.css";
 import toastConfig from "@/lib/toast";
 import AuthProvider from "@/providers/Auth";
 import queryClient from "@/lib/query-client";
+import ThemeProvider from "@/providers/Theme";
 import SplashScreenProvider from "@/providers/SplashScreen";
 import BottomSheetComponent from "@/components/BottomSheets";
 import setupRequestInterceptors from "@/lib/axios/interceptors";
@@ -33,14 +35,16 @@ export default function RootLayout() {
       <AuthProvider>
         <SplashScreenProvider>
           <SafeAreaProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <BottomSheetModalProvider>
-                <GestureDetectorProvider>
-                  <BottomSheetComponent />
-                  <Slot />
-                </GestureDetectorProvider>
-              </BottomSheetModalProvider>
-              <Toast config={toastConfig} />
+            <GestureHandlerRootView style={[{ flex: 1 }]}>
+              <ThemeProvider>
+                <BottomSheetModalProvider>
+                  <GestureDetectorProvider>
+                    <BottomSheetComponent />
+                    <Slot />
+                  </GestureDetectorProvider>
+                </BottomSheetModalProvider>
+                <Toast config={toastConfig} />
+              </ThemeProvider>
             </GestureHandlerRootView>
           </SafeAreaProvider>
         </SplashScreenProvider>

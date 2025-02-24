@@ -6,9 +6,9 @@ import Event from "@/ui/Event";
 import Button from "@/ui/Button";
 import Switch from "@/ui/Switch";
 import Select from "@/ui/Select";
+import useColors from "@/lib/theme";
 import Skeleton from "@/ui/Skeleton";
 import { EventData } from "@/@types";
-import { colors } from "@/lib/tailwind";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
 import { useGetEvents } from "@/hooks/api/query";
@@ -16,6 +16,8 @@ import { ISelectOption } from "@/ui/Select/@types";
 
 export default function Activity() {
   const query = useGetEvents();
+
+  const colors = useColors();
   const clientStore = useClientStore();
 
   const timePeriodOptions: ISelectOption[] = [
@@ -56,7 +58,7 @@ export default function Activity() {
   const ListEmptyComponent = useCallback(() => {
     if (query.isLoading) {
       return (
-        <View className="items-center bg-white">
+        <View className="items-center bg-highlight">
           {new Array(15).fill(0).map((_, index) => (
             <View className="py-1.5 px-2 w-full" key={index}>
               <Skeleton key={index} className="w-full h-8" />
@@ -67,11 +69,9 @@ export default function Activity() {
     }
 
     return (
-      <View className="items-center py-48 bg-white">
-        <Text className="text-ink-light text-xl font-medium">
-          No events found
-        </Text>
-        <Text className="text-ink-light">
+      <View className="items-center py-48 bg-highlight">
+        <Text className="text-ink text-xl font-medium">No events found</Text>
+        <Text className="text-ink">
           Try changing your filters, or reloading the page.
         </Text>
       </View>
@@ -86,8 +86,8 @@ export default function Activity() {
       return (
         <ActivityIndicator
           size="small"
-          className="w-full bg-white p-4"
-          color={colors.gray[500]}
+          className="w-full bg-highlight p-4"
+          color={colors.gray}
         />
       );
     }
@@ -118,8 +118,10 @@ export default function Activity() {
         </Button>
       </View>
 
-      <View className="h-12 px-4 rounded-xl bg-white border border-divider-light items-center justify-between flex-row">
-        <Text className="font-medium">Filter out internal and test users</Text>
+      <View className="h-12 px-4 rounded-xl bg-highlight border border-divider items-center justify-between flex-row">
+        <Text className="font-medium text-ink">
+          Filter out internal and test users
+        </Text>
         <Switch
           value={clientStore.filterTestAccounts}
           onValueChange={clientStore.setField.bind(null, "filterTestAccounts")}
@@ -130,22 +132,18 @@ export default function Activity() {
         data={data}
         onEndReachedThreshold={0.75}
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="bg-divider-light gap-px"
-        className="flex-1 rounded-xl border border-divider-light bg-white"
+        contentContainerClassName="bg-divider gap-px"
+        className="flex-1 rounded-xl border border-divider bg-highlight"
         ListEmptyComponent={ListEmptyComponent}
         ListFooterComponent={ListFooterComponent}
         onEndReached={onEndReached}
         ListHeaderComponent={() => (
-          <View className="p-4 bg-white flex-row justify-between items-center">
-            <Text className="text-sm font-semibold text-ink-light flex-1">
-              EVENT
-            </Text>
-            <Text className="text-sm font-semibold text-ink-light flex-[2]">
+          <View className="p-4 bg-highlight flex-row justify-between items-center">
+            <Text className="text-sm font-semibold text-ink flex-1">EVENT</Text>
+            <Text className="text-sm font-semibold text-ink flex-[2]">
               URL / SCREEN
             </Text>
-            <Text className="text-sm font-semibold text-ink-light flex-1">
-              TIME
-            </Text>
+            <Text className="text-sm font-semibold text-ink flex-1">TIME</Text>
             <View className="w-6" />
           </View>
         )}

@@ -13,12 +13,13 @@ import classNames from "classnames";
 import Feather from "@expo/vector-icons/Feather";
 
 import Text from "@/ui/Text";
+import useColors from "@/lib/theme";
 
 export interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   icon?: keyof typeof Feather.glyphMap;
   size?: keyof typeof SizeClasses;
-  color?: keyof typeof ColorClasses;
+  color?: "primary" | "accent" | "danger";
 }
 
 const BUTTON_ANIMATION_OFFSET = 3;
@@ -36,33 +37,6 @@ const SizeClasses = {
   },
 };
 
-const ColorClasses = {
-  primary: {
-    container: "#EEEFE9",
-    shadow: "#E1DDDD",
-    border: "#CCCCCC",
-    text: "#151515",
-  },
-  secondary: {
-    container: "#FFFFFF",
-    shadow: "#DC9300",
-    border: "#B17816",
-    text: "#151515",
-  },
-  accent: {
-    container: "#DC9300",
-    border: "#B17816",
-    shadow: "#DC9300",
-    text: "#000000",
-  },
-  danger: {
-    container: "#EEEFE9",
-    border: "#E96B30",
-    shadow: "#F4A178",
-    text: "#F54E00",
-  },
-};
-
 export default function Button({
   children,
   loading = false,
@@ -72,6 +46,29 @@ export default function Button({
   icon,
   ...props
 }: ButtonProps) {
+  const colors = useColors();
+
+  const ColorClasses = {
+    primary: {
+      container: colors.primary,
+      shadow: colors.shadowPrimary,
+      border: colors.divider,
+      text: colors.ink,
+    },
+    accent: {
+      container: colors.yellow,
+      border: colors.shadowAccent,
+      shadow: colors.yellow,
+      text: colors.ink,
+    },
+    danger: {
+      container: colors.primary,
+      border: colors.borderDanger,
+      shadow: colors.shadowDanger,
+      text: colors.red,
+    },
+  };
+
   disabled = disabled || loading;
 
   const offset = useSharedValue(BUTTON_ANIMATION_OFFSET);

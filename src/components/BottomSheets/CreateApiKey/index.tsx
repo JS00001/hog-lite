@@ -16,8 +16,8 @@ function Content({}: Props) {
     <BottomSheetView className="items-center">
       <HedgehogSVG size={64} />
       <View className="gap-1 items-center">
-        <Text className="text-3xl text-ink-light">Create an API Key</Text>
-        <Text className="text-lg text-ink-light text-center">
+        <Text className="text-3xl text-ink">Create an API Key</Text>
+        <Text className="text-lg text-ink text-center">
           la la la this will be multistep
         </Text>
       </View>

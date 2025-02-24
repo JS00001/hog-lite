@@ -4,6 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { TouchableOpacity, View } from "react-native";
 
 import Text from "@/ui/Text";
+import useColors from "@/lib/theme";
 import { timeAgo } from "@/lib/utils";
 import { EventData, IEvent } from "@/@types";
 
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function Event({ event }: Props) {
+  const colors = useColors();
   const [expanded, setExpanded] = useState(false);
 
   const data = event[EventData.All];
@@ -51,11 +53,11 @@ export default function Event({ event }: Props) {
 
   const containerClasses = classNames(
     "flex-row justify-between items-center gap-2",
-    "p-3 bg-white"
+    "p-3 bg-highlight"
   );
 
   const toggleClasses = classNames(
-    "p-1 bg-accent-light rounded-md",
+    "p-1 bg-accent rounded-md",
     "flex-row items-center"
   );
 
@@ -64,24 +66,24 @@ export default function Event({ event }: Props) {
   return (
     <View>
       <View className={containerClasses}>
-        <Text className="text-sm flex-1" numberOfLines={1}>
+        <Text className="text-sm flex-1 text-ink" numberOfLines={1}>
           {eventName}
         </Text>
-        <Text className="text-sm flex-[2]" numberOfLines={1}>
+        <Text className="text-sm flex-[2] text-ink" numberOfLines={1}>
           {eventUrl}
         </Text>
-        <Text className="flex-1 text-gray-500 text-sm">
+        <Text className="flex-1 text-gray text-sm">
           {timeAgo(eventTimestamp)}
         </Text>
 
         <TouchableOpacity className={toggleClasses} onPress={toggleExpanded}>
-          <Feather name={iconName} />
+          <Feather name={iconName} color={colors.ink} />
         </TouchableOpacity>
       </View>
 
       {/* Detail View */}
       {expanded && (
-        <View className="bg-accent-light p-2">
+        <View className="bg-accent p-2">
           {Object.entries(eventProperties).map(([key, value]) => (
             <EventProperty key={key} name={key} value={value} />
           ))}
@@ -122,12 +124,9 @@ function EventProperty({ name, value }: { name: string; value: any }) {
   })();
 
   return (
-    <View className="border-b border-divider-light py-2 flex-row justify-between gap-2">
-      <Text className="text-sm font-semibold text-ink-light">{key}</Text>
-      <Text
-        className="text-sm text-ink-light flex-1 text-right"
-        numberOfLines={4}
-      >
+    <View className="border-b border-divider py-2 flex-row justify-between gap-2">
+      <Text className="text-sm font-semibold text-ink">{key}</Text>
+      <Text className="text-sm text-ink flex-1 text-right" numberOfLines={4}>
         {value.toString()}
       </Text>
     </View>

@@ -5,6 +5,10 @@ import PersistedAsyncStorage from "@/lib/async-store";
 import { TimePeriod } from "@/@types";
 
 interface IClientState {
+  /** Whether the user is currently in dev mode or not */
+  devMode: boolean;
+  /** The users current theme */
+  theme: "light" | "dark";
   /** The project id that the user is currently viewing */
   project: string | null;
   /** The organization id that the user is currently viewing */
@@ -27,6 +31,8 @@ const useClientStore = create<IClientStore>()(
   persist(
     (set) => {
       const initialState: IClientState = {
+        devMode: false,
+        theme: "light",
         project: null,
         organization: null,
         timePeriod: "-1dStart",

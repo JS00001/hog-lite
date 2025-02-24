@@ -15,6 +15,7 @@ import SelectOption from "./SelectOption";
 
 import Text from "@/ui/Text";
 import Button, { ButtonProps } from "@/ui/Button";
+import useColors from "@/lib/theme";
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -37,6 +38,7 @@ export default function Select({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const colors = useColors();
 
   /**
    * When the page loads, calculate where the select dropdown
@@ -77,7 +79,7 @@ export default function Select({
 
   const overlayClasses = classNames(
     "w-full rounded-xl pb-1 z-50",
-    "border border-[#CCCCCC] bg-[#E1DDDD]"
+    "border border-divider bg-shadow-primary"
   );
 
   const icon = open ? "chevron-up" : "chevron-down";
@@ -85,7 +87,9 @@ export default function Select({
   return (
     <>
       <View ref={onElementLoad} className="gap-1.5">
-        {label && <Text className="font-medium text-ink-light">{label}</Text>}
+        {label && (
+          <Text className="font-medium text-[--color-ink]">{label}</Text>
+        )}
 
         <Button {...props} icon={icon} onPress={toggleOpen}>
           {selectedLabel}
@@ -100,8 +104,8 @@ export default function Select({
           <View style={overlayStyle} className={overlayClasses}>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              className=" bg-white rounded-xl overflow-hidden"
-              style={{ boxShadow: "0px 1px 0px #CCCCCC" }}
+              className="bg-highlight rounded-xl overflow-hidden"
+              style={{ boxShadow: `0px 1px 0px ${colors.divider}` }}
             >
               {options.map((option, i) => (
                 <SelectOption
