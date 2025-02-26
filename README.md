@@ -1,50 +1,57 @@
-# Welcome to your Expo app 👋
+## Introduction
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Hog Mobile is a free and open-source [PostHog] client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the Hog Mobile app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
 
-## Get started
+## Documentation Sections
 
-1. Install dependencies
+- [Introduction](#introduction)
+- [Setting up the environment](#setting-up-the-environment)
+- [Running the application](#running-the-application)
+- [Architecture](#architecture)
+  - [Managing Server State](#managing-server-state)
+- [Debugging](#debugging)
 
-   ```bash
-   npm install
-   ```
+## Setting up the environment
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Install the required packages by running the following command:
 
 ```bash
-npm run reset-project
+yarn install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Running the application
 
-## Learn more
+Run the following command to start the application in development mode:
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+yarn dev
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Architecture
 
-## Join the community
+| Folder       | Description                                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `@types`     | Common data types used across the entire application.                                                                          |
+| `api`        | All methods to call PostHog's backend API exist here.                                                                          |
+| `app`        | Expo router root folder.                                                                                                       |
+| `components` | Larger components made up of smaller components from the `ui` folder, such as Widgets, Bottom Sheets, etc.                     |
+| `constants`  | Constant values used across the entire application.                                                                            |
+| `hooks`      | Common hooks across the application. Includes an `api` folder with hooks for every API query and mutation using Tanstack Query |
+| `lib`        | Utility functions and external library setup.                                                                                  |
+| `providers`  | Context providers for the application.                                                                                         |
+| `store`      | Client-side stores using Zustand. _Preferred over using React Context_                                                         |
+| `ui`         | Small blocks of UI components such as Buttons, Inputs, etc.                                                                    |
 
-Join our community of developers creating universal apps.
+### Managing Server State
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+All async state should be handled via Tanstack Query. Every API query and mutation has an associated hook in the `hooks/api` folder. The hooks should be used in the components to fetch and mutate data. The hooks are responsible for managing the state and fetching the data from PostHog's backend.
+
+Relevant optimistic updates or cache updates (when mutating data) should be handled in the hooks.
+
+Every component using a query should validate `isLoading`, `isError`, and `data` states to handle the UI accordingly.
+
+## Debugging
+
+To help with debugging, we've added debugging tools to the application when running in development mode.
+
+- **Network Requests**: To view network requests, press three fingers on the screen to open the network inspector.
