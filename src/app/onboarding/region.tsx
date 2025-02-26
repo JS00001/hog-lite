@@ -8,10 +8,12 @@ import TextInput from "@/ui/TextInput";
 import Layout from "@/components/Layout";
 import validators from "@/lib/validators";
 import useClientStore from "@/store/client";
+import usePosthog from "@/hooks/usePosthog";
 import { ISelectOption } from "@/ui/Select/@types";
 import useBottomSheetStore from "@/store/bottom-sheets";
 
 export default function Region() {
+  const posthog = usePosthog();
   const clientStore = useClientStore();
   const bottomSheetStore = useBottomSheetStore();
 
@@ -42,6 +44,7 @@ export default function Region() {
 
     clientStore.setField("posthogEndpoint", form.state.posthogEndpoint.value);
     router.push("/onboarding/api-key");
+    posthog.capture("onboarding_region_continue");
   };
 
   /**
@@ -68,6 +71,7 @@ export default function Region() {
    */
   const onExplain = () => {
     bottomSheetStore.open("DATA_REGION");
+    posthog.capture("onboarding_region_explain");
   };
 
   const regionOptions: ISelectOption[] = [

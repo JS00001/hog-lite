@@ -10,7 +10,7 @@ import useColors from "@/lib/theme";
 import Skeleton from "@/ui/Skeleton";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
-
+import usePosthog from "@/hooks/usePosthog";
 import { EventData, TimePeriod } from "@/@types";
 import { useGetEvents } from "@/hooks/api/query";
 import PanickedHedgehog from "@/assets/PanickedHedgehog";
@@ -26,6 +26,7 @@ export default function Activity() {
 
   const query = useGetEvents();
   const colors = useColors();
+  const posthog = usePosthog();
   const clientStore = useClientStore();
 
   /**
@@ -35,6 +36,7 @@ export default function Activity() {
   const onRefetch = () => {
     setFetchState(FetchingState.Reloading);
     query.refetch();
+    posthog.capture("activity_reloaded");
   };
 
   /**
@@ -45,6 +47,7 @@ export default function Activity() {
     if (!query.hasNextPage) return;
     if (query.isFetchingNextPage) return;
     query.fetchNextPage();
+    posthog.capture("activity_fetched_next_page");
   };
 
   /**
@@ -54,6 +57,16 @@ export default function Activity() {
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
     clientStore.setField("activityTimePeriod", value as TimePeriod);
+    posthog.capture("activity_time_period_changed");
+  };
+
+  /**
+   * When the 'filter out test accounts' switch is toggled, set it
+   * and refetch the data from the server.
+   */
+  const onFilterTestAccountsChange = (value: boolean) => {
+    clientStore.setField("filterTestAccounts", value);
+    posthog.capture("activity_filter_test_accounts_changed", { value });
   };
 
   /**
@@ -138,7 +151,7 @@ export default function Activity() {
         </Text>
         <Switch
           value={clientStore.filterTestAccounts}
-          onValueChange={clientStore.setField.bind(null, "filterTestAccounts")}
+          onValueChange={onFilterTestAccountsChange}
         />
       </View>
 

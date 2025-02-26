@@ -7,6 +7,7 @@ import Text from "@/ui/Text";
 import useColors from "@/lib/theme";
 import { timeAgo } from "@/lib/utils";
 import { EventData, IEvent } from "@/@types";
+import usePosthog from "@/hooks/usePosthog";
 
 interface Props {
   event: IEvent;
@@ -14,6 +15,7 @@ interface Props {
 
 export default function Event({ event }: Props) {
   const colors = useColors();
+  const posthog = usePosthog();
   const [expanded, setExpanded] = useState(false);
 
   const data = event[EventData.All];
@@ -22,6 +24,7 @@ export default function Event({ event }: Props) {
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
+    posthog.capture("event_expanded", { value: !expanded });
   };
 
   /**

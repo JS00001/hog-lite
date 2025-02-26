@@ -7,12 +7,14 @@ import TextInput from "@/ui/TextInput";
 import useAuthStore from "@/store/auth";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
+import usePosthog from "@/hooks/usePosthog";
 import { ISelectOption } from "@/ui/Select/@types";
 import { useGetOrganization } from "@/hooks/api/organization";
 
 export default function Settings() {
   const organizationQuery = useGetOrganization();
 
+  const posthog = usePosthog();
   const authStore = useAuthStore();
   const clientStore = useClientStore();
 
@@ -39,6 +41,21 @@ export default function Settings() {
       value: `${organization.id}`,
     }));
   }, [authStore.user]);
+
+  const onProjectChange = (value: string) => {
+    clientStore.setField("project", value);
+    posthog.capture("project_changed");
+  };
+
+  const onOrganizationChange = (value: string) => {
+    clientStore.setField("organization", value);
+    posthog.capture("organization_changed");
+  };
+
+  const onThemeChange = (value: string) => {
+    clientStore.setField("theme", value as "light" | "dark");
+    posthog.capture("theme_changed", { theme: value });
+  };
 
   /**
    * The options for the theme select input.
@@ -78,6 +95,9 @@ export default function Settings() {
         },
       ],
     });
+
+    const eventName = authStore.demoing ? "demo_logout" : "logout";
+    posthog.capture(eventName);
   };
 
   return (
@@ -90,7 +110,7 @@ export default function Settings() {
         value={clientStore.project}
         options={projectSelectOptions}
         disabled={organizationQuery.isLoading}
-        onChange={(value) => clientStore.setField("project", value)}
+        onChange={onProjectChange}
       />
       <Select
         size="sm"
@@ -99,7 +119,7 @@ export default function Settings() {
         value={clientStore.organization}
         options={organizationSelectOptions}
         loading={organizationQuery.isLoading}
-        onChange={(value) => clientStore.setField("organization", value)}
+        onChange={onOrganizationChange}
       />
       <Select
         size="sm"
@@ -107,9 +127,7 @@ export default function Settings() {
         placeholder="Select theme"
         value={clientStore.theme}
         options={themeSelectOptions}
-        onChange={(value) => {
-          clientStore.setField("theme", value as "light" | "dark");
-        }}
+        onChange={onThemeChange}
       />
 
       {/* Form Fields */}

@@ -9,6 +9,7 @@ import Skeleton from "@/ui/Skeleton";
 import { TimePeriod } from "@/@types";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
+import usePosthog from "@/hooks/usePosthog";
 import { ISelectOption } from "@/ui/Select/@types";
 import PanickedHedgehog from "@/assets/PanickedHedgehog";
 import timePeriodOptions from "@/constants/time-periods";
@@ -22,6 +23,7 @@ enum FetchingState {
 export default function Insights() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
+  const posthog = usePosthog();
   const clientStore = useClientStore();
   const dashboardQuery = useGetDashboard();
   const dashboardsQuery = useGetDashboards();
@@ -48,12 +50,22 @@ export default function Insights() {
   }, [dashboards]);
 
   /**
+   * When the select dropdown for dashboards
+   * changes, set it
+   */
+  const onDashboardChange = (value: string) => {
+    clientStore.setField("dashboard", value);
+    posthog.capture("insights_dashboard_changed");
+  };
+
+  /**
    * When the select dropdown changes, set it and refetch
    * the data from the server.
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
     clientStore.setField("insightsTimePeriod", value as TimePeriod);
+    posthog.capture("insights_time_period_changed", { timePeriod: value });
   };
 
   /**
@@ -63,6 +75,7 @@ export default function Insights() {
   const onRefetch = () => {
     setFetchState(FetchingState.Reloading);
     dashboardQuery.refetch();
+    posthog.capture("insights_reloaded");
   };
 
   /**
@@ -107,7 +120,7 @@ export default function Insights() {
         disabled={actionsDisabled}
         value={clientStore.dashboard}
         loading={dashboardsQuery.isLoading || dashboardsQuery.isRefetching}
-        onChange={(value) => clientStore.setField("dashboard", value)}
+        onChange={onDashboardChange}
       />
       <View className="flex-row gap-2 justify-between">
         <Select

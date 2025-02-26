@@ -6,10 +6,12 @@ import TextInput from "@/ui/TextInput";
 import Layout from "@/components/Layout";
 import validators from "@/lib/validators";
 import { useLogin } from "@/hooks/api/user";
+import usePosthog from "@/hooks/usePosthog";
 import useBottomSheetStore from "@/store/bottom-sheets";
 
 export default function Step1() {
   const login = useLogin();
+  const posthog = usePosthog();
   const bottomSheetStore = useBottomSheetStore();
 
   const form = useForm({
@@ -28,6 +30,7 @@ export default function Step1() {
     if (!isValid) return;
 
     await login.mutateAsync({ apiKey: form.state.apiKey.value });
+    posthog.capture("onboarding_api_key_submit");
   };
 
   /**
@@ -37,6 +40,7 @@ export default function Step1() {
    */
   const onCreateApiKey = () => {
     bottomSheetStore.open("CREATE_API_KEY");
+    posthog.capture("onboarding_api_key_tutorial");
   };
 
   /**
@@ -46,6 +50,7 @@ export default function Step1() {
    */
   const onDataSecurity = () => {
     bottomSheetStore.open("DATA_SECURITY");
+    posthog.capture("onboarding_api_key_data_security");
   };
 
   return (

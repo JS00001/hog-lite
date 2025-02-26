@@ -5,20 +5,25 @@ import Text from "@/ui/Text";
 import Button from "@/ui/Button";
 import useAuthStore from "@/store/auth";
 import Layout from "@/components/Layout";
+import usePosthog from "@/hooks/usePosthog";
 
 export default function Landing() {
+  const posthog = usePosthog();
   const authStore = useAuthStore();
 
   const onContinue = () => {
     router.push("/onboarding/region");
+    posthog.capture("onboarding_landing_continue");
   };
 
   const onTextClick = () => {
     Linking.openURL("https://github.com/JS00001/hog-mobile");
+    posthog.capture("onboarding_landing_open_source");
   };
 
   const onDemo = () => {
     authStore.setDemoing(true);
+    posthog.capture("onboarding_landing_demo");
   };
 
   return (

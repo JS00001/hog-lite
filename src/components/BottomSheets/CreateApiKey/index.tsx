@@ -8,17 +8,19 @@ import Text from "@/ui/Text";
 import Button from "@/ui/Button";
 import BottomSheet from "@/ui/BottomSheet";
 import useClientStore from "@/store/client";
-
+import usePosthog from "@/hooks/usePosthog";
 import TeacherHedgehogRight from "@/assets/TeacherHedgehogRight";
 import BottomSheetScrollView from "@/ui/BottomSheet/Containers/ScrollView";
 
 type Props = BottomSheetProps;
 
 function Content({}: Props) {
+  const posthog = usePosthog();
   const posthogEndpoint = useClientStore((store) => store.posthogEndpoint);
 
   const onUserSettings = () => {
     Linking.openURL(`${posthogEndpoint}/settings/user-api-keys`);
+    posthog.capture("onboarding_api_key_tutorial_settings_clicked");
   };
 
   return (
@@ -88,14 +90,6 @@ function Content({}: Props) {
       </View>
     </BottomSheetScrollView>
   );
-}
-
-function Step1() {
-  return <></>;
-}
-
-function Step2() {
-  return <></>;
 }
 
 const CreateApiKeySheet = forwardRef<BottomSheetModal, BottomSheetProps>(

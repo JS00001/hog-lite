@@ -45,6 +45,13 @@
       },
       "eas": {
         "projectId": "f1b0f2b0-5e1f-471e-9b19-dfee83a9d6bc"
+      },
+      "sentry": {
+        "dsn": "https://9160938ae3b27ed96491fe7a8c66d52b@o4508886620307456.ingest.us.sentry.io/4508886621356032"
+      },
+      "posthog": {
+        "apiKey": "phc_iTaZ24s0csbANginlIguMpeD9B3njznZFQtSVi98trh",
+        "url": "https://us.posthog.com"
       }
     }
   }
