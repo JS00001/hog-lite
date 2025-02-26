@@ -1,3 +1,5 @@
+import qs from "qs";
+
 import axios from "@/lib/axios";
 
 import {
@@ -25,7 +27,12 @@ export const getDashboards = async (data: GetDashboardsRequest) => {
  * Description: Get a dashboard by id
  */
 export const getDashboard = async (data: GetDashboardRequest) => {
-  const url = `/api/environments/${data.project_id}/dashboards/${data.dashboard_id}`;
+  const queryString = qs.stringify({
+    filters_override: JSON.stringify(data.filters_override),
+    refresh: "blocking",
+  });
+
+  const url = `/api/environments/${data.project_id}/dashboards/${data.dashboard_id}?${queryString}`;
 
   const response = await axios.get<GetDashboardResponse>(url);
 

@@ -72,7 +72,7 @@ export default function Insights() {
   const ListEmptyComponent = useCallback(() => {
     if (actionsDisabled) {
       return (
-        <View className="items-center bg-highlight">
+        <View className="items-center bg-highlight border border-divider rounded-xl">
           {new Array(15).fill(0).map((_, index) => (
             <View className="py-1.5 px-2 w-full" key={index}>
               <Skeleton key={index} className="w-full h-16" />

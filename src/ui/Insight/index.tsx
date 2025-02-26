@@ -87,7 +87,7 @@ export default function Insight({ insight }: Props) {
   }
 
   return (
-    <TouchableOpacity className={containerClasses}>
+    <TouchableOpacity className={containerClasses} disabled>
       {result.type === ResultType.FunnelConversionTime && (
         <FunnelConversionTimeCard data={result.data} />
       )}

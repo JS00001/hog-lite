@@ -110,7 +110,7 @@ export default function Activity() {
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
   return (
-    <Layout title="Activity">
+    <Layout title="Activity" className="pb-32">
       <View className="flex-row gap-2 justify-between">
         <Select
           size="sm"

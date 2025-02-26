@@ -80,7 +80,7 @@ export default function Settings() {
   };
 
   return (
-    <Layout title="Settings" scrollable>
+    <Layout title="Settings" className="pb-32" scrollable>
       {/* Selections */}
       <Select
         size="sm"

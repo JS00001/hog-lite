@@ -21,10 +21,7 @@ export default function Layout({
   hedgehog = false,
   children,
 }: Props) {
-  const contentContainerClasses = classNames(
-    "gap-4 flex-1 pb-32 p-4",
-    className
-  );
+  const contentContainerClasses = classNames("gap-4 flex-1 p-4", className);
 
   const titleClasses = classNames("text-4xl font-semibold mb-2 text-ink");
 

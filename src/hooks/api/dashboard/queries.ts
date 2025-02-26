@@ -40,14 +40,21 @@ export const useGetDashboards = () => {
 export const useGetDashboard = () => {
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
+  const insightsTimePeriod = useClientStore(
+    (state) => state.insightsTimePeriod
+  );
 
   return useQuery({
     enabled: !!project && !!dashboard,
-    queryKey: [GET_DASHBOARD_KEY, project, dashboard],
+    queryKey: [GET_DASHBOARD_KEY, project, dashboard, insightsTimePeriod],
     queryFn: async () => {
       const res = await getDashboard({
         dashboard_id: dashboard!,
         project_id: project!,
+        filters_override: {
+          date_from: insightsTimePeriod,
+          date_to: null,
+        },
       });
       return validateResponse(res);
     },
