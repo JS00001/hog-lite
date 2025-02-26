@@ -1,6 +1,6 @@
 # 🦔 Hog Mobile
 
-![hog mobile demo](https://github.com/JS00001/hog-mobile/assets/demo.png)
+![hog mobile demo](assets/demo.png)
 
 ## Introduction
 
