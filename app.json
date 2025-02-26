@@ -34,7 +34,15 @@
           "backgroundColor": "#EEEFE9"
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "react-native",
+          "organization": "mobile-hog"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
