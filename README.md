@@ -1,4 +1,4 @@
-# 🦔 Hog Lite
+# 🦔 HogLite
 
 ## The best way to view your PostHog analytics on the go!
 
@@ -7,7 +7,7 @@
 
 ## Introduction
 
-Hog Lite is a free and open-source [PostHog](https://posthog.com) client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the Hog Lite app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
+HogLite is a free and open-source [PostHog](https://posthog.com) client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the HogLite app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
 
 ## Documentation Sections
 
