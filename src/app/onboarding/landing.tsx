@@ -31,9 +31,9 @@ export default function Landing() {
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <View className="gap-1">
-            <Text className="text-2xl font-medium">Welcome to Hog Mobile!</Text>
+            <Text className="text-2xl font-medium">Welcome to Hog Lite!</Text>
             <Text className="text-lg text-gray">
-              Hog Mobile is a free and fully{" "}
+              Hog Lite is a free and fully{" "}
               <Text className="text-red underline" onPress={onTextClick}>
                 open-source
               </Text>{" "}
