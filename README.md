@@ -1,6 +1,7 @@
 # 🦔 Hog Mobile
 
 ![hog mobile demo](assets/demo.png)
+![hog mobile demo dark](assets/dark-demo.png)
 
 ## Introduction
 
