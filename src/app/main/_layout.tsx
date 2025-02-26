@@ -8,9 +8,9 @@ interface Props {}
 
 export default function Layout({}: Props) {
   const colors = useColors();
-  const apiKey = useAuthStore((state) => state.apiKey);
+  const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
-  if (!apiKey) return <Redirect href="/onboarding/landing" />;
+  if (!loggedIn) return <Redirect href="/onboarding/landing" />;
 
   return (
     <Tabs

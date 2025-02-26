@@ -7,9 +7,9 @@ interface Props {}
 
 export default function Layout({}: Props) {
   const colors = useColors();
-  const apiKey = useAuthStore((state) => state.apiKey);
+  const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
-  if (!apiKey) {
+  if (!loggedIn) {
     return (
       <Stack
         screenOptions={{

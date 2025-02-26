@@ -4,10 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { GET_ORGANIZATION_KEY } from "../keys";
 
 import { getOrganization } from "@/api";
+import useAuthStore from "@/store/auth";
 import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
+import { getMockOrganizationResponse } from "@/constants/mock-data";
 
 export const useGetOrganization = () => {
+  const demoing = useAuthStore((state) => state.demoing);
   const project = useClientStore((state) => state.project);
   const organization = useClientStore((state) => state.organization);
 
@@ -15,8 +18,13 @@ export const useGetOrganization = () => {
 
   const query = useQuery({
     enabled: !!organization,
-    queryKey: [GET_ORGANIZATION_KEY, organization],
+    queryKey: [GET_ORGANIZATION_KEY, organization, demoing],
     queryFn: async () => {
+      if (demoing) {
+        const res = await getMockOrganizationResponse();
+        return validateResponse(res);
+      }
+
       const res = await getOrganization({ id: organization! });
       return validateResponse(res);
     },

@@ -3,19 +3,30 @@ import { useQuery } from "@tanstack/react-query";
 
 import { GET_DASHBOARD_KEY, GET_DASHBOARDS_KEY } from "../keys";
 
+import {
+  getMockDashboardResponse,
+  getMockDashboardsResponse,
+} from "@/constants/mock-data";
+import useAuthStore from "@/store/auth";
 import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
 import { getDashboard, getDashboards } from "@/api";
 
 export const useGetDashboards = () => {
+  const demoing = useAuthStore((state) => state.demoing);
   const setField = useClientStore((state) => state.setField);
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
 
   const query = useQuery({
     enabled: !!project,
-    queryKey: [GET_DASHBOARDS_KEY, project],
+    queryKey: [GET_DASHBOARDS_KEY, project, demoing],
     queryFn: async () => {
+      if (demoing) {
+        const res = await getMockDashboardsResponse();
+        return validateResponse(res);
+      }
+
       const res = await getDashboards({ project_id: project!, limit: 2000 });
       return validateResponse(res);
     },
@@ -38,6 +49,7 @@ export const useGetDashboards = () => {
 };
 
 export const useGetDashboard = () => {
+  const demoing = useAuthStore((state) => state.demoing);
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
   const insightsTimePeriod = useClientStore(
@@ -46,8 +58,19 @@ export const useGetDashboard = () => {
 
   return useQuery({
     enabled: !!project && !!dashboard,
-    queryKey: [GET_DASHBOARD_KEY, project, dashboard, insightsTimePeriod],
+    queryKey: [
+      GET_DASHBOARD_KEY,
+      project,
+      dashboard,
+      insightsTimePeriod,
+      demoing,
+    ],
     queryFn: async () => {
+      if (demoing) {
+        const res = await getMockDashboardResponse(insightsTimePeriod);
+        return validateResponse(res);
+      }
+
       const res = await getDashboard({
         dashboard_id: dashboard!,
         project_id: project!,

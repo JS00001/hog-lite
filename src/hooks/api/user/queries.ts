@@ -6,15 +6,22 @@ import { GET_USER_KEY } from "../keys";
 import { getUser } from "@/api";
 import useAuthStore from "@/store/auth";
 import { validateResponse } from "@/lib/utils";
+import { getMockUserResponse } from "@/constants/mock-data";
 
 export const useGetUser = () => {
-  const apiKey = useAuthStore((state) => state.apiKey);
+  const demoing = useAuthStore((state) => state.demoing);
   const setUser = useAuthStore((state) => state.setUser);
+  const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
   const query = useQuery({
-    enabled: !!apiKey,
+    enabled: !!loggedIn,
     queryKey: [GET_USER_KEY],
     queryFn: async () => {
+      if (demoing) {
+        const res = await getMockUserResponse();
+        return validateResponse(res);
+      }
+
       const res = await getUser();
       return validateResponse(res);
     },

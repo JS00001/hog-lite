@@ -3,13 +3,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { GET_QUERY_KEY } from "../keys";
 
 import { getQuery } from "@/api";
+import useAuthStore from "@/store/auth";
 import { GetQueryRequest } from "@/@types";
 import useClientStore from "@/store/client";
 import { createUUID, validateResponse } from "@/lib/utils";
+import { getMockActivityResponse } from "@/constants/mock-data";
 
 export const useGetEvents = () => {
   const PAGINIATION_LIMIT = 100;
 
+  const demoing = useAuthStore((state) => state.demoing);
   const project = useClientStore((state) => state.project);
   const timePeriod = useClientStore((state) => state.activityTimePeriod);
   const filterTestAccounts = useClientStore(
@@ -34,13 +37,25 @@ export const useGetEvents = () => {
   };
 
   // Derive some stable query keys so we refetch when critical data changes
-  const queryKey = [GET_QUERY_KEY, project, timePeriod, filterTestAccounts];
+  const queryKey = [
+    GET_QUERY_KEY,
+    project,
+    timePeriod,
+    filterTestAccounts,
+    demoing,
+  ];
 
   const query = useInfiniteQuery({
     staleTime: Infinity,
     initialPageParam: 0,
     queryKey: queryKey,
     queryFn: async ({ pageParam = 0 }) => {
+      // If in demo mode, return mock data
+      if (demoing) {
+        const res = await getMockActivityResponse(timePeriod);
+        return validateResponse(res);
+      }
+
       // Generate a unique query id for each request, add the pagination
       // updates, then query
       const res = await getQuery({

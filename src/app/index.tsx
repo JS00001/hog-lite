@@ -3,9 +3,9 @@ import { Redirect } from "expo-router";
 import useAuthStore from "@/store/auth";
 
 export default function Index() {
-  const apiKey = useAuthStore((state) => state.apiKey);
+  const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
-  if (!apiKey) {
+  if (!loggedIn) {
     return <Redirect href="/onboarding/landing" />;
   }
 

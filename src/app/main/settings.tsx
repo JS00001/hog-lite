@@ -53,7 +53,8 @@ export default function Settings() {
    * fill the rest with *'s to hide the rest of the key.
    */
   const maskedApiKey = useMemo(() => {
-    const apiKey = authStore.apiKey!;
+    const apiKey = authStore.apiKey;
+    if (!apiKey) return "You're in Demo Mode";
     return `${apiKey.slice(0, 12)}${"*".repeat(apiKey.length - 12)}`;
   }, [authStore.apiKey]);
 
