@@ -1,5 +1,7 @@
 # 🦔 Hog Mobile
 
+![hog mobile demo](https://github.com/JS00001/hog-mobile/assets/demo.png)
+
 ## Introduction
 
 Hog Mobile is a free and open-source [PostHog](https://posthog.com) client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the Hog Mobile app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
