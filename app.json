@@ -13,6 +13,9 @@
       "bundleIdentifier": "com.js00001.hogliteposthogclient",
       "infoPlist": {
         "CFBundleDisplayName": "HogLite"
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
