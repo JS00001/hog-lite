@@ -1,5 +1,7 @@
 # 🦔 Hog Mobile
 
+## The best way to view your PostHog analytics on the go!
+
 ![hog mobile demo](assets/demo.png)
 ![hog mobile demo dark](assets/dark-demo.png)
 
