@@ -95,7 +95,10 @@ export default function Button({
 
   const containerStyles = {
     backgroundColor: ColorClasses[color].container,
-    boxShadow: `0px 1px 0px ${ColorClasses[color].border}`,
+    shadowColor: ColorClasses[color].border,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
   };
 
   const textClasses = classNames(

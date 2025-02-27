@@ -5,9 +5,7 @@ import useColors from "@/lib/theme";
 import Redirect from "@/ui/Redirect";
 import useAuthStore from "@/store/auth";
 
-interface Props {}
-
-export default function Layout({}: Props) {
+export default function Layout() {
   const colors = useColors();
   const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 

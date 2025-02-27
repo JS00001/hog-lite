@@ -7,11 +7,13 @@ import { View } from "react-native";
 import { PropsWithChildren } from "react";
 
 import constants from "@/constants";
+import useClientStore from "@/store/client";
 import useBottomSheetStore from "@/store/bottom-sheets";
 
 export default function GestureDetectorProvider({
   children,
 }: PropsWithChildren) {
+  const devModeEnabled = useClientStore((s) => s.devMode);
   const openBottomSheet = useBottomSheetStore((s) => s.open);
 
   /**
@@ -21,7 +23,7 @@ export default function GestureDetectorProvider({
    */
   const onTripleFingerTap = (event: GestureTouchEvent) => {
     if (event.numberOfTouches === 3) {
-      if (constants.environment === "development") {
+      if (constants.environment === "development" || devModeEnabled) {
         openBottomSheet("NETWORK_LOGGER");
       }
     }

@@ -115,7 +115,10 @@ export default function Select({
             style={overlayStyle}
             className={overlayClasses}
             contentContainerStyle={{
-              boxShadow: `0px 1px 0px ${colors.divider}`,
+              shadowColor: colors.divider,
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 1,
+              shadowRadius: 0,
             }}
             contentContainerClassName="bg-highlight rounded-xl overflow-hidden"
             showsVerticalScrollIndicator={false}
