@@ -22,8 +22,7 @@ export default function Appearance() {
   };
 
   const onAppIconChange = (value: TAppIcon) => {
-    // TODO: uncomment on new dev build
-    // setAppIcon(value);
+    setAppIcon(value);
     setClientStore("appIcon", value);
     posthog.capture("app_icon_changed", { appIcon: value });
   };
