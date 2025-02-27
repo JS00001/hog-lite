@@ -16,7 +16,11 @@ export default function Settings() {
 
   const posthog = usePosthog();
   const authStore = useAuthStore();
-  const clientStore = useClientStore();
+
+  const setClientStore = useClientStore((s) => s.setField);
+  const theme = useClientStore((store) => store.theme);
+  const project = useClientStore((store) => store.project);
+  const organization = useClientStore((store) => store.organization);
 
   const organizations = authStore.user!.organizations;
   const projects = organizationQuery.data?.projects || [];
@@ -43,17 +47,17 @@ export default function Settings() {
   }, [authStore.user]);
 
   const onProjectChange = (value: string) => {
-    clientStore.setField("project", value);
+    setClientStore("project", value);
     posthog.capture("project_changed");
   };
 
   const onOrganizationChange = (value: string) => {
-    clientStore.setField("organization", value);
+    setClientStore("organization", value);
     posthog.capture("organization_changed");
   };
 
   const onThemeChange = (value: string) => {
-    clientStore.setField("theme", value as "light" | "dark");
+    setClientStore("theme", value as "light" | "dark");
     posthog.capture("theme_changed", { theme: value });
   };
 
@@ -107,7 +111,7 @@ export default function Settings() {
         size="sm"
         label="Project"
         placeholder="Select project"
-        value={clientStore.project}
+        value={project}
         options={projectSelectOptions}
         disabled={organizationQuery.isLoading}
         onChange={onProjectChange}
@@ -116,7 +120,7 @@ export default function Settings() {
         size="sm"
         label="Organization"
         placeholder="Select organization"
-        value={clientStore.organization}
+        value={organization}
         options={organizationSelectOptions}
         loading={organizationQuery.isLoading}
         onChange={onOrganizationChange}
@@ -125,7 +129,7 @@ export default function Settings() {
         size="sm"
         label="Theme"
         placeholder="Select theme"
-        value={clientStore.theme}
+        value={theme}
         options={themeSelectOptions}
         onChange={onThemeChange}
       />

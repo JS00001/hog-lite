@@ -24,9 +24,12 @@ export default function Insights() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
   const posthog = usePosthog();
-  const clientStore = useClientStore();
   const dashboardQuery = useGetDashboard();
   const dashboardsQuery = useGetDashboards();
+
+  const setClientStore = useClientStore((s) => s.setField);
+  const dashboard = useClientStore((s) => s.dashboard);
+  const timePeriod = useClientStore((s) => s.insightsTimePeriod);
 
   const actionsDisabled =
     dashboardQuery.isLoading ||
@@ -54,7 +57,7 @@ export default function Insights() {
    * changes, set it
    */
   const onDashboardChange = (value: string) => {
-    clientStore.setField("dashboard", value);
+    setClientStore("dashboard", value);
     posthog.capture("insights_dashboard_changed");
   };
 
@@ -64,7 +67,7 @@ export default function Insights() {
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
-    clientStore.setField("insightsTimePeriod", value as TimePeriod);
+    setClientStore("insightsTimePeriod", value as TimePeriod);
     posthog.capture("insights_time_period_changed", { timePeriod: value });
   };
 
@@ -118,7 +121,7 @@ export default function Insights() {
         placeholder="Select dashboard"
         options={dashboardOptions}
         disabled={actionsDisabled}
-        value={clientStore.dashboard}
+        value={dashboard}
         loading={dashboardsQuery.isLoading || dashboardsQuery.isRefetching}
         onChange={onDashboardChange}
       />
@@ -127,7 +130,7 @@ export default function Insights() {
           size="sm"
           placeholder="Select time period"
           options={timePeriodOptions}
-          value={clientStore.insightsTimePeriod}
+          value={timePeriod}
           disabled={actionsDisabled}
           loading={timePeriodLoading}
           onChange={onTimePeriodChange}

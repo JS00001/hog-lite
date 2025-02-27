@@ -12,7 +12,7 @@ import useBottomSheetStore from "@/store/bottom-sheets";
 export default function Step1() {
   const login = useLogin();
   const posthog = usePosthog();
-  const bottomSheetStore = useBottomSheetStore();
+  const openBottomSheet = useBottomSheetStore((s) => s.open);
 
   const form = useForm({
     validators: {
@@ -39,7 +39,7 @@ export default function Step1() {
    * an API key
    */
   const onCreateApiKey = () => {
-    bottomSheetStore.open("CREATE_API_KEY");
+    openBottomSheet("CREATE_API_KEY");
     posthog.capture("onboarding_api_key_tutorial");
   };
 
@@ -49,7 +49,7 @@ export default function Step1() {
    * the API key (We don't store it)
    */
   const onDataSecurity = () => {
-    bottomSheetStore.open("DATA_SECURITY");
+    openBottomSheet("DATA_SECURITY");
     posthog.capture("onboarding_api_key_data_security");
   };
 

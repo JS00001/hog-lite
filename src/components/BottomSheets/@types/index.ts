@@ -15,4 +15,5 @@ export interface IndividualSheetProps {
   NETWORK_LOGGER: undefined;
   DATA_SECURITY: undefined;
   DATA_REGION: undefined;
+  CONFIGURE_ACTIVITY: undefined;
 }

@@ -59,7 +59,7 @@ export default function Button({
       container: colors.yellow,
       border: colors.shadowAccent,
       shadow: colors.yellow,
-      text: colors.ink,
+      text: "#000",
     },
     danger: {
       container: colors.primary,

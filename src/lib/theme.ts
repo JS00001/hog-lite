@@ -20,7 +20,7 @@ const colorPalette = {
   dark: {
     ink: "#EEEFE9",
     primary: "#151515",
-    accent: "#2C2C2C",
+    accent: "#3b3b3b",
     highlight: "#232429",
     divider: "#4B4B4B",
     red: "#F54E00",

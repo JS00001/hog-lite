@@ -4,6 +4,10 @@ import { persist } from "zustand/middleware";
 import { TimePeriod } from "@/@types";
 import PersistedAsyncStorage from "@/lib/async-store";
 
+export type ActivityColumn = "event" | "url" | "timestamp";
+
+export type ActivityDisplayMode = "compact" | "full";
+
 interface IClientState {
   /** Whether the user is currently in dev mode or not */
   devMode: boolean;
@@ -15,6 +19,10 @@ interface IClientState {
   organization: string | null;
   /** The dashboard that the user is currently viewing */
   dashboard: string | null;
+  /** The display mode for the activity table */
+  activityDisplayMode: ActivityDisplayMode;
+  /** The columns to show in the activity table */
+  activityColumns: ActivityColumn[];
   /** The endpoint that the user prefers to use */
   posthogEndpoint: "https://us.posthog.com" | "https://eu.posthog.com" | string;
   /** The activity time period that the user prefers to query */
@@ -42,6 +50,8 @@ const useClientStore = create<IClientStore>()(
         project: null,
         organization: null,
         dashboard: null,
+        activityDisplayMode: "full",
+        activityColumns: ["event", "url", "timestamp"],
         activityTimePeriod: "-1dStart",
         insightsTimePeriod: "-7d",
         filterTestAccounts: false,

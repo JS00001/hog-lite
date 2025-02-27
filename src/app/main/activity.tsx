@@ -1,19 +1,16 @@
-import { useCallback, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { View } from "react-native";
+import { useState } from "react";
 
 import Text from "@/ui/Text";
-import Event from "@/ui/Event";
 import Button from "@/ui/Button";
 import Switch from "@/ui/Switch";
 import Select from "@/ui/Select";
-import useColors from "@/lib/theme";
-import Skeleton from "@/ui/Skeleton";
+import { TimePeriod } from "@/@types";
 import Layout from "@/components/Layout";
 import useClientStore from "@/store/client";
 import usePosthog from "@/hooks/usePosthog";
-import { EventData, TimePeriod } from "@/@types";
 import { useGetEvents } from "@/hooks/api/query";
-import PanickedHedgehog from "@/assets/PanickedHedgehog";
+import ActivityList from "@/components/ActivityList";
 import timePeriodOptions from "@/constants/time-periods";
 
 enum FetchingState {
@@ -25,9 +22,11 @@ export default function Activity() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
   const query = useGetEvents();
-  const colors = useColors();
   const posthog = usePosthog();
-  const clientStore = useClientStore();
+
+  const setClientStore = useClientStore((s) => s.setField);
+  const timePeriod = useClientStore((s) => s.activityTimePeriod);
+  const filterTestAccounts = useClientStore((s) => s.filterTestAccounts);
 
   /**
    * When the refetch button is pressed, we want to refetch the data
@@ -56,7 +55,7 @@ export default function Activity() {
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
-    clientStore.setField("activityTimePeriod", value as TimePeriod);
+    setClientStore("activityTimePeriod", value as TimePeriod);
     posthog.capture("activity_time_period_changed");
   };
 
@@ -65,54 +64,9 @@ export default function Activity() {
    * and refetch the data from the server.
    */
   const onFilterTestAccountsChange = (value: boolean) => {
-    clientStore.setField("filterTestAccounts", value);
+    setClientStore("filterTestAccounts", value);
     posthog.capture("activity_filter_test_accounts_changed", { value });
   };
-
-  /**
-   * Show a loading state if that is the reason for the empty data,
-   * otherwise show a message to the user that no results were found.
-   */
-  const ListEmptyComponent = useCallback(() => {
-    if (query.isLoading) {
-      return (
-        <View className="items-center bg-highlight">
-          {new Array(15).fill(0).map((_, index) => (
-            <View className="py-1.5 px-2 w-full" key={index}>
-              <Skeleton key={index} className="w-full h-8" />
-            </View>
-          ))}
-        </View>
-      );
-    }
-
-    return (
-      <View className="items-center py-32 bg-highlight -mb-px">
-        <PanickedHedgehog size={96} />
-        <Text className="text-ink text-xl font-medium">No events found</Text>
-        <Text className="text-ink">
-          Try changing your filters, or reloading the page.
-        </Text>
-      </View>
-    );
-  }, [query.isLoading]);
-
-  /**
-   * Show a spinner at the end of the list if we are fetching more data.
-   */
-  const ListFooterComponent = useCallback(() => {
-    if (query.isFetchingNextPage) {
-      return (
-        <ActivityIndicator
-          size="small"
-          className="w-full bg-highlight p-4"
-          color={colors.gray}
-        />
-      );
-    }
-
-    return null;
-  }, [query.isFetchingNextPage]);
 
   const data = query.data?.results || [];
 
@@ -129,7 +83,7 @@ export default function Activity() {
           size="sm"
           placeholder="Select time period"
           options={timePeriodOptions}
-          value={clientStore.activityTimePeriod}
+          value={timePeriod}
           loading={timePeriodLoading}
           disabled={actionsDisabled}
           onChange={onTimePeriodChange}
@@ -150,41 +104,16 @@ export default function Activity() {
           Filter out internal and test users
         </Text>
         <Switch
-          value={clientStore.filterTestAccounts}
+          value={filterTestAccounts}
           onValueChange={onFilterTestAccountsChange}
         />
       </View>
 
-      <FlatList
+      <ActivityList
         data={data}
-        onEndReachedThreshold={0.75}
-        showsVerticalScrollIndicator={false}
-        contentContainerClassName="bg-divider gap-px"
-        className="flex-1 rounded-xl border border-divider bg-highlight"
-        ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={ListFooterComponent}
+        isLoading={query.isLoading}
+        isFetchingNextPage={query.isFetchingNextPage}
         onEndReached={onEndReached}
-        ListHeaderComponent={() => (
-          <View className="p-4 bg-highlight flex-row justify-between items-center">
-            <Text className="text-sm font-semibold text-ink flex-1">EVENT</Text>
-            <Text className="text-sm font-semibold text-ink flex-[2]">
-              URL / SCREEN
-            </Text>
-            <Text className="text-sm font-semibold text-ink flex-1">TIME</Text>
-            <View className="w-6" />
-          </View>
-        )}
-        renderItem={({ item }) => <Event event={item} />}
-        // List optimization
-        removeClippedSubviews
-        initialNumToRender={25}
-        maxToRenderPerBatch={25}
-        keyExtractor={(item) => item[EventData.All].uuid}
-        getItemLayout={(_, index) => ({
-          index,
-          length: 40,
-          offset: 40 * index,
-        })}
       />
     </Layout>
   );

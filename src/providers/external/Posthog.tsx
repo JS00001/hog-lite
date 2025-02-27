@@ -1,20 +1,21 @@
 import { PropsWithChildren } from "react";
-import ExpoConstants from "expo-constants";
 import { PostHogProvider } from "posthog-react-native";
 
+import constants from "@/constants";
+
 export default function PosthogProvider({ children }: PropsWithChildren) {
-  // if (__DEV__) return children;
+  if (constants.environment === "development") return children;
 
   return (
     <PostHogProvider
-      apiKey={ExpoConstants.expoConfig?.extra?.posthog?.apiKey}
+      apiKey={constants.posthogPublicApiKey}
       autocapture={{
         captureLifecycleEvents: false,
         captureTouches: false,
         captureScreens: true,
       }}
       options={{
-        host: ExpoConstants.expoConfig?.extra?.posthog?.url,
+        host: constants.posthogHost,
       }}
     >
       {children}

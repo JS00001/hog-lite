@@ -5,6 +5,7 @@ import { IndividualSheetName } from "./@types";
 import DataSecuritySheet from "./DataSecurity";
 import CreateApiKeySheet from "./CreateApiKey";
 import DataRegionSheet from "./DataRegion";
+import ConfigureActivitySheet from "./ConfigureActivity";
 import NetworkLoggerSheet from "./DevTools/NetworkLogger";
 
 import useBottomSheetStore from "@/store/bottom-sheets";
@@ -17,6 +18,7 @@ const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   DATA_SECURITY: DataSecuritySheet,
   CREATE_API_KEY: CreateApiKeySheet,
   DATA_REGION: DataRegionSheet,
+  CONFIGURE_ACTIVITY: ConfigureActivitySheet,
 };
 
 /**

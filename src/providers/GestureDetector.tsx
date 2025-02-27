@@ -6,12 +6,13 @@ import {
 import { View } from "react-native";
 import { PropsWithChildren } from "react";
 
+import constants from "@/constants";
 import useBottomSheetStore from "@/store/bottom-sheets";
 
 export default function GestureDetectorProvider({
   children,
 }: PropsWithChildren) {
-  const bottomSheetStore = useBottomSheetStore();
+  const openBottomSheet = useBottomSheetStore((s) => s.open);
 
   /**
    * When pressing the screen with three fingers at once, open
@@ -20,8 +21,8 @@ export default function GestureDetectorProvider({
    */
   const onTripleFingerTap = (event: GestureTouchEvent) => {
     if (event.numberOfTouches === 3) {
-      if (__DEV__) {
-        bottomSheetStore.open("NETWORK_LOGGER");
+      if (constants.environment === "development") {
+        openBottomSheet("NETWORK_LOGGER");
       }
     }
   };

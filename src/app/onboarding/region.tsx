@@ -15,7 +15,7 @@ import useBottomSheetStore from "@/store/bottom-sheets";
 export default function Region() {
   const posthog = usePosthog();
   const clientStore = useClientStore();
-  const bottomSheetStore = useBottomSheetStore();
+  const openBottomSheet = useBottomSheetStore((s) => s.open);
 
   const form = useForm({
     validators: {
@@ -70,7 +70,7 @@ export default function Region() {
    * that explains what the data region is and why it's important
    */
   const onExplain = () => {
-    bottomSheetStore.open("DATA_REGION");
+    openBottomSheet("DATA_REGION");
     posthog.capture("onboarding_region_explain");
   };
 
