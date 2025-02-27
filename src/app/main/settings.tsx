@@ -141,6 +141,10 @@ export default function Settings() {
       <TextInput disabled label="Email" placeholder={user.email} />
       <TextInput disabled label="First Name" placeholder={user.first_name} />
       <TextInput disabled label="Last Name" placeholder={user.last_name} />
+      <TextInput disabled label="API Key" placeholder={maskedApiKey} />
+      <TextInput disabled label="Email" placeholder={user.email} />
+      <TextInput disabled label="First Name" placeholder={user.first_name} />
+      <TextInput disabled label="Last Name" placeholder={user.last_name} />
 
       <Button color="danger" onPress={onLogout}>
         Logout
