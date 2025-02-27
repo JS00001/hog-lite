@@ -1,95 +1,96 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { GET_QUERY_KEY } from "../keys";
+import { GET_QUERY_KEY } from '../keys';
 
-import { getQuery } from "@/api";
-import useAuthStore from "@/store/auth";
-import { GetQueryRequest } from "@/@types";
-import useClientStore from "@/store/client";
-import { createUUID, validateResponse } from "@/lib/utils";
-import { getMockActivityResponse } from "@/constants/mock-data";
+import { getQuery } from '@/api';
+import useAuthStore from '@/store/auth';
+import { GetQueryRequest } from '@/@types';
+import useClientStore from '@/store/client';
+import { createUUID, validateResponse } from '@/lib/utils';
+import { getMockActivityResponse } from '@/constants/mock-data';
 
 export const useGetEvents = () => {
-  const PAGINIATION_LIMIT = 100;
+	const PAGINIATION_LIMIT = 100;
 
-  const demoing = useAuthStore((state) => state.demoing);
-  const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
+	const demoing = useAuthStore((state) => state.demoing);
+	const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
-  const project = useClientStore((state) => state.project);
-  const timePeriod = useClientStore((state) => state.activityTimePeriod);
-  const filterTestAccounts = useClientStore(
-    (state) => state.filterTestAccounts
-  );
+	const project = useClientStore((state) => state.project);
+	const timePeriod = useClientStore((state) => state.activityTimePeriod);
+	const filterTestAccounts = useClientStore(
+		(state) => state.filterTestAccounts
+	);
 
-  // Craft the payload that we will send to the server
-  const payload: Omit<GetQueryRequest, "client_query_id"> = {
-    project_id: project!,
-    query: {
-      after: timePeriod,
-      kind: "EventsQuery",
-      filterTestAccounts: filterTestAccounts,
-      orderBy: ["timestamp DESC"],
-      select: [
-        "*",
-        "event",
-        "coalesce(properties.$current_url, properties.$screen_name) -- Url / Screen",
-        "timestamp",
-      ],
-    },
-  };
+	// Craft the payload that we will send to the server
+	const payload: Omit<GetQueryRequest, 'client_query_id'> = {
+		project_id: project!,
+		query: {
+			after: timePeriod,
+			kind: 'EventsQuery',
+			filterTestAccounts: filterTestAccounts,
+			orderBy: ['timestamp DESC'],
+			// TODO: Select 'person' after event
+			select: [
+				'*',
+				'event',
+				'coalesce(properties.$current_url, properties.$screen_name) -- Url / Screen',
+				'timestamp',
+			],
+		},
+	};
 
-  // Derive some stable query keys so we refetch when critical data changes
-  const queryKey = [
-    GET_QUERY_KEY,
-    project,
-    timePeriod,
-    filterTestAccounts,
-    demoing,
-  ];
+	// Derive some stable query keys so we refetch when critical data changes
+	const queryKey = [
+		GET_QUERY_KEY,
+		project,
+		timePeriod,
+		filterTestAccounts,
+		demoing,
+	];
 
-  const query = useInfiniteQuery({
-    enabled: !!isLoggedIn,
-    staleTime: Infinity,
-    initialPageParam: 0,
-    queryKey: queryKey,
-    queryFn: async ({ pageParam = 0 }) => {
-      // If in demo mode, return mock data
-      if (demoing) {
-        const res = await getMockActivityResponse(timePeriod);
-        return validateResponse(res);
-      }
+	const query = useInfiniteQuery({
+		enabled: !!isLoggedIn,
+		staleTime: Infinity,
+		initialPageParam: 0,
+		queryKey: queryKey,
+		queryFn: async ({ pageParam = 0 }) => {
+			// If in demo mode, return mock data
+			if (demoing) {
+				const res = await getMockActivityResponse(timePeriod);
+				return validateResponse(res);
+			}
 
-      // Generate a unique query id for each request, add the pagination
-      // updates, then query
-      const res = await getQuery({
-        ...payload,
-        client_query_id: createUUID(),
-        query: {
-          ...payload.query,
-          limit: PAGINIATION_LIMIT,
-          offset: pageParam * PAGINIATION_LIMIT,
-        },
-      });
+			// Generate a unique query id for each request, add the pagination
+			// updates, then query
+			const res = await getQuery({
+				...payload,
+				client_query_id: createUUID(),
+				query: {
+					...payload.query,
+					limit: PAGINIATION_LIMIT,
+					offset: pageParam * PAGINIATION_LIMIT,
+				},
+			});
 
-      return validateResponse(res);
-    },
-    // If we have more pages to fetch, return the next offset
-    getNextPageParam: (lastPage) => {
-      if (lastPage.hasMore) {
-        return lastPage.offset + 1;
-      }
-    },
-  });
+			return validateResponse(res);
+		},
+		// If we have more pages to fetch, return the next offset
+		getNextPageParam: (lastPage) => {
+			if (lastPage.hasMore) {
+				return lastPage.offset + 1;
+			}
+		},
+	});
 
-  // Combine all of the results into one flat array
-  const pages = query.data?.pages || [];
-  const results = pages.flatMap((page) => page.results);
+	// Combine all of the results into one flat array
+	const pages = query.data?.pages || [];
+	const results = pages.flatMap((page) => page.results);
 
-  return {
-    ...query,
-    data: {
-      ...query.data,
-      results,
-    },
-  };
+	return {
+		...query,
+		data: {
+			...query.data,
+			results,
+		},
+	};
 };
