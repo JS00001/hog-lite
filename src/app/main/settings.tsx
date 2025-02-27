@@ -12,17 +12,20 @@ import { ISelectOption } from "@/ui/Select/@types";
 import { useGetOrganization } from "@/hooks/api/organization";
 
 export default function Settings() {
+  const posthog = usePosthog();
   const organizationQuery = useGetOrganization();
 
-  const posthog = usePosthog();
-  const authStore = useAuthStore();
+  const user = useAuthStore((store) => store.user)!;
+  const apiKey = useAuthStore((store) => store.apiKey);
+  const demoing = useAuthStore((store) => store.demoing);
+  const logout = useAuthStore((store) => store.logout);
 
   const setClientStore = useClientStore((s) => s.setField);
   const theme = useClientStore((store) => store.theme);
   const project = useClientStore((store) => store.project);
   const organization = useClientStore((store) => store.organization);
 
-  const organizations = authStore.user!.organizations;
+  const organizations = user.organizations;
   const projects = organizationQuery.data?.projects || [];
 
   /**
@@ -34,7 +37,7 @@ export default function Settings() {
       label: project.name,
       value: `${project.id}`,
     }));
-  }, [authStore.user, projects]);
+  }, [user, projects]);
 
   /**
    * All of the organizations that the user can switch to.
@@ -44,7 +47,7 @@ export default function Settings() {
       label: organization.name,
       value: `${organization.id}`,
     }));
-  }, [authStore.user]);
+  }, [user]);
 
   const onProjectChange = (value: string) => {
     setClientStore("project", value);
@@ -74,10 +77,9 @@ export default function Settings() {
    * fill the rest with *'s to hide the rest of the key.
    */
   const maskedApiKey = useMemo(() => {
-    const apiKey = authStore.apiKey;
     if (!apiKey) return "You're in Demo Mode";
     return `${apiKey.slice(0, 12)}${"*".repeat(apiKey.length - 12)}`;
-  }, [authStore.apiKey]);
+  }, [apiKey]);
 
   /**
    * Log the user out after prompting them with a confirmation dialog.
@@ -95,12 +97,12 @@ export default function Settings() {
         {
           text: "Logout",
           style: "destructive",
-          onPress: authStore.logout,
+          onPress: logout,
         },
       ],
     });
 
-    const eventName = authStore.demoing ? "demo_logout" : "logout";
+    const eventName = demoing ? "demo_logout" : "logout";
     posthog.capture(eventName);
   };
 
@@ -136,17 +138,9 @@ export default function Settings() {
 
       {/* Form Fields */}
       <TextInput disabled label="API Key" placeholder={maskedApiKey} />
-      <TextInput disabled label="Email" placeholder={authStore.user!.email} />
-      <TextInput
-        disabled
-        label="First Name"
-        placeholder={authStore.user!.first_name}
-      />
-      <TextInput
-        disabled
-        label="Last Name"
-        placeholder={authStore.user!.last_name}
-      />
+      <TextInput disabled label="Email" placeholder={user.email} />
+      <TextInput disabled label="First Name" placeholder={user.first_name} />
+      <TextInput disabled label="Last Name" placeholder={user.last_name} />
 
       <Button color="danger" onPress={onLogout}>
         Logout

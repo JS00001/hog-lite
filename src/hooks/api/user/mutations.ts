@@ -8,8 +8,8 @@ import useClientStore from "@/store/client";
 import { validateResponse } from "@/lib/utils";
 
 export const useLogin = () => {
-  const authStore = useAuthStore();
   const clientStore = useClientStore();
+  const loginAuthStore = useAuthStore((store) => store.login);
 
   const query = useMutation({
     mutationFn: async (data: LoginRequest) => {
@@ -26,7 +26,7 @@ export const useLogin = () => {
         clientStore.setField("project", project.id.toString());
       }
 
-      authStore.login(vars.apiKey);
+      loginAuthStore(vars.apiKey);
       router.push("/main/insights");
     },
   });

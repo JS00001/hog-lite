@@ -9,7 +9,7 @@ import usePosthog from "@/hooks/usePosthog";
 
 export default function Landing() {
   const posthog = usePosthog();
-  const authStore = useAuthStore();
+  const setDemoing = useAuthStore((store) => store.setDemoing);
 
   const onContinue = () => {
     router.push("/onboarding/region");
@@ -22,7 +22,7 @@ export default function Landing() {
   };
 
   const onDemo = () => {
-    authStore.setDemoing(true);
+    setDemoing(true);
     posthog.capture("onboarding_landing_demo");
   };
 
