@@ -47,6 +47,35 @@ export default {
           backgroundColor: "#EEEFE9",
         },
       ],
+      [
+        "expo-dynamic-app-icon",
+        {
+          default: {
+            icon: "./assets/images/icon.png",
+            prerendered: true,
+          },
+          angry: {
+            icon: "./assets/images/dynamic-icons/angry-icon.png",
+            prerendered: true,
+          },
+          "happy-blue": {
+            icon: "./assets/images/dynamic-icons/happy-icon-blue.png",
+            prerendered: true,
+          },
+          "happy-orange": {
+            icon: "./assets/images/dynamic-icons/happy-icon-orange.png",
+            prerendered: true,
+          },
+          nerd: {
+            icon: "./assets/images/dynamic-icons/nerd-icon.png",
+            prerendered: true,
+          },
+          space: {
+            icon: "./assets/images/dynamic-icons/space-icon.png",
+            prerendered: true,
+          },
+        },
+      ],
       "expo-localization",
       [
         "@sentry/react-native/expo",

@@ -3723,6 +3723,11 @@ expo-dev-menu@6.0.19:
   dependencies:
     expo-dev-menu-interface "1.9.3"
 
+expo-dynamic-app-icon@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/expo-dynamic-app-icon/-/expo-dynamic-app-icon-1.2.0.tgz#86ec9fe191bc71224fc5a271a628c0ec2e7f2594"
+  integrity sha512-l8qNUVl9lhADtdgyL6hf6xWFOaDayFCXdXnqDGzh1H3P58n380WkzibjVxbL/w0Nbu4FUUGVqMLAY1BETTzo9g==
+
 expo-eas-client@~0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/expo-eas-client/-/expo-eas-client-0.13.3.tgz#1535a99a224e360581c6253b0a1ea767e19815b8"
