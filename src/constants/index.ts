@@ -12,11 +12,11 @@ export default {
   /**
    * The public PostHog API key
    */
-  posthogPublicApiKey: Constants.expoConfig?.extra?.posthog?.publicApiKey,
+  posthogPublicApiKey: Constants.expoConfig?.extra?.posthog?.apiKey,
   /**
    * The PostHog API Host
    */
-  posthogHost: Constants.expoConfig?.extra?.posthog?.host,
+  posthogHost: Constants.expoConfig?.extra?.posthog?.url,
   /**
    * The Sentry DSN (Data Source Name)
    */
