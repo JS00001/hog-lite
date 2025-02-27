@@ -8,7 +8,17 @@ export type ActivityColumn = "event" | "url" | "timestamp";
 
 export type ActivityDisplayMode = "compact" | "full";
 
+export type AppIcon =
+  | "default"
+  | "angry"
+  | "nerd"
+  | "happy-blue"
+  | "happy-orange"
+  | "space";
+
 interface IClientState {
+  /** The users selected app icon */
+  appIcon: AppIcon;
   /** Whether the user is currently in dev mode or not */
   devMode: boolean;
   /** The users current theme */
@@ -50,6 +60,7 @@ const useClientStore = create<IClientStore>()(
         project: null,
         organization: null,
         dashboard: null,
+        appIcon: "default",
         activityDisplayMode: "full",
         activityColumns: ["event", "url", "timestamp"],
         activityTimePeriod: "-1dStart",
