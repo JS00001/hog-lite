@@ -30,19 +30,23 @@ function Content({ close }: Props) {
 
   const displayOptions: ISelectOption[] = [
     {
-      label: "Compact",
-      value: "compact",
-      description:
-        "Fit all data in the width of the screen without scrolling horizontally",
-    },
-    {
       label: "Full",
       value: "full",
       description:
         "Gives each column more space to breathe, but may require scrolling horizontally",
     },
+    {
+      label: "Compact",
+      value: "compact",
+      description:
+        "Fit all data in the width of the screen without scrolling horizontally",
+    },
   ];
 
+  /**
+   * When a column is toggled, update the state to
+   * reflect the change
+   */
   const onToggleColumn = (column: ActivityColumn) => {
     const newColumns = state.columns.includes(column)
       ? state.columns.filter((c) => c !== column)
@@ -75,32 +79,26 @@ function Content({ close }: Props) {
       />
 
       <View className="gap-2">
-        <Text className=" font-medium text-ink ">Columns</Text>
-
-        <View className="p-4 rounded-xl bg-primary border border-divider">
-          <View className="flex-row items-center justify-between gap-2">
-            <Text className="font-medium text-ink">Event</Text>
-            <Switch
-              value={state.columns.includes("event")}
-              onValueChange={() => onToggleColumn("event")}
-            />
-          </View>
-
-          <View className="flex-row items-center justify-between gap-2">
-            <Text className="font-medium text-ink">Url/Screen</Text>
-            <Switch
-              value={state.columns.includes("url")}
-              onValueChange={() => onToggleColumn("url")}
-            />
-          </View>
-
-          <View className="flex-row items-center justify-between gap-2">
-            <Text className="font-medium text-ink">Timestamp</Text>
-            <Switch
-              value={state.columns.includes("timestamp")}
-              onValueChange={() => onToggleColumn("timestamp")}
-            />
-          </View>
+        <Text className=" font-medium text-ink">Visible Columns</Text>
+        <View className="p-4 rounded-xl bg-primary border border-divider gap-4">
+          <ColumnToggle
+            title="Event"
+            description="The name of the event that occurred"
+            value={state.columns.includes("event")}
+            onValueChange={() => onToggleColumn("event")}
+          />
+          <ColumnToggle
+            title="URL / Screen"
+            description="The url/screen where the action occurred"
+            value={state.columns.includes("url")}
+            onValueChange={() => onToggleColumn("url")}
+          />
+          <ColumnToggle
+            title="Timestamp"
+            description="The time when the activity occurred"
+            value={state.columns.includes("timestamp")}
+            onValueChange={() => onToggleColumn("timestamp")}
+          />
         </View>
       </View>
 
@@ -108,6 +106,30 @@ function Content({ close }: Props) {
         Save
       </Button>
     </BottomSheetView>
+  );
+}
+
+interface ColumnToggleProps {
+  title: string;
+  description: string;
+  value: boolean;
+  onValueChange: () => void;
+}
+
+function ColumnToggle({
+  title,
+  description,
+  value,
+  onValueChange,
+}: ColumnToggleProps) {
+  return (
+    <View className="flex-row items-center justify-between gap-2">
+      <View>
+        <Text className="font-medium text-ink">{title}</Text>
+        <Text className="font-medium text-gray text-sm">{description}</Text>
+      </View>
+      <Switch value={value} onValueChange={onValueChange} />
+    </View>
   );
 }
 

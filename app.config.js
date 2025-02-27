@@ -11,7 +11,7 @@ export default {
     icon: IS_DEV ? "./assets/images/dev-icon.png" : "./assets/images/icon.png",
     scheme: "myapp",
     userInterfaceStyle: "automatic",
-    newArchEnabled: true,
+    newArchEnabled: false,
     ios: {
       supportsTablet: false,
       bundleIdentifier: IS_DEV

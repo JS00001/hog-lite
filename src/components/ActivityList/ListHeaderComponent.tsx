@@ -33,7 +33,7 @@ export default function ListHeaderComponent() {
 
   const urlRowClasses = classNames(
     "text-sm font-semibold text-ink",
-    isCompact ? "flex-[2]" : "w-64"
+    isCompact ? "flex-[1.5]" : "w-64"
   );
 
   const timeRowClasses = classNames("text-sm font-semibold text-ink", "w-20");

@@ -16,6 +16,7 @@ HogLite is a free and open-source [PostHog](https://posthog.com) client for mobi
 - [Running the application](#running-the-application)
 - [Architecture](#architecture)
   - [Managing Server State](#managing-server-state)
+  - [Managing Client State](#managing-client-state)
 - [Debugging](#debugging)
 
 ## Setting up the environment
@@ -56,6 +57,26 @@ All async state should be handled via Tanstack Query. Every API query and mutati
 Relevant optimistic updates or cache updates (when mutating data) should be handled in the hooks.
 
 Every component using a query should validate `isLoading`, `isError`, and `data` states to handle the UI accordingly.
+
+### Managing Client State
+
+All client state is stored in two unique Zustand stores: `auth-store` (`useAuthStore`) and `client-store` (`useClientStore`). The `auth-store` is responsible for managing the user's authentication state, while the `client-store` is responsible for managing the client's preferences, settings, and state.
+
+Both stores persist their data and rehydrate it on app startup. All persisted client state should be stored in one of these stores. Do NOT directly access a store's state in a component. Instead, set up a selector to prevent inefficient re-renders. See example below:
+
+```tsx
+// DON'T DO THIS
+const clientStore = useClientStore();
+
+return <Text>Your theme is: {clientStore.theme}</Text>;
+```
+
+```tsx
+// INSTEAD, DO THIS
+const theme = useClientStore((state) => state.theme);
+
+return <Text>Your theme is: {theme}</Text>;
+```
 
 ## Debugging
 

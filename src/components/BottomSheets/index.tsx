@@ -9,6 +9,7 @@ import ConfigureActivitySheet from "./ConfigureActivity";
 import NetworkLoggerSheet from "./DevTools/NetworkLogger";
 
 import useBottomSheetStore from "@/store/bottom-sheets";
+import { memo } from "react";
 
 /**
  * The list of bottom sheets we want to support
@@ -50,4 +51,4 @@ const BottomSheetComponent = () => {
   });
 };
 
-export default BottomSheetComponent;
+export default memo(BottomSheetComponent);

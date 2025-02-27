@@ -6,7 +6,6 @@ import { TouchableOpacity, View } from "react-native";
 import Text from "@/ui/Text";
 import useColors from "@/lib/theme";
 import { timeAgo } from "@/lib/utils";
-import DetailText from "@/ui/DetailText";
 import useClientStore from "@/store/client";
 import usePosthog from "@/hooks/usePosthog";
 import { EventData, IEvent } from "@/@types";
@@ -47,22 +46,6 @@ export default function ListItem({ event }: Props) {
   }, [data.event]);
 
   /**
-   * Return the event date formatted as
-   * Month, Day, Year at Hour:Minute:Second AM/PM
-   */
-  const eventDate = useMemo(() => {
-    return new Date(eventTimestamp).toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
-    });
-  }, [eventTimestamp]);
-
-  /**
    * Sort all event properties by their key in
    * alphabetical order and return the sorted properties.
    */
@@ -82,8 +65,17 @@ export default function ListItem({ event }: Props) {
     "p-3 bg-highlight"
   );
 
-  const eventRowClasses = classNames(isCompact ? "flex-1" : "w-64");
-  const urlRowClasses = classNames(isCompact ? "flex-[2]" : "w-64");
+  const eventRowClasses = classNames(
+    "text-sm text-ink",
+    isCompact ? "flex-1" : "w-64"
+  );
+
+  const urlRowClasses = classNames(
+    "text-sm text-ink",
+    isCompact ? "flex-[1.5]" : "w-64"
+  );
+
+  const timeRowClasses = classNames("text-sm text-ink", "w-20");
 
   const toggleClasses = classNames(
     "p-1 bg-accent rounded-md",
@@ -102,41 +94,21 @@ export default function ListItem({ event }: Props) {
 
         {/* Event Display */}
         {columns.includes("event") && (
-          <View className={eventRowClasses}>
-            <DetailText
-              className="text-sm text-ink"
-              detail={eventName}
-              numberOfLines={1}
-            >
-              {eventName}
-            </DetailText>
-          </View>
+          <Text className={eventRowClasses} numberOfLines={1}>
+            {eventName}
+          </Text>
         )}
 
         {/* URL/Screen Display */}
         {columns.includes("url") && (
-          <View className={urlRowClasses}>
-            <DetailText
-              className="text-sm text-ink"
-              detail={eventUrl}
-              numberOfLines={1}
-            >
-              {eventUrl}
-            </DetailText>
-          </View>
+          <Text className={urlRowClasses} numberOfLines={1}>
+            {eventUrl}
+          </Text>
         )}
 
         {/* Timestamp Display */}
         {columns.includes("timestamp") && (
-          <View className={"w-20"}>
-            <DetailText
-              className="text-sm text-ink"
-              detail={eventDate}
-              numberOfLines={1}
-            >
-              {timeAgo(eventTimestamp)}
-            </DetailText>
-          </View>
+          <Text className={timeRowClasses}>{timeAgo(eventTimestamp)}</Text>
         )}
       </View>
 
