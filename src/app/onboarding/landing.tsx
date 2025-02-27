@@ -3,13 +3,13 @@ import { Linking, View } from "react-native";
 
 import Text from "@/ui/Text";
 import Button from "@/ui/Button";
-import useAuthStore from "@/store/auth";
 import Layout from "@/components/Layout";
 import usePosthog from "@/hooks/usePosthog";
+import { useDemoLogin } from "@/hooks/api/user";
 
 export default function Landing() {
   const posthog = usePosthog();
-  const setDemoing = useAuthStore((store) => store.setDemoing);
+  const demoMutation = useDemoLogin();
 
   const onContinue = () => {
     router.push("/onboarding/region");
@@ -21,8 +21,8 @@ export default function Landing() {
     posthog.capture("onboarding_landing_open_source");
   };
 
-  const onDemo = () => {
-    setDemoing(true);
+  const onDemo = async () => {
+    await demoMutation.mutateAsync();
     posthog.capture("onboarding_landing_demo");
   };
 

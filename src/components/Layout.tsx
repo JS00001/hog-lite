@@ -53,7 +53,6 @@ export default function Layout({
   }, [scrollable, contentContainerClasses, children]);
 
   return (
-    // TODO: Fix the non-animation for this
     <KeyboardAvoidingView
       behavior="padding"
       className="flex-1"

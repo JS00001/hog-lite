@@ -1746,8 +1746,6 @@ export const MockActivity: Record<TimePeriod, IEvent[]> = {
  */
 export const getMockOrganizationResponse =
   async (): Promise<GetOrganizationResponse> => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-
     return {
       ...MockOrganization,
       projects: [MockProject],

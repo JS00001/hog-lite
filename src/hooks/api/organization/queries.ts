@@ -11,13 +11,15 @@ import { getMockOrganizationResponse } from "@/constants/mock-data";
 
 export const useGetOrganization = () => {
   const demoing = useAuthStore((state) => state.demoing);
+  const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
+
   const project = useClientStore((state) => state.project);
   const organization = useClientStore((state) => state.organization);
 
   const setField = useClientStore((state) => state.setField);
 
   const query = useQuery({
-    enabled: !!organization,
+    enabled: !!isLoggedIn,
     queryKey: [GET_ORGANIZATION_KEY, organization, demoing],
     queryFn: async () => {
       if (demoing) {

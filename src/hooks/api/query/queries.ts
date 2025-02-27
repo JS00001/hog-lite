@@ -13,6 +13,8 @@ export const useGetEvents = () => {
   const PAGINIATION_LIMIT = 100;
 
   const demoing = useAuthStore((state) => state.demoing);
+  const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
+
   const project = useClientStore((state) => state.project);
   const timePeriod = useClientStore((state) => state.activityTimePeriod);
   const filterTestAccounts = useClientStore(
@@ -46,6 +48,7 @@ export const useGetEvents = () => {
   ];
 
   const query = useInfiniteQuery({
+    enabled: !!isLoggedIn,
     staleTime: Infinity,
     initialPageParam: 0,
     queryKey: queryKey,

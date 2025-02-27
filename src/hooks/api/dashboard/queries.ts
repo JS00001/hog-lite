@@ -14,12 +14,14 @@ import { getDashboard, getDashboards } from "@/api";
 
 export const useGetDashboards = () => {
   const demoing = useAuthStore((state) => state.demoing);
+  const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
+
   const setField = useClientStore((state) => state.setField);
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
 
   const query = useQuery({
-    enabled: !!project,
+    enabled: !!project && !!isLoggedIn,
     queryKey: [GET_DASHBOARDS_KEY, project, demoing],
     queryFn: async () => {
       if (demoing) {
@@ -49,22 +51,27 @@ export const useGetDashboards = () => {
 };
 
 export const useGetDashboard = () => {
+  const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
   const demoing = useAuthStore((state) => state.demoing);
+
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
   const insightsTimePeriod = useClientStore(
     (state) => state.insightsTimePeriod
   );
 
+  // Create a stable key for the query
+  const key = [
+    GET_DASHBOARD_KEY,
+    project,
+    dashboard,
+    insightsTimePeriod,
+    demoing,
+  ];
+
   return useQuery({
-    enabled: !!project && !!dashboard,
-    queryKey: [
-      GET_DASHBOARD_KEY,
-      project,
-      dashboard,
-      insightsTimePeriod,
-      demoing,
-    ],
+    queryKey: key,
+    enabled: !!project && !!dashboard && !!isLoggedIn,
     queryFn: async () => {
       if (demoing) {
         const res = await getMockDashboardResponse(insightsTimePeriod);
