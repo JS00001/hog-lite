@@ -31,7 +31,9 @@ export default function Landing() {
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <View className="gap-1">
-            <Text className="text-2xl font-medium">Welcome to HogLite!</Text>
+            <Text className="text-2xl font-medium text-ink">
+              Welcome to HogLite!
+            </Text>
             <Text className="text-lg text-gray">
               HogLite is a free and fully{" "}
               <Text className="text-red underline" onPress={onTextClick}>

@@ -19,5 +19,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     return null;
   }
 
+  initialized.current = true;
+
   return children;
 }

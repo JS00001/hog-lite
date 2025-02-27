@@ -1,7 +1,8 @@
-import { Redirect, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 
 import useColors from "@/lib/theme";
+import Redirect from "@/ui/Redirect";
 import useAuthStore from "@/store/auth";
 
 interface Props {}
@@ -10,10 +11,13 @@ export default function Layout({}: Props) {
   const colors = useColors();
   const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
-  if (!loggedIn) return <Redirect href="/onboarding/landing" />;
+  if (!loggedIn) {
+    return <Redirect href="/onboarding/landing" />;
+  }
 
   return (
     <Tabs
+      initialRouteName="insights"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.blue,
