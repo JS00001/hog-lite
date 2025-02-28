@@ -9,6 +9,7 @@ import { timeAgo } from "@/lib/utils";
 import useClientStore from "@/store/client";
 import usePosthog from "@/hooks/usePosthog";
 import { EventData, IEvent } from "@/@types";
+import TruncatedText from "@/ui/TruncatedText";
 
 interface Props {
   event: IEvent;
@@ -45,6 +46,22 @@ export default function ListItem({ event }: Props) {
 
     return data.event;
   }, [data.event]);
+
+  /**
+   * Return the event date formatted as
+   * Month, Day, Year at Hour:Minute:Second AM/PM
+   */
+  const eventDate = useMemo(() => {
+    return new Date(eventTimestamp).toLocaleString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    });
+  }, [eventTimestamp]);
 
   /**
    * Sort all event properties by their key in
@@ -100,28 +117,30 @@ export default function ListItem({ event }: Props) {
 
         {/* Event Display */}
         {columns.includes("event") && (
-          <Text className={eventRowClasses} numberOfLines={1}>
+          <TruncatedText className={eventRowClasses} numberOfLines={1}>
             {eventName}
-          </Text>
+          </TruncatedText>
         )}
 
         {/* Person Display */}
         {columns.includes("person") && (
-          <Text className={personRowClasses} numberOfLines={1}>
+          <TruncatedText className={personRowClasses} numberOfLines={1}>
             {person.distinct_id}
-          </Text>
+          </TruncatedText>
         )}
 
         {/* URL/Screen Display */}
         {columns.includes("url") && (
-          <Text className={urlRowClasses} numberOfLines={1}>
+          <TruncatedText className={urlRowClasses} numberOfLines={1}>
             {eventUrl}
-          </Text>
+          </TruncatedText>
         )}
 
         {/* Timestamp Display */}
         {columns.includes("timestamp") && (
-          <Text className={timeRowClasses}>{timeAgo(eventTimestamp)}</Text>
+          <TruncatedText className={timeRowClasses} numberOfLines={1}>
+            {timeAgo(eventTimestamp)}
+          </TruncatedText>
         )}
       </View>
 

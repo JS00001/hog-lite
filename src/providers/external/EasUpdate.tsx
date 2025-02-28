@@ -1,6 +1,6 @@
 import * as Updates from "expo-updates";
-import { PropsWithChildren, useEffect, useRef } from "react";
 import { AppState, AppStateStatus } from "react-native";
+import { PropsWithChildren, useEffect, useRef } from "react";
 
 import alert from "@/lib/alert";
 import constants from "@/constants";
