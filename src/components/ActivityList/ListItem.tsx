@@ -9,7 +9,6 @@ import { timeAgo } from "@/lib/utils";
 import useClientStore from "@/store/client";
 import usePosthog from "@/hooks/usePosthog";
 import { EventData, IEvent } from "@/@types";
-import TruncatedText from "@/ui/TruncatedText";
 
 interface Props {
   event: IEvent;
@@ -101,30 +100,30 @@ export default function ListItem({ event }: Props) {
 
         {/* Event Display */}
         {columns.includes("event") && (
-          <TruncatedText className={eventRowClasses} numberOfLines={1}>
+          <Text className={eventRowClasses} numberOfLines={1}>
             {eventName}
-          </TruncatedText>
+          </Text>
         )}
 
         {/* Person Display */}
         {columns.includes("person") && (
-          <TruncatedText className={personRowClasses} numberOfLines={1}>
+          <Text className={personRowClasses} numberOfLines={1}>
             {person.distinct_id}
-          </TruncatedText>
+          </Text>
         )}
 
         {/* URL/Screen Display */}
         {columns.includes("url") && (
-          <TruncatedText className={urlRowClasses} numberOfLines={1}>
+          <Text className={urlRowClasses} numberOfLines={1}>
             {eventUrl}
-          </TruncatedText>
+          </Text>
         )}
 
         {/* Timestamp Display */}
         {columns.includes("timestamp") && (
-          <TruncatedText className={timeRowClasses} numberOfLines={1}>
+          <Text className={timeRowClasses} numberOfLines={1}>
             {timeAgo(eventTimestamp)}
-          </TruncatedText>
+          </Text>
         )}
       </View>
 

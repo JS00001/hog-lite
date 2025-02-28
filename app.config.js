@@ -1,6 +1,27 @@
 const packageJson = require("./package.json");
 
-const IS_DEV = process.env.APP_VARIANT === "development";
+const appVariant = process.env.APP_VARIANT; // 'development' | 'preview' | 'production';
+
+const appIcon =
+  {
+    development: "./assets/images/dev-icon.png",
+    preview: "./assets/images/preview-icon.png",
+    production: "./assets/images/icon.png",
+  }[appVariant] || "./assets/images/icon.png";
+
+const appBundleIdentifier =
+  {
+    development: "dev.js00001.hogliteposthogclient",
+    preview: "preview.js00001.hogliteposthogclient",
+    production: "com.js00001.hogliteposthogclient",
+  }[appVariant] || "com.js00001.hogliteposthogclient";
+
+const appDisplayName =
+  {
+    development: "HogLite (Dev)",
+    preview: "HogLite (Preview)",
+    production: "HogLite",
+  }[appVariant] || "HogLite";
 
 export default {
   expo: {
@@ -8,17 +29,15 @@ export default {
     slug: "hoglite-posthog-client",
     version: packageJson.version,
     orientation: "portrait",
-    icon: IS_DEV ? "./assets/images/dev-icon.png" : "./assets/images/icon.png",
+    icon: appIcon,
     scheme: "myapp",
     userInterfaceStyle: "automatic",
     newArchEnabled: false,
     ios: {
       supportsTablet: false,
-      bundleIdentifier: IS_DEV
-        ? "dev.js00001.hogliteposthogclient"
-        : "com.js00001.hogliteposthogclient",
+      bundleIdentifier: appBundleIdentifier,
       infoPlist: {
-        CFBundleDisplayName: IS_DEV ? "HogLite (Dev)" : "HogLite",
+        CFBundleDisplayName: appDisplayName,
       },
       config: {
         usesNonExemptEncryption: false,
