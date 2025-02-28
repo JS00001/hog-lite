@@ -48,22 +48,6 @@ export default function ListItem({ event }: Props) {
   }, [data.event]);
 
   /**
-   * Return the event date formatted as
-   * Month, Day, Year at Hour:Minute:Second AM/PM
-   */
-  const eventDate = useMemo(() => {
-    return new Date(eventTimestamp).toLocaleString("en-US", {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
-    });
-  }, [eventTimestamp]);
-
-  /**
    * Sort all event properties by their key in
    * alphabetical order and return the sorted properties.
    */
@@ -189,7 +173,7 @@ function EventProperty({ name, value }: { name: string; value: any }) {
   return (
     <View className="border-b border-divider py-2 flex-row justify-between gap-2">
       <Text className="text-sm font-semibold text-ink sticky">{key}</Text>
-      <Text className="text-sm text-ink flex-1 text-right" numberOfLines={4}>
+      <Text className="text-sm text-ink flex-1 text-right max-w-96">
         {value.toString()}
       </Text>
     </View>
