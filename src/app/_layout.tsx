@@ -19,6 +19,7 @@ import setupRequestInterceptors from "@/lib/axios/interceptors";
 import GestureDetectorProvider from "@/providers/GestureDetector";
 import SentryProvider from "@/providers/external/Sentry";
 import PosthogProvider from "@/providers/external/Posthog";
+import EasUpdateProvider from "@/providers/external/EasUpdate";
 
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -34,27 +35,29 @@ startNetworkLogging();
 export default function RootLayout() {
   return (
     <SentryProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <PosthogProvider>
-            <SplashScreenProvider>
-              <SafeAreaProvider>
-                <GestureHandlerRootView style={[{ flex: 1 }]}>
-                  <ThemeProvider>
-                    <BottomSheetModalProvider>
-                      <GestureDetectorProvider>
-                        <Slot />
-                        <BottomSheetComponent />
-                      </GestureDetectorProvider>
-                    </BottomSheetModalProvider>
-                    <Toast config={toastConfig} />
-                  </ThemeProvider>
-                </GestureHandlerRootView>
-              </SafeAreaProvider>
-            </SplashScreenProvider>
-          </PosthogProvider>
-        </AuthProvider>
-      </QueryClientProvider>
+      <EasUpdateProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <PosthogProvider>
+              <SplashScreenProvider>
+                <SafeAreaProvider>
+                  <GestureHandlerRootView style={[{ flex: 1 }]}>
+                    <ThemeProvider>
+                      <BottomSheetModalProvider>
+                        <GestureDetectorProvider>
+                          <Slot />
+                          <BottomSheetComponent />
+                        </GestureDetectorProvider>
+                      </BottomSheetModalProvider>
+                      <Toast config={toastConfig} />
+                    </ThemeProvider>
+                  </GestureHandlerRootView>
+                </SafeAreaProvider>
+              </SplashScreenProvider>
+            </PosthogProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      </EasUpdateProvider>
     </SentryProvider>
   );
 }
