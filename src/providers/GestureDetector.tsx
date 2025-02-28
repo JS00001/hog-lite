@@ -19,7 +19,6 @@ export default function GestureDetectorProvider({
   /**
    * When pressing the screen with three fingers at once, open
    * the network logger 'dev tools' bottom sheet
-   * TODO: In settings add a 'dev mode enabled' for prod
    */
   const onTripleFingerTap = (event: GestureTouchEvent) => {
     if (event.numberOfTouches === 3) {

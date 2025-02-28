@@ -28,7 +28,12 @@ export default function ListHeaderComponent() {
 
   const eventRowClasses = classNames(
     "text-sm font-semibold text-ink",
-    isCompact ? "flex-1" : "w-64"
+    isCompact ? "flex-1" : "w-60"
+  );
+
+  const personRowClasses = classNames(
+    "text-sm font-semibold text-ink",
+    isCompact ? "flex-1" : "w-80"
   );
 
   const urlRowClasses = classNames(
@@ -52,9 +57,11 @@ export default function ListHeaderComponent() {
         <Text className={eventRowClasses}>EVENT</Text>
       )}
 
-      {columns.includes("url") && (
-        <Text className={urlRowClasses}>URL / SCREEN</Text>
+      {columns.includes("person") && (
+        <Text className={personRowClasses}>PERSON</Text>
       )}
+
+      {columns.includes("url") && <Text className={urlRowClasses}>URL</Text>}
 
       {columns.includes("timestamp") && (
         <Text className={timeRowClasses}>TIME</Text>

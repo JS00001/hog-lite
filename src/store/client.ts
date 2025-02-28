@@ -4,7 +4,7 @@ import { persist } from "zustand/middleware";
 import { TimePeriod } from "@/@types";
 import PersistedAsyncStorage from "@/lib/async-store";
 
-export type ActivityColumn = "event" | "url" | "timestamp";
+export type ActivityColumn = "event" | "url" | "person" | "timestamp";
 
 export type ActivityDisplayMode = "compact" | "full";
 

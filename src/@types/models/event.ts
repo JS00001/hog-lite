@@ -2,17 +2,10 @@
 export enum EventData {
   All,
   Name,
+  Person,
   URL,
   Timestamp,
 }
-
-// type EventData = {
-//   $autocapture: {};
-//   $pageview: {};
-//   $pageleave: {};
-//   $screen: {};
-//   $identify: {};
-// };
 
 export type IEvent = [
   // All data
@@ -25,6 +18,13 @@ export type IEvent = [
   },
   // Event Name
   string,
+  // Person properties
+  {
+    uuid?: string;
+    created_at?: string;
+    distinct_id: string;
+    properties?: Record<string, any>;
+  },
   // Current URL or Screen Name
   string,
   // Timestamp

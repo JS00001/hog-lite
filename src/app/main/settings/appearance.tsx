@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { setAppIcon } from "expo-dynamic-app-icon";
+// import { setAppIcon } from "expo-dynamic-app-icon";
 
 import Text from "@/ui/Text";
 import Select from "@/ui/Select";
@@ -22,7 +22,8 @@ export default function Appearance() {
   };
 
   const onAppIconChange = (value: TAppIcon) => {
-    setAppIcon(value);
+    // TODO: Enable
+    // setAppIcon(value);
     setClientStore("appIcon", value);
     posthog.capture("app_icon_changed", { appIcon: value });
   };

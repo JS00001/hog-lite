@@ -26,6 +26,7 @@ export default function ListItem({ event }: Props) {
 
   const data = event[EventData.All];
   const eventUrl = event[EventData.URL];
+  const person = event[EventData.Person];
   const eventTimestamp = event[EventData.Timestamp];
 
   const toggleExpanded = () => {
@@ -67,7 +68,12 @@ export default function ListItem({ event }: Props) {
 
   const eventRowClasses = classNames(
     "text-sm text-ink",
-    isCompact ? "flex-1" : "w-64"
+    isCompact ? "flex-1" : "w-60"
+  );
+
+  const personRowClasses = classNames(
+    "text-sm text-ink",
+    isCompact ? "flex-1" : "w-80"
   );
 
   const urlRowClasses = classNames(
@@ -96,6 +102,13 @@ export default function ListItem({ event }: Props) {
         {columns.includes("event") && (
           <Text className={eventRowClasses} numberOfLines={1}>
             {eventName}
+          </Text>
+        )}
+
+        {/* Person Display */}
+        {columns.includes("person") && (
+          <Text className={personRowClasses} numberOfLines={1}>
+            {person.distinct_id}
           </Text>
         )}
 
