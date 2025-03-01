@@ -55,11 +55,11 @@ export default function ListItem({ event }: Props) {
           break;
         case "submit":
           if (element?.tag_name) return `submitted ${element.tag_name}${text}`;
-          return "Submit";
+          break;
         case "change":
           if (element?.tag_name)
             return `typed something into ${element.tag_name}${text}`;
-          return "Change";
+          break;
         case "focus":
           if (element?.tag_name) return `focused on ${element.tag_name}${text}`;
           break;
