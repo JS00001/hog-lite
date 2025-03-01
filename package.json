@@ -2,7 +2,7 @@
   "name": "hoglite-posthog-client",
   "main": "expo-router/entry",
   "version": "1.0.13",
-  "updateVersion": "2025.2.28.1",
+  "updateVersion": "2025.3.1.1",
   "scripts": {
     "start": "expo start",
     "dev": "expo start --dev-client",
@@ -12,7 +12,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "build": "npx expo prebuild && npx pod-install"
+    "build": "npx expo prebuild && npx pod-install",
+    "update:staging": "npx eas update --channel preview --message \"Update to latest preview version\"",
+    "update:prod": "npx eas update --channel production --message \"Update to latest production version\""
   },
   "jest": {
     "preset": "jest-expo"
