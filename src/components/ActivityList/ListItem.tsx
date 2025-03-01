@@ -53,6 +53,9 @@ export default function ListItem({ event }: Props) {
         case "click":
           if (element?.tag_name) return `clicked ${element.tag_name}${text}`;
           break;
+        case "touch":
+          if (element?.tag_name) return `touched ${element.tag_name}${text}`;
+          break;
         case "submit":
           if (element?.tag_name) return `submitted ${element.tag_name}${text}`;
           break;
