@@ -39,11 +39,40 @@ export default function ListItem({ event }: Props) {
    * else return the event name as is.
    */
   const eventName = useMemo(() => {
+    let event = data.event;
+
     if (data.event.startsWith("$")) {
-      return data.event.charAt(1).toUpperCase() + data.event.slice(2);
+      event = data.event.charAt(1).toUpperCase() + data.event.slice(2);
     }
 
-    return data.event;
+    if (event === "Autocapture") {
+      const element = data.elements?.[0];
+      const text = element?.text ? ` with text "${element.text}"` : "";
+
+      switch (data.properties.$event_type) {
+        case "click":
+          if (element?.tag_name) return `clicked ${element.tag_name}${text}`;
+          break;
+        case "submit":
+          if (element?.tag_name) return `submitted ${element.tag_name}${text}`;
+          return "Submit";
+        case "change":
+          if (element?.tag_name)
+            return `typed something into ${element.tag_name}${text}`;
+          return "Change";
+        case "focus":
+          if (element?.tag_name) return `focused on ${element.tag_name}${text}`;
+          break;
+        case "blur":
+          if (element?.tag_name)
+            return `blurred from ${element.tag_name}${text}`;
+          break;
+        default:
+          break;
+      }
+    }
+
+    return event;
   }, [data.event]);
 
   /**
@@ -52,7 +81,11 @@ export default function ListItem({ event }: Props) {
    */
   const eventProperties = useMemo(() => {
     const keys = Object.keys(data.properties).sort();
-    const properties: Record<string, any> = {};
+    const properties: Record<string, any> = {
+      Event: eventName,
+      Person: person.distinct_id,
+      Url: eventUrl,
+    };
 
     keys.forEach((key) => {
       properties[key] = data.properties[key];

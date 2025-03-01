@@ -15,6 +15,10 @@ export type IEvent = [
     distinct_id: string;
     event: string;
     properties: Record<string, any>;
+    elements?: {
+      text: string | null;
+      tag_name: string;
+    }[];
   },
   // Event Name
   string,
