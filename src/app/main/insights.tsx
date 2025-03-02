@@ -87,15 +87,16 @@ export default function Insights() {
    */
   const ListEmptyComponent = useCallback(() => {
     if (actionsDisabled) {
-      return (
-        <View className="items-center bg-highlight border border-divider rounded-xl">
-          {new Array(15).fill(0).map((_, index) => (
-            <View className="py-1.5 px-2 w-full" key={index}>
-              <Skeleton key={index} className="w-full h-16" />
-            </View>
-          ))}
+      return new Array(15).fill(0).map((_, index) => (
+        <View
+          key={index}
+          className="p-6 bg-highlight rounded-xl border border-divider w-full gap-2"
+        >
+          <Skeleton className="w-32 h-16" />
+          <Skeleton className="w-full h-4" />
+          <Skeleton className="w-full h-8" />
         </View>
-      );
+      ));
     }
 
     return (
