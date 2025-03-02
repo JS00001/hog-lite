@@ -11,13 +11,19 @@ HogLite is a free and open-source [PostHog](https://posthog.com) client for mobi
 
 ## Documentation Sections
 
-- [Introduction](#introduction)
-- [Setting up the environment](#setting-up-the-environment)
-- [Running the application](#running-the-application)
-- [Architecture](#architecture)
-  - [Managing Server State](#managing-server-state)
-  - [Managing Client State](#managing-client-state)
-- [Debugging](#debugging)
+- [🦔 HogLite](#-hoglite)
+  - [The best way to view your PostHog analytics on the go!](#the-best-way-to-view-your-posthog-analytics-on-the-go)
+  - [Introduction](#introduction)
+  - [Documentation Sections](#documentation-sections)
+  - [Setting up the environment](#setting-up-the-environment)
+  - [Running the application](#running-the-application)
+  - [Architecture](#architecture)
+    - [Managing Server State](#managing-server-state)
+    - [Managing Client State](#managing-client-state)
+  - [Debugging](#debugging)
+  - [Creating Builds/Releases](#creating-buildsreleases)
+    - [App Store Update](#app-store-update)
+    - [OTA Update](#ota-update)
 
 ## Setting up the environment
 
@@ -83,3 +89,40 @@ return <Text>Your theme is: {theme}</Text>;
 To help with debugging, we've added debugging tools to the application when running in development mode.
 
 - **Network Requests**: To view network requests, press three fingers on the screen to open the network inspector.
+
+## Creating Builds/Releases
+HogLite has two different update methods. The first is a traditional app store update, and the second is an OTA update. The app store update is used for major updates (typically with new native code), while the OTA update is used for minor updates (with only JavaScript changes). See below for instructions on how to create each type of update.
+
+### App Store Update
+
+1. **Update the app version**: Update the app version in the `app.json` file. Increment the `version` field by one. For example, if the current version is `1.0.0`, the new version should be `1.0.1`.
+2. **Build the app**: Run the following command to build the app:
+
+```bash
+eas build --platform ios --profile production
+```
+
+3. **Submit the app**: Submit the app to the app store using the `eas submit` command. For example, to submit the iOS app, run the following command:
+
+```bash
+eas submit --platform ios
+```
+
+### OTA Update
+
+When running OTA updates, staging/preview updates MUST be ran before production updates. This is to ensure that the update is working as expected before being released to all users. This will also automatically update the 'update version' for the build. The production script will NOT update the 'update version' for the build.
+
+1. Run the following command to deploy the OTA update to the staging environment. This will *automatically* increment the 'update version' for the build and set the build date to the current date:
+
+```bash
+yarn update:staging
+```
+
+2. Test the update on the staging environment to ensure that it works as expected.
+3. Run the following command to deploy the OTA update to the production environment:
+
+```bash
+yarn update:production
+```
+
+4. Test the update on the production environment to ensure that it works as expected.
