@@ -1,5 +1,5 @@
-import { StyleProp, ViewStyle } from "react-native";
-import Svg, { Path } from "react-native-svg";
+import { StyleProp, ViewStyle } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
 interface Props {
   size?: number;

@@ -1,19 +1,20 @@
-import { useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from 'react';
+import { Linking, View } from 'react-native';
 
-import Text from "@/ui/Text";
-import alert from "@/lib/alert";
-import Button from "@/ui/Button";
-import Select from "@/ui/Select";
-import useAuthStore from "@/store/auth";
-import Layout from "@/components/Layout";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import { ISelectOption } from "@/ui/Select/@types";
-import { useGetOrganization } from "@/hooks/api/organization";
+import Text from '@/ui/Text';
+import alert from '@/lib/alert';
+import Button from '@/ui/Button';
+import Select from '@/ui/Select';
+import useAuthStore from '@/store/auth';
+import Layout from '@/components/Layout';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import { ISelectOption } from '@/ui/Select/@types';
+import { useGetOrganization } from '@/hooks/api/organization';
 
-import Card from "@/ui/Card";
-import { router } from "expo-router";
+import Card from '@/ui/Card';
+import { router } from 'expo-router';
+import constants from '@/constants';
 
 export default function Settings() {
   const posthog = usePosthog();
@@ -52,13 +53,13 @@ export default function Settings() {
   }, [user]);
 
   const onProjectChange = (value: string) => {
-    setClientStore("project", value);
-    posthog.capture("project_changed");
+    setClientStore('project', value);
+    posthog.capture('project_changed');
   };
 
   const onOrganizationChange = (value: string) => {
-    setClientStore("organization", value);
-    posthog.capture("organization_changed");
+    setClientStore('organization', value);
+    posthog.capture('organization_changed');
   };
 
   /**
@@ -66,23 +67,23 @@ export default function Settings() {
    */
   const onLogout = () => {
     alert({
-      title: "Are you sure?",
+      title: 'Are you sure?',
       message:
-        "Are you sure you want to logout? You will need to re-enter your API key to login again.",
+        'Are you sure you want to logout? You will need to re-enter your API key to login again.',
       buttons: [
         {
-          text: "Cancel",
-          style: "cancel",
+          text: 'Cancel',
+          style: 'cancel',
         },
         {
-          text: "Logout",
-          style: "destructive",
+          text: 'Logout',
+          style: 'destructive',
           onPress: logout,
         },
       ],
     });
 
-    const eventName = demoing ? "demo_logout" : "logout";
+    const eventName = demoing ? 'demo_logout' : 'logout';
     posthog.capture(eventName);
   };
 
@@ -117,8 +118,8 @@ export default function Settings() {
             title="Account"
             description="View your current PostHog account"
             onPress={() => {
-              router.push("/main/settings/account");
-              posthog.capture("account_settings_clicked");
+              router.push('/main/settings/account');
+              posthog.capture('account_settings_clicked');
             }}
           />
           <Card
@@ -126,19 +127,48 @@ export default function Settings() {
             title="Appearance"
             description="Change the appearance of the app"
             onPress={() => {
-              router.push("/main/settings/appearance");
-              posthog.capture("appearance_settings_clicked");
+              router.push('/main/settings/appearance');
+              posthog.capture('appearance_settings_clicked');
             }}
           />
         </View>
         <View className="gap-2 flex-row">
           <Card
+            icon="book-open"
+            title="Feature Requests"
+            description="Request new features or improvements"
+            onPress={() => {
+              Linking.openURL(`${constants.githubUrl}/issues/new`);
+              posthog.capture('feature_request_clicked');
+            }}
+          />
+          <Card
+            icon="frown"
+            title="Report Bug"
+            description="Found a bug? Report it here"
+            onPress={() => {
+              Linking.openURL(`${constants.githubUrl}/issues/new`);
+              posthog.capture('bug_report_clicked');
+            }}
+          />
+        </View>
+        <View className="gap-2 flex-row">
+          <Card
+            icon="git-branch"
+            title="Contribute"
+            description="We're open source! Contribute to our project"
+            onPress={() => {
+              Linking.openURL(`${constants.githubUrl}`);
+              posthog.capture('contribute_clicked');
+            }}
+          />
+          <Card
             icon="code"
             title="Debug"
             description="View and enable debugging features"
             onPress={() => {
-              router.push("/main/settings/debug");
-              posthog.capture("debug_settings_clicked");
+              router.push('/main/settings/debug');
+              posthog.capture('debug_settings_clicked');
             }}
           />
         </View>

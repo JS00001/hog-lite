@@ -91,6 +91,7 @@ To help with debugging, we've added debugging tools to the application when runn
 - **Network Requests**: To view network requests, press three fingers on the screen to open the network inspector.
 
 ## Creating Builds/Releases
+
 HogLite has two different update methods. The first is a traditional app store update, and the second is an OTA update. The app store update is used for major updates (typically with new native code), while the OTA update is used for minor updates (with only JavaScript changes). See below for instructions on how to create each type of update.
 
 ### App Store Update
@@ -112,7 +113,7 @@ eas submit --platform ios
 
 When running OTA updates, staging/preview updates MUST be ran before production updates. This is to ensure that the update is working as expected before being released to all users. This will also automatically update the 'update version' for the build. The production script will NOT update the 'update version' for the build.
 
-1. Run the following command to deploy the OTA update to the staging environment. This will *automatically* increment the 'update version' for the build and set the build date to the current date:
+1. Run the following command to deploy the OTA update to the staging environment. This will _automatically_ increment the 'update version' for the build and set the build date to the current date:
 
 ```bash
 yarn update:staging

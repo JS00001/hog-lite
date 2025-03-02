@@ -1,8 +1,8 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import TextInput from "@/ui/TextInput";
-import useAuthStore from "@/store/auth";
-import Layout from "@/components/Layout";
+import TextInput from '@/ui/TextInput';
+import useAuthStore from '@/store/auth';
+import Layout from '@/components/Layout';
 
 export default function Account() {
   const user = useAuthStore((store) => store.user)!;
@@ -14,7 +14,7 @@ export default function Account() {
    */
   const maskedApiKey = useMemo(() => {
     if (!apiKey) return "You're in Demo Mode";
-    return `${apiKey.slice(0, 12)}${"*".repeat(apiKey.length - 12)}`;
+    return `${apiKey.slice(0, 12)}${'*'.repeat(apiKey.length - 12)}`;
   }, [apiKey]);
 
   return (

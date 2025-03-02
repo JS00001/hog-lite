@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import classNames from "classnames";
-import { TouchableOpacity, View } from "react-native";
+import { useMemo } from 'react';
+import classNames from 'classnames';
+import { TouchableOpacity, View } from 'react-native';
 
-import FunnelConversionTimeCard from "./FunnelConversionTime";
-import AggregationCard from "./Aggregation";
-import FunnelCard from "./Funnel";
+import FunnelConversionTimeCard from './FunnelConversionTime';
+import AggregationCard from './Aggregation';
+import FunnelCard from './Funnel';
 
 import {
   Aggregation,
@@ -13,8 +13,8 @@ import {
   IInsight,
   ResultType,
   Retention,
-} from "@/@types";
-import Text from "@/ui/Text";
+} from '@/@types';
+import Text from '@/ui/Text';
 
 interface Props {
   insight: IInsight;
@@ -32,7 +32,7 @@ export default function Insight({ insight }: Props) {
 
     // If all items in the array have the keys of an aggregation, it must be an aggregation
     const isAggregation = (insight.result as any[]).every((item) => {
-      const keys = ["data", "days", "count", "label"];
+      const keys = ['data', 'days', 'count', 'label'];
 
       return keys.every((key) => key in item);
     });
@@ -46,7 +46,7 @@ export default function Insight({ insight }: Props) {
 
     // If the keys required for a funnel are in the array
     const isFunnel = (insight.result as any[]).every((item) => {
-      const keys = ["action_id", "count", "custom_name", "name", "order"];
+      const keys = ['action_id', 'count', 'custom_name', 'name', 'order'];
 
       return keys.every((key) => key in item);
     });
@@ -60,7 +60,7 @@ export default function Insight({ insight }: Props) {
 
     // If the keys required for a retention are in the array
     const isRetention = (insight.result as any[]).every((item) => {
-      const keys = ["date", "label", "values"];
+      const keys = ['date', 'label', 'values'];
 
       return keys.every((key) => key in item);
     });
@@ -76,8 +76,8 @@ export default function Insight({ insight }: Props) {
   }, [insight.result]);
 
   const containerClasses = classNames(
-    "bg-highlight p-6",
-    "border border-divider rounded-xl"
+    'bg-highlight p-6',
+    'border border-divider rounded-xl',
   );
 
   const hiddenTiles = [ResultType.Retention, ResultType.Unknown];

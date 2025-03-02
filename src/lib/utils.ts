@@ -1,6 +1,6 @@
-import { API } from "@/@types";
-import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
+import { API } from '@/@types';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 
 export const createUUID = () => {
   return uuidv4();
@@ -17,7 +17,7 @@ export const timeAgo = (date: string) => {
   const days = hours / 24;
 
   if (seconds < 60) {
-    return "Just now";
+    return 'Just now';
   } else if (minutes < 60) {
     return `${Math.floor(minutes)}m ago`;
   } else if (hours < 24) {
@@ -31,7 +31,7 @@ export const timeAgo = (date: string) => {
  * Format a number to a readable string
  */
 export const formatNumber = (num: number) => {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 /**
@@ -41,26 +41,26 @@ export const formatDate = (date: string) => {
   const d = new Date(date);
 
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
     hour12: true,
   };
 
-  return d.toLocaleString("en-US", options);
+  return d.toLocaleString('en-US', options);
 };
 
 /**
  * Check if an api response is an error
  */
 export const validateResponse = <T extends any>(res: API.Response<T>) => {
-  if (typeof res !== "object" || !res) {
+  if (typeof res !== 'object' || !res) {
     return res as T;
   }
 
-  if ("type" in res && "code" in res && "detail" in res) {
+  if ('type' in res && 'code' in res && 'detail' in res) {
     throw res;
   }
 

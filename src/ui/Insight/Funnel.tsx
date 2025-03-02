@@ -1,12 +1,12 @@
-import { View } from "react-native";
-import classNames from "classnames";
-import Feather from "@expo/vector-icons/Feather";
+import { View } from 'react-native';
+import classNames from 'classnames';
+import Feather from '@expo/vector-icons/Feather';
 
-import { Funnel } from "@/@types";
+import { Funnel } from '@/@types';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
-import { formatNumber } from "@/lib/utils";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
+import { formatNumber } from '@/lib/utils';
 
 interface Props {
   data: Funnel;
@@ -14,7 +14,7 @@ interface Props {
 
 export default function FunnelCard({ data }: Props) {
   const colors = useColors();
-  const barClasses = classNames("bg-blue h-4 rounded");
+  const barClasses = classNames('bg-blue h-4 rounded');
 
   return (
     <View className="gap-4 pb-4">

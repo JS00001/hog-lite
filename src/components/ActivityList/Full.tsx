@@ -1,11 +1,11 @@
-import { FlatList, ScrollView } from "react-native";
+import { FlatList, ScrollView } from 'react-native';
 
-import { ActivityListProps } from "./@types";
+import { ActivityListProps } from './@types';
 
-import ListItem from "./ListItem";
-import ListEmptyComponent from "./ListEmptyComponent";
-import ListFooterComponent from "./ListFooterComponent";
-import ListHeaderComponent from "./ListHeaderComponent";
+import ListItem from './ListItem';
+import ListEmptyComponent from './ListEmptyComponent';
+import ListFooterComponent from './ListFooterComponent';
+import ListHeaderComponent from './ListHeaderComponent';
 
 export default function FullActivityList({
   data,

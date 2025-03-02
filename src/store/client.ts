@@ -1,20 +1,20 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { TimePeriod } from "@/@types";
-import PersistedAsyncStorage from "@/lib/async-store";
+import { TimePeriod } from '@/@types';
+import PersistedAsyncStorage from '@/lib/async-store';
 
-export type ActivityColumn = "event" | "url" | "person" | "timestamp";
+export type ActivityColumn = 'event' | 'url' | 'person' | 'timestamp';
 
-export type ActivityDisplayMode = "compact" | "full";
+export type ActivityDisplayMode = 'compact' | 'full';
 
 export type AppIcon =
-  | "default"
-  | "angry"
-  | "nerd"
-  | "happy-blue"
-  | "happy-orange"
-  | "space";
+  | 'default'
+  | 'angry'
+  | 'nerd'
+  | 'happy-blue'
+  | 'happy-orange'
+  | 'space';
 
 interface IClientState {
   /** The users selected app icon */
@@ -22,7 +22,7 @@ interface IClientState {
   /** Whether the user is currently in dev mode or not */
   devMode: boolean;
   /** The users current theme */
-  theme: "light" | "dark";
+  theme: 'light' | 'dark';
   /** The project id that the user is currently viewing */
   project: string | null;
   /** The organization id that the user is currently viewing */
@@ -34,7 +34,7 @@ interface IClientState {
   /** The columns to show in the activity table */
   activityColumns: ActivityColumn[];
   /** The endpoint that the user prefers to use */
-  posthogEndpoint: "https://us.posthog.com" | "https://eu.posthog.com" | string;
+  posthogEndpoint: 'https://us.posthog.com' | 'https://eu.posthog.com' | string;
   /** The activity time period that the user prefers to query */
   activityTimePeriod: TimePeriod;
   /** The insights time period that the user prefers to query */
@@ -47,7 +47,7 @@ interface IClientStore extends IClientState {
   clear: () => void;
   setField: <T extends keyof IClientState>(
     field: T,
-    value: IClientState[T]
+    value: IClientState[T],
   ) => void;
 }
 
@@ -56,22 +56,22 @@ const useClientStore = create<IClientStore>()(
     (set) => {
       const initialState: IClientState = {
         devMode: false,
-        theme: "light",
+        theme: 'light',
         project: null,
         organization: null,
         dashboard: null,
-        appIcon: "default",
-        activityDisplayMode: "full",
-        activityColumns: ["event", "url", "timestamp"],
-        activityTimePeriod: "-1dStart",
-        insightsTimePeriod: "-7d",
+        appIcon: 'default',
+        activityDisplayMode: 'full',
+        activityColumns: ['event', 'url', 'timestamp'],
+        activityTimePeriod: '-1dStart',
+        insightsTimePeriod: '-7d',
         filterTestAccounts: false,
-        posthogEndpoint: "https://us.posthog.com",
+        posthogEndpoint: 'https://us.posthog.com',
       };
 
       const setField = <T extends keyof IClientState>(
         field: T,
-        value: IClientState[T]
+        value: IClientState[T],
       ) => {
         set((state) => ({ ...state, [field]: value }));
       };
@@ -87,10 +87,10 @@ const useClientStore = create<IClientStore>()(
       };
     },
     {
-      name: "client-storage",
+      name: 'client-storage',
       storage: PersistedAsyncStorage,
-    }
-  )
+    },
+  ),
 );
 
 export default useClientStore;

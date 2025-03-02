@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import { ScrollViewProps } from "react-native";
-import { BottomSheetScrollView as RNBottomSheetScrollView } from "@gorhom/bottom-sheet";
+import classNames from 'classnames';
+import { ScrollViewProps } from 'react-native';
+import { BottomSheetScrollView as RNBottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 export default function BottomSheetScrollView({
   children,
@@ -8,10 +8,10 @@ export default function BottomSheetScrollView({
   contentContainerClassName,
   ...props
 }: ScrollViewProps) {
-  const containerClasses = classNames("px-4 py-4", className);
+  const containerClasses = classNames('px-4 py-4', className);
   const contentContainerClasses = classNames(
-    "gap-y-2 pb-16",
-    contentContainerClassName
+    'gap-y-2 pb-16',
+    contentContainerClassName,
   );
 
   return (

@@ -1,8 +1,8 @@
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
 
-import useColors from "@/lib/theme";
-import Redirect from "@/ui/Redirect";
-import useAuthStore from "@/store/auth";
+import useColors from '@/lib/theme';
+import Redirect from '@/ui/Redirect';
+import useAuthStore from '@/store/auth';
 
 export default function Layout() {
   const colors = useColors();

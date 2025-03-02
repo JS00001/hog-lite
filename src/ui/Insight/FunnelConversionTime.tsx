@@ -1,7 +1,7 @@
-import { FunnelConversionTime } from "@/@types";
-import { useMemo } from "react";
+import { FunnelConversionTime } from '@/@types';
+import { useMemo } from 'react';
 
-import Text from "@/ui/Text";
+import Text from '@/ui/Text';
 
 interface Props {
   data: FunnelConversionTime;

@@ -1,17 +1,17 @@
-import { View } from "react-native";
-import { useState } from "react";
+import { View } from 'react-native';
+import { useState } from 'react';
 
-import Text from "@/ui/Text";
-import Button from "@/ui/Button";
-import Switch from "@/ui/Switch";
-import Select from "@/ui/Select";
-import { TimePeriod } from "@/@types";
-import Layout from "@/components/Layout";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import { useGetEvents } from "@/hooks/api/query";
-import ActivityList from "@/components/ActivityList";
-import timePeriodOptions from "@/constants/time-periods";
+import Text from '@/ui/Text';
+import Button from '@/ui/Button';
+import Switch from '@/ui/Switch';
+import Select from '@/ui/Select';
+import { TimePeriod } from '@/@types';
+import Layout from '@/components/Layout';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import { useGetEvents } from '@/hooks/api/query';
+import ActivityList from '@/components/ActivityList';
+import timePeriodOptions from '@/constants/time-periods';
 
 enum FetchingState {
   Reloading,
@@ -35,7 +35,7 @@ export default function Activity() {
   const onRefetch = () => {
     setFetchState(FetchingState.Reloading);
     query.refetch();
-    posthog.capture("activity_reloaded");
+    posthog.capture('activity_reloaded');
   };
 
   /**
@@ -46,7 +46,7 @@ export default function Activity() {
     if (!query.hasNextPage) return;
     if (query.isFetchingNextPage) return;
     query.fetchNextPage();
-    posthog.capture("activity_fetched_next_page");
+    posthog.capture('activity_fetched_next_page');
   };
 
   /**
@@ -55,8 +55,8 @@ export default function Activity() {
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
-    setClientStore("activityTimePeriod", value as TimePeriod);
-    posthog.capture("activity_time_period_changed");
+    setClientStore('activityTimePeriod', value as TimePeriod);
+    posthog.capture('activity_time_period_changed');
   };
 
   /**
@@ -64,8 +64,8 @@ export default function Activity() {
    * and refetch the data from the server.
    */
   const onFilterTestAccountsChange = (value: boolean) => {
-    setClientStore("filterTestAccounts", value);
-    posthog.capture("activity_filter_test_accounts_changed", { value });
+    setClientStore('filterTestAccounts', value);
+    posthog.capture('activity_filter_test_accounts_changed', { value });
   };
 
   const data = query.data?.results || [];

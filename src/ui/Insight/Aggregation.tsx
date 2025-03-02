@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { Aggregation } from "@/@types";
+import { Aggregation } from '@/@types';
 
-import Text from "@/ui/Text";
-import { formatNumber } from "@/lib/utils";
+import Text from '@/ui/Text';
+import { formatNumber } from '@/lib/utils';
 
 interface Props {
   data: Aggregation;

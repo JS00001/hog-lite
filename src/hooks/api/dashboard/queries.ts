@@ -1,16 +1,16 @@
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { GET_DASHBOARD_KEY, GET_DASHBOARDS_KEY } from "../keys";
+import { GET_DASHBOARD_KEY, GET_DASHBOARDS_KEY } from '../keys';
 
 import {
   getMockDashboardResponse,
   getMockDashboardsResponse,
-} from "@/constants/mock-data";
-import useAuthStore from "@/store/auth";
-import useClientStore from "@/store/client";
-import { validateResponse } from "@/lib/utils";
-import { getDashboard, getDashboards } from "@/api";
+} from '@/constants/mock-data';
+import useAuthStore from '@/store/auth';
+import useClientStore from '@/store/client';
+import { validateResponse } from '@/lib/utils';
+import { getDashboard, getDashboards } from '@/api';
 
 export const useGetDashboards = () => {
   const demoing = useAuthStore((state) => state.demoing);
@@ -43,7 +43,7 @@ export const useGetDashboards = () => {
     });
 
     if (firstDashboard && !dashboardInProject) {
-      setField("dashboard", firstDashboard.id.toString());
+      setField('dashboard', firstDashboard.id.toString());
     }
   }, [query.data]);
 
@@ -57,7 +57,7 @@ export const useGetDashboard = () => {
   const project = useClientStore((state) => state.project);
   const dashboard = useClientStore((state) => state.dashboard);
   const insightsTimePeriod = useClientStore(
-    (state) => state.insightsTimePeriod
+    (state) => state.insightsTimePeriod,
   );
 
   // Create a stable key for the query

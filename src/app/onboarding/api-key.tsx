@@ -1,13 +1,13 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import Button from "@/ui/Button";
-import useForm from "@/hooks/useForm";
-import TextInput from "@/ui/TextInput";
-import Layout from "@/components/Layout";
-import validators from "@/lib/validators";
-import { useLogin } from "@/hooks/api/user";
-import usePosthog from "@/hooks/usePosthog";
-import useBottomSheetStore from "@/store/bottom-sheets";
+import Button from '@/ui/Button';
+import useForm from '@/hooks/useForm';
+import TextInput from '@/ui/TextInput';
+import Layout from '@/components/Layout';
+import validators from '@/lib/validators';
+import { useLogin } from '@/hooks/api/user';
+import usePosthog from '@/hooks/usePosthog';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function Step1() {
   const login = useLogin();
@@ -30,7 +30,7 @@ export default function Step1() {
     if (!isValid) return;
 
     await login.mutateAsync({ apiKey: form.state.apiKey.value });
-    posthog.capture("onboarding_api_key_submit");
+    posthog.capture('onboarding_api_key_submit');
   };
 
   /**
@@ -39,8 +39,8 @@ export default function Step1() {
    * an API key
    */
   const onCreateApiKey = () => {
-    openBottomSheet("CREATE_API_KEY");
-    posthog.capture("onboarding_api_key_tutorial");
+    openBottomSheet('CREATE_API_KEY');
+    posthog.capture('onboarding_api_key_tutorial');
   };
 
   /**
@@ -49,8 +49,8 @@ export default function Step1() {
    * the API key (We don't store it)
    */
   const onDataSecurity = () => {
-    openBottomSheet("DATA_SECURITY");
-    posthog.capture("onboarding_api_key_data_security");
+    openBottomSheet('DATA_SECURITY');
+    posthog.capture('onboarding_api_key_data_security');
   };
 
   return (
@@ -64,7 +64,7 @@ export default function Step1() {
             placeholder="phx_12345"
             value={form.state.apiKey.value}
             error={form.state.apiKey.error}
-            onChangeText={(apiKey) => form.setValue("apiKey", apiKey)}
+            onChangeText={(apiKey) => form.setValue('apiKey', apiKey)}
           />
 
           <View className="gap-1">

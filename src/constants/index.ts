@@ -1,8 +1,8 @@
-import Constants from "expo-constants";
+import Constants from 'expo-constants';
 
-import Package from "@/../package.json";
+import Package from '@/../package.json';
 
-export type Environment = "development" | "production";
+export type Environment = 'development' | 'production';
 
 export default {
   /**
@@ -24,5 +24,9 @@ export default {
   /**
    * The environment the app is running in
    */
-  environment: __DEV__ ? "development" : "production",
+  environment: __DEV__ ? 'development' : 'production',
+  /**
+   * The URL for the github repository
+   */
+  githubUrl: 'https://github.com/JS00001/hog-lite',
 };

@@ -2,13 +2,13 @@ import {
   Gesture,
   GestureDetector,
   GestureTouchEvent,
-} from "react-native-gesture-handler";
-import { View } from "react-native";
-import { PropsWithChildren } from "react";
+} from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { PropsWithChildren } from 'react';
 
-import constants from "@/constants";
-import useClientStore from "@/store/client";
-import useBottomSheetStore from "@/store/bottom-sheets";
+import constants from '@/constants';
+import useClientStore from '@/store/client';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function GestureDetectorProvider({
   children,
@@ -22,8 +22,8 @@ export default function GestureDetectorProvider({
    */
   const onTripleFingerTap = (event: GestureTouchEvent) => {
     if (event.numberOfTouches === 3) {
-      if (constants.environment === "development" || devModeEnabled) {
-        openBottomSheet("NETWORK_LOGGER");
+      if (constants.environment === 'development' || devModeEnabled) {
+        openBottomSheet('NETWORK_LOGGER');
       }
     }
   };

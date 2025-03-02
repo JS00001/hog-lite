@@ -1,7 +1,7 @@
-import { PropsWithChildren, useRef } from "react";
+import { PropsWithChildren, useRef } from 'react';
 
-import useAuthStore from "@/store/auth";
-import { useGetUser } from "@/hooks/api/user";
+import useAuthStore from '@/store/auth';
+import { useGetUser } from '@/hooks/api/user';
 
 export default function AuthProvider({ children }: PropsWithChildren) {
   const initialized = useRef(false);

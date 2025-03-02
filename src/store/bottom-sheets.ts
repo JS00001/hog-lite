@@ -1,12 +1,12 @@
-import { create } from "zustand";
-import * as Haptic from "expo-haptics";
-import { Keyboard } from "react-native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { create } from 'zustand';
+import * as Haptic from 'expo-haptics';
+import { Keyboard } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import {
   IndividualSheetName,
   IndividualSheetProps,
-} from "@/components/BottomSheets/@types";
+} from '@/components/BottomSheets/@types';
 
 interface IBottomSheetState {
   refs: {
@@ -27,7 +27,7 @@ interface IBottomSheetStore extends IBottomSheetState {
   /** Open a bottom sheet by its name */
   open: <T extends IndividualSheetName>(
     name: T,
-    props?: IndividualSheetProps[T]
+    props?: IndividualSheetProps[T],
   ) => void;
 }
 
@@ -38,7 +38,7 @@ const useBottomSheetStore = create<IBottomSheetStore>((set, get) => {
 
   const open = <T extends IndividualSheetName>(
     name: T,
-    props?: IndividualSheetProps[T]
+    props?: IndividualSheetProps[T],
   ) => {
     const sheet = get().refs.find((ref) => ref.name === name);
 

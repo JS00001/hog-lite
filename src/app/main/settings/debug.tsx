@@ -1,13 +1,13 @@
-import { Linking, View } from "react-native";
+import { Linking, View } from 'react-native';
 
-import Text from "@/ui/Text";
-import Switch from "@/ui/Switch";
-import Button from "@/ui/Button";
-import constants from "@/constants";
-import { createUUID } from "@/lib/utils";
-import Layout from "@/components/Layout";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
+import Text from '@/ui/Text';
+import Switch from '@/ui/Switch';
+import Button from '@/ui/Button';
+import constants from '@/constants';
+import { createUUID } from '@/lib/utils';
+import Layout from '@/components/Layout';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
 
 export default function Appearance() {
   const posthog = usePosthog();
@@ -16,22 +16,22 @@ export default function Appearance() {
   const setClientStore = useClientStore((s) => s.setField);
 
   const onToggleDeveloperMode = () => {
-    setClientStore("devMode", !devMode);
-    posthog.capture("toggle_developer_mode", { devMode: !devMode });
+    setClientStore('devMode', !devMode);
+    posthog.capture('toggle_developer_mode', { devMode: !devMode });
   };
 
   const onGoToGitHub = () => {
-    Linking.openURL("https://github.com/JS00001/hog-lite");
-    posthog.capture("go_to_github");
+    Linking.openURL(constants.githubUrl);
+    posthog.capture('go_to_github');
   };
 
   const onSetUniqueId = () => {
     const uuid = createUUID();
 
-    posthog.capture("set_unique_id", { uuid });
+    posthog.capture('set_unique_id', { uuid });
     posthog.identify(uuid, {
       uuid,
-      user_source: "debug",
+      user_source: 'debug',
     });
   };
 
@@ -60,24 +60,6 @@ export default function Appearance() {
           </View>
           <Switch value={devMode} onChange={onToggleDeveloperMode} />
         </View>
-      </View>
-
-      <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">
-        <View>
-          <Text className="font-medium text-ink">Source Code</Text>
-          <Text className="font-medium text-gray text-sm">
-            this app is fully open-source, check it out on GitHub and maybe
-            event give it a star?
-          </Text>
-        </View>
-        <Button
-          size="sm"
-          color="accent"
-          icon="arrow-up-right"
-          onPress={onGoToGitHub}
-        >
-          Go to GitHub
-        </Button>
       </View>
 
       <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">

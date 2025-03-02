@@ -1,6 +1,6 @@
-import { BaseToast, type BaseToastProps } from "react-native-toast-message";
+import { BaseToast, type BaseToastProps } from 'react-native-toast-message';
 
-import useColors from "@/lib/theme";
+import useColors from '@/lib/theme';
 
 const toastConfig = {
   /**
@@ -12,7 +12,7 @@ const toastConfig = {
       <BaseToast
         {...props}
         style={{
-          boxShadow: "none",
+          boxShadow: 'none',
           shadowOpacity: 0,
           borderWidth: 1,
           borderColor: colors.divider,
@@ -21,8 +21,8 @@ const toastConfig = {
           height: 72,
           paddingVertical: 24,
         }}
-        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: "600" }}
-        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: "500" }}
+        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: '600' }}
+        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: '500' }}
       />
     );
   },
@@ -35,7 +35,7 @@ const toastConfig = {
       <BaseToast
         {...props}
         style={{
-          boxShadow: "none",
+          boxShadow: 'none',
           shadowOpacity: 0,
           borderWidth: 1,
           borderColor: colors.divider,
@@ -44,8 +44,8 @@ const toastConfig = {
           height: 72,
           paddingVertical: 24,
         }}
-        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: "600" }}
-        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: "500" }}
+        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: '600' }}
+        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: '500' }}
       />
     );
   },
@@ -58,7 +58,7 @@ const toastConfig = {
       <BaseToast
         {...props}
         style={{
-          boxShadow: "none",
+          boxShadow: 'none',
           shadowOpacity: 0,
           borderWidth: 1,
           borderColor: colors.divider,
@@ -67,8 +67,8 @@ const toastConfig = {
           height: 72,
           paddingVertical: 24,
         }}
-        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: "600" }}
-        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: "500" }}
+        text1Style={{ color: colors.ink, fontSize: 16, fontWeight: '600' }}
+        text2Style={{ color: colors.gray, fontSize: 12, fontWeight: '500' }}
       />
     );
   },
@@ -82,7 +82,7 @@ const toastConfig = {
       <BaseToast
         {...props}
         style={{
-          boxShadow: "none",
+          boxShadow: 'none',
           shadowOpacity: 0,
           borderWidth: 1,
           borderColor: colors.divider,
@@ -94,12 +94,12 @@ const toastConfig = {
         text1Style={{
           color: colors.ink,
           fontSize: 16,
-          fontWeight: "600",
+          fontWeight: '600',
         }}
         text2Style={{
           color: colors.gray,
           fontSize: 12,
-          fontWeight: "500",
+          fontWeight: '500',
         }}
       />
     );

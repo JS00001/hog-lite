@@ -1,9 +1,9 @@
-import { forwardRef } from "react";
-import useColors from "@/lib/theme";
-import { Dimensions, StyleSheet } from "react-native";
-import { BottomSheetModal, BottomSheetModalProps } from "@gorhom/bottom-sheet";
+import { forwardRef } from 'react';
+import useColors from '@/lib/theme';
+import { Dimensions, StyleSheet } from 'react-native';
+import { BottomSheetModal, BottomSheetModalProps } from '@gorhom/bottom-sheet';
 
-import BottomSheetBackdrop from "./Backdrop";
+import BottomSheetBackdrop from './Backdrop';
 
 interface Props extends BottomSheetModalProps {
   maxHeight?: number;
@@ -12,10 +12,10 @@ interface Props extends BottomSheetModalProps {
 
 const BottomSheet = forwardRef<BottomSheetModal, Props>(function BottomSheet(
   { preventClose, children, maxHeight = 0.9, ...props },
-  ref
+  ref,
 ) {
   const colors = useColors();
-  const windowHeight = Dimensions.get("window").height;
+  const windowHeight = Dimensions.get('window').height;
   const maxDynamicContentSize = windowHeight * maxHeight;
 
   return (
@@ -33,7 +33,7 @@ const BottomSheet = forwardRef<BottomSheetModal, Props>(function BottomSheet(
         { backgroundColor: colors.divider },
       ]}
       backdropComponent={(props) => {
-        const pressBehavior = preventClose ? "none" : "close";
+        const pressBehavior = preventClose ? 'none' : 'close';
         return <BottomSheetBackdrop {...props} pressBehavior={pressBehavior} />;
       }}
       {...props}

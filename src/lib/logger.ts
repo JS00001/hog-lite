@@ -1,6 +1,6 @@
-import { consoleTransport, logger as RNLogger } from "react-native-logs";
+import { consoleTransport, logger as RNLogger } from 'react-native-logs';
 
-export type LogLevels = "debug" | "info" | "warn" | "error";
+export type LogLevels = 'debug' | 'info' | 'warn' | 'error';
 
 export const logger = RNLogger.createLogger({
   async: false,
@@ -14,16 +14,16 @@ export const logger = RNLogger.createLogger({
   },
   transportOptions: {
     colors: {
-      debug: "grey",
-      info: "grey",
-      warn: "yellowBright",
-      error: "redBright",
+      debug: 'grey',
+      info: 'grey',
+      warn: 'yellowBright',
+      error: 'redBright',
     },
     extensionColors: {
-      Websocket: "magentaBright",
-      Http: "greenBright",
+      Websocket: 'magentaBright',
+      Http: 'greenBright',
     },
   },
 });
 
-export const httpLogger = logger.extend("Http");
+export const httpLogger = logger.extend('Http');

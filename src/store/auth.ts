@@ -1,8 +1,8 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { IUser } from "@/@types";
-import PersistedAsyncStorage from "@/lib/async-store";
+import { IUser } from '@/@types';
+import PersistedAsyncStorage from '@/lib/async-store';
 
 /**
  * State that is stored about the auth
@@ -69,7 +69,7 @@ const useAuthStore = create<IAuthStore>()(
       };
     },
     {
-      name: "auth-storage",
+      name: 'auth-storage',
       storage: PersistedAsyncStorage,
       // Only persist the api key
       partialize: (state) => ({
@@ -86,8 +86,8 @@ const useAuthStore = create<IAuthStore>()(
           return state.setHydrated();
         };
       },
-    }
-  )
+    },
+  ),
 );
 
 export default useAuthStore;

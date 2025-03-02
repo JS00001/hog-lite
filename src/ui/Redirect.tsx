@@ -1,8 +1,8 @@
-import { RedirectProps, Redirect as ExpoRedirect } from "expo-router";
+import { RedirectProps, Redirect as ExpoRedirect } from 'expo-router';
 
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, View } from 'react-native';
 
-import useColors from "@/lib/theme";
+import useColors from '@/lib/theme';
 
 export default function Redirect(props: RedirectProps) {
   const colors = useColors();

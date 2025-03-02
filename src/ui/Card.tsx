@@ -2,12 +2,12 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-} from "react-native-reanimated";
-import { Pressable, View } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
+} from 'react-native-reanimated';
+import { Pressable, View } from 'react-native';
+import Feather from '@expo/vector-icons/Feather';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
 
 interface Props {
   disabled?: boolean;

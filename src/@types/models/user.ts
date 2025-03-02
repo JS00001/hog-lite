@@ -1,4 +1,4 @@
-import { IOrganization, IProject } from "..";
+import { IOrganization, IProject } from '..';
 
 export interface IUser {
   date_joined: string;

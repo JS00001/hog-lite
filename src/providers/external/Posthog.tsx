@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
-import { PostHogProvider } from "posthog-react-native";
+import { PropsWithChildren } from 'react';
+import { PostHogProvider } from 'posthog-react-native';
 
-import constants from "@/constants";
+import constants from '@/constants';
 
 export default function PosthogProvider({ children }: PropsWithChildren) {
-  if (constants.environment === "development") return children;
+  if (constants.environment === 'development') return children;
 
   return (
     <PostHogProvider

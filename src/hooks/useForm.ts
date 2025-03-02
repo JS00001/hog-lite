@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { useState } from "react";
+import { z } from 'zod';
+import { useState } from 'react';
 
 interface IUseForm<TRequest> {
   /** Validators for each form field */
@@ -27,8 +27,8 @@ const useForm = <TRequest>({
   const initialState = Object.fromEntries(
     Object.keys(validators).map((key) => {
       const initialValue = initialValues?.[key as keyof TRequest];
-      return [key, { value: initialValue ?? "", error: "" }];
-    })
+      return [key, { value: initialValue ?? '', error: '' }];
+    }),
   ) as TState;
 
   const [state, setState] = useState<TState>(initialState);
@@ -41,7 +41,7 @@ const useForm = <TRequest>({
   const reducedState: TRequest = (() => {
     const entries = Object.entries(state) as [
       TRequestFields,
-      TState[TRequestFields]
+      TState[TRequestFields],
     ][];
 
     const mappedEntries = entries.map(([KeyboardEvent, fieldState]) => [
@@ -61,7 +61,7 @@ const useForm = <TRequest>({
       ...prev,
       [key]: {
         value,
-        error: "", // Clear the error when the values changes
+        error: '', // Clear the error when the values changes
       },
     }));
   };
@@ -92,7 +92,7 @@ const useForm = <TRequest>({
       const errors = validatorsResult.error.errors;
 
       for (const error of errors) {
-        const field = error.path.join(".");
+        const field = error.path.join('.');
 
         setError(field as TRequestFields, error.message);
       }

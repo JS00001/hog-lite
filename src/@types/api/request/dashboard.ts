@@ -1,4 +1,4 @@
-import { TimePeriod } from "./query";
+import { TimePeriod } from './query';
 
 export interface GetDashboardsRequest {
   limit?: number;

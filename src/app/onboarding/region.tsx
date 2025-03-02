@@ -1,16 +1,16 @@
-import { View } from "react-native";
-import { router } from "expo-router";
+import { View } from 'react-native';
+import { router } from 'expo-router';
 
-import Select from "@/ui/Select";
-import Button from "@/ui/Button";
-import useForm from "@/hooks/useForm";
-import TextInput from "@/ui/TextInput";
-import Layout from "@/components/Layout";
-import validators from "@/lib/validators";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import { ISelectOption } from "@/ui/Select/@types";
-import useBottomSheetStore from "@/store/bottom-sheets";
+import Select from '@/ui/Select';
+import Button from '@/ui/Button';
+import useForm from '@/hooks/useForm';
+import TextInput from '@/ui/TextInput';
+import Layout from '@/components/Layout';
+import validators from '@/lib/validators';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import { ISelectOption } from '@/ui/Select/@types';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function Region() {
   const posthog = usePosthog();
@@ -34,17 +34,17 @@ export default function Region() {
 
     if (!isValid) return;
 
-    const isCustomInput = form.state.selection.value === "custom-endpoint";
-    const isCustomInputEmpty = form.state.posthogEndpoint.value === "";
+    const isCustomInput = form.state.selection.value === 'custom-endpoint';
+    const isCustomInputEmpty = form.state.posthogEndpoint.value === '';
 
     if (isCustomInput && isCustomInputEmpty) {
-      form.setError("posthogEndpoint", "URL is required");
+      form.setError('posthogEndpoint', 'URL is required');
       return;
     }
 
-    clientStore.setField("posthogEndpoint", form.state.posthogEndpoint.value);
-    router.push("/onboarding/api-key");
-    posthog.capture("onboarding_region_continue");
+    clientStore.setField('posthogEndpoint', form.state.posthogEndpoint.value);
+    router.push('/onboarding/api-key');
+    posthog.capture('onboarding_region_continue');
   };
 
   /**
@@ -55,14 +55,14 @@ export default function Region() {
    * to an empty string and allow the user to input their own endpoint.
    */
   const onSelectChange = (value: string) => {
-    form.setValue("selection", value);
+    form.setValue('selection', value);
 
-    if (value !== "custom-endpoint") {
-      form.setValue("posthogEndpoint", value);
+    if (value !== 'custom-endpoint') {
+      form.setValue('posthogEndpoint', value);
       return;
     }
 
-    form.setValue("posthogEndpoint", "");
+    form.setValue('posthogEndpoint', '');
   };
 
   /**
@@ -70,14 +70,14 @@ export default function Region() {
    * that explains what the data region is and why it's important
    */
   const onExplain = () => {
-    openBottomSheet("DATA_REGION");
-    posthog.capture("onboarding_region_explain");
+    openBottomSheet('DATA_REGION');
+    posthog.capture('onboarding_region_explain');
   };
 
   const regionOptions: ISelectOption[] = [
-    { label: "United States", value: "https://us.posthog.com" },
-    { label: "European Union", value: "https://eu.posthog.com" },
-    { label: "Custom Endpoint", value: "custom-endpoint" },
+    { label: 'United States', value: 'https://us.posthog.com' },
+    { label: 'European Union', value: 'https://eu.posthog.com' },
+    { label: 'Custom Endpoint', value: 'custom-endpoint' },
   ];
 
   return (
@@ -91,13 +91,13 @@ export default function Region() {
             value={form.state.selection.value}
             onChange={onSelectChange}
           />
-          {form.state.selection.value === "custom-endpoint" && (
+          {form.state.selection.value === 'custom-endpoint' && (
             <TextInput
               label="Custom Endpoint"
               placeholder="https://us.posthog.com"
               value={form.state.posthogEndpoint.value}
               error={form.state.posthogEndpoint.error}
-              onChangeText={(value) => form.setValue("posthogEndpoint", value)}
+              onChangeText={(value) => form.setValue('posthogEndpoint', value)}
             />
           )}
 

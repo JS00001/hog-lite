@@ -1,12 +1,12 @@
-import { router } from "expo-router";
-import { useMutation } from "@tanstack/react-query";
+import { router } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
 
-import { login } from "@/api";
-import useAuthStore from "@/store/auth";
-import { LoginRequest } from "@/@types";
-import useClientStore from "@/store/client";
-import { validateResponse } from "@/lib/utils";
-import { getMockUserResponse } from "@/constants/mock-data";
+import { login } from '@/api';
+import useAuthStore from '@/store/auth';
+import { LoginRequest } from '@/@types';
+import useClientStore from '@/store/client';
+import { validateResponse } from '@/lib/utils';
+import { getMockUserResponse } from '@/constants/mock-data';
 
 export const useLogin = () => {
   const clientStore = useClientStore();
@@ -19,16 +19,16 @@ export const useLogin = () => {
     },
     onSuccess: (data, vars) => {
       if (data.organization.id) {
-        clientStore.setField("organization", data.organization.id);
+        clientStore.setField('organization', data.organization.id);
       }
 
       if (data.organization.projects.length) {
         const project = data.organization.projects[0];
-        clientStore.setField("project", project.id.toString());
+        clientStore.setField('project', project.id.toString());
       }
 
       loginAuthStore(vars.apiKey);
-      router.push("/main/insights");
+      router.push('/main/insights');
     },
   });
 
@@ -46,16 +46,16 @@ export const useDemoLogin = () => {
     },
     onSuccess: (data) => {
       if (data.organization.id) {
-        clientStore.setField("organization", data.organization.id);
+        clientStore.setField('organization', data.organization.id);
       }
 
       if (data.organization.projects.length) {
         const project = data.organization.projects[0];
-        clientStore.setField("project", project.id.toString());
+        clientStore.setField('project', project.id.toString());
       }
 
       setDemoing(true);
-      router.push("/main/insights");
+      router.push('/main/insights');
     },
   });
 

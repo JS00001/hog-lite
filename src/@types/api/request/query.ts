@@ -1,24 +1,24 @@
 export type TimePeriod =
   /** Results from today */
-  | "dStart"
+  | 'dStart'
   /** Results from yesterday */
-  | "-1dStart"
+  | '-1dStart'
   /** Results from the last 24 hours */
-  | "-24h"
+  | '-24h'
   /** Results from the last 7 days */
-  | "-7d"
+  | '-7d'
   /** Results from the last 30 days */
-  | "-30d"
+  | '-30d'
   /** Results from the last 90 days */
-  | "-90d"
+  | '-90d'
   /** Results from the last 180 days */
-  | "-180d"
+  | '-180d'
   /** Results from the start of the month */
-  | "mStart"
+  | 'mStart'
   /** Results from the start of the year */
-  | "yStart"
+  | 'yStart'
   /** Results from all time */
-  | "all";
+  | 'all';
 
 export interface GetQueryRequest {
   /** The project id to query */
@@ -32,7 +32,7 @@ export interface GetQueryRequest {
     /** The amount to offset by */
     offset?: number;
     /** The type of query */
-    kind: "EventsQuery";
+    kind: 'EventsQuery';
     /** Limit to results within a specific time range */
     after: TimePeriod;
     /** Whether to filter out test users or not */

@@ -1,12 +1,12 @@
-import { AxiosError } from "axios";
-import Toast from "react-native-toast-message";
+import { AxiosError } from 'axios';
+import Toast from 'react-native-toast-message';
 
-import axios from ".";
+import axios from '.';
 
-import { API } from "@/@types";
-import useAuthStore from "@/store/auth";
-import { httpLogger } from "@/lib/logger";
-import useClientStore from "@/store/client";
+import { API } from '@/@types';
+import useAuthStore from '@/store/auth';
+import { httpLogger } from '@/lib/logger';
+import useClientStore from '@/store/client';
 
 /**
  * Setup request and response interceptors for axios
@@ -25,7 +25,7 @@ const setupRequestInterceptors = () => {
     httpLogger.debug(config.method?.toUpperCase(), config.url);
 
     if (apiKey && !config.headers.Authorization) {
-      config.headers["Authorization"] = `Bearer ${apiKey}`;
+      config.headers['Authorization'] = `Bearer ${apiKey}`;
     }
 
     return config;
@@ -43,9 +43,9 @@ const setupRequestInterceptors = () => {
       /** No network connection */
       if (!response) {
         Toast.show({
-          type: "error",
-          text1: "Network Error",
-          text2: "Please check your internet connection and try again.",
+          type: 'error',
+          text1: 'Network Error',
+          text2: 'Please check your internet connection and try again.',
         });
 
         return Promise.reject(error);
@@ -54,9 +54,9 @@ const setupRequestInterceptors = () => {
       /** 401 - Unauthorized Error */
       if (response.status === 401) {
         Toast.show({
-          type: "error",
-          text1: "Authorization Failed",
-          text2: "Invalid API key. Maybe the wrong region?",
+          type: 'error',
+          text1: 'Authorization Failed',
+          text2: 'Invalid API key. Maybe the wrong region?',
         });
 
         useAuthStore.getState().logout();
@@ -65,24 +65,24 @@ const setupRequestInterceptors = () => {
       /** 429 - Rate Limit Exceeded */
       if (response.status === 429) {
         Toast.show({
-          type: "error",
-          text1: "Rate Limit Exceeded",
+          type: 'error',
+          text1: 'Rate Limit Exceeded',
           text2:
-            "PostHog has rate limits in place that we cannot control. Please wait before trying again.",
+            'PostHog has rate limits in place that we cannot control. Please wait before trying again.',
         });
       }
 
       /** 500 - Internal Server Error */
       if (response.status >= 500) {
         Toast.show({
-          type: "error",
-          text1: "Internal Server Error",
-          text2: "An unexpected error occurred. Please try again later.",
+          type: 'error',
+          text1: 'Internal Server Error',
+          text2: 'An unexpected error occurred. Please try again later.',
         });
       }
 
       return Promise.reject(error);
-    }
+    },
   );
 };
 

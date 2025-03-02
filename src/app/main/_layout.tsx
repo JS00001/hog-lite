@@ -1,9 +1,9 @@
-import { Tabs } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
+import { Tabs } from 'expo-router';
+import Feather from '@expo/vector-icons/Feather';
 
-import useColors from "@/lib/theme";
-import Redirect from "@/ui/Redirect";
-import useAuthStore from "@/store/auth";
+import useColors from '@/lib/theme';
+import Redirect from '@/ui/Redirect';
+import useAuthStore from '@/store/auth';
 
 export default function Layout() {
   const colors = useColors();
@@ -23,7 +23,7 @@ export default function Layout() {
           marginTop: 12,
         },
         tabBarStyle: {
-          position: "absolute",
+          position: 'absolute',
           backgroundColor: colors.highlight,
           borderTopColor: colors.divider,
           height: 92,
@@ -36,7 +36,7 @@ export default function Layout() {
       <Tabs.Screen
         name="insights"
         options={{
-          title: "Insights",
+          title: 'Insights',
           tabBarIcon: ({ color }) => (
             <Feather
               name="bar-chart"
@@ -50,7 +50,7 @@ export default function Layout() {
       <Tabs.Screen
         name="activity"
         options={{
-          title: "Activity",
+          title: 'Activity',
           tabBarIcon: ({ color }) => (
             <Feather name="radio" size={24} color={color} className="pb-4" />
           ),
@@ -59,7 +59,7 @@ export default function Layout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: 'Settings',
           tabBarIcon: ({ color }) => (
             <Feather name="settings" size={24} color={color} className="pb-4" />
           ),

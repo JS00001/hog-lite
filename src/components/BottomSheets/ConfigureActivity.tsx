@@ -1,20 +1,20 @@
-import { View } from "react-native";
-import { forwardRef, useState } from "react";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { View } from 'react-native';
+import { forwardRef, useState } from 'react';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { BottomSheetProps } from "./@types";
+import { BottomSheetProps } from './@types';
 
 import useClientStore, {
   ActivityColumn,
   ActivityDisplayMode,
-} from "@/store/client";
-import Text from "@/ui/Text";
-import Switch from "@/ui/Switch";
-import Select from "@/ui/Select";
-import Button from "@/ui/Button";
-import BottomSheet from "@/ui/BottomSheet";
-import { ISelectOption } from "@/ui/Select/@types";
-import BottomSheetView from "@/ui/BottomSheet/Containers/View";
+} from '@/store/client';
+import Text from '@/ui/Text';
+import Switch from '@/ui/Switch';
+import Select from '@/ui/Select';
+import Button from '@/ui/Button';
+import BottomSheet from '@/ui/BottomSheet';
+import { ISelectOption } from '@/ui/Select/@types';
+import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 
 type Props = BottomSheetProps;
 
@@ -30,16 +30,16 @@ function Content({ close }: Props) {
 
   const displayOptions: ISelectOption[] = [
     {
-      label: "Full",
-      value: "full",
+      label: 'Full',
+      value: 'full',
       description:
-        "Gives each column more space to breathe, but may require scrolling horizontally",
+        'Gives each column more space to breathe, but may require scrolling horizontally',
     },
     {
-      label: "Compact",
-      value: "compact",
+      label: 'Compact',
+      value: 'compact',
       description:
-        "Fit all data in the width of the screen without scrolling horizontally",
+        'Fit all data in the width of the screen without scrolling horizontally',
     },
   ];
 
@@ -56,8 +56,8 @@ function Content({ close }: Props) {
   };
 
   const onSave = () => {
-    setField("activityDisplayMode", state.mode);
-    setField("activityColumns", state.columns);
+    setField('activityDisplayMode', state.mode);
+    setField('activityColumns', state.columns);
     close();
   };
 
@@ -85,26 +85,26 @@ function Content({ close }: Props) {
           <ColumnToggle
             title="Event"
             description="The name of the event that occurred"
-            value={state.columns.includes("event")}
-            onValueChange={() => onToggleColumn("event")}
+            value={state.columns.includes('event')}
+            onValueChange={() => onToggleColumn('event')}
           />
           <ColumnToggle
             title="Person"
             description="The person who performed the action"
-            value={state.columns.includes("person")}
-            onValueChange={() => onToggleColumn("person")}
+            value={state.columns.includes('person')}
+            onValueChange={() => onToggleColumn('person')}
           />
           <ColumnToggle
             title="URL / Screen"
             description="The url/screen where the action occurred"
-            value={state.columns.includes("url")}
-            onValueChange={() => onToggleColumn("url")}
+            value={state.columns.includes('url')}
+            onValueChange={() => onToggleColumn('url')}
           />
           <ColumnToggle
             title="Timestamp"
             description="The time when the activity occurred"
-            value={state.columns.includes("timestamp")}
-            onValueChange={() => onToggleColumn("timestamp")}
+            value={state.columns.includes('timestamp')}
+            onValueChange={() => onToggleColumn('timestamp')}
           />
         </View>
       </View>
@@ -143,7 +143,7 @@ function ColumnToggle({
 const ConfigureActivitySheet = forwardRef<BottomSheetModal, BottomSheetProps>(
   function ConfigureActivitySheet(props, ref) {
     return <BottomSheet ref={ref} children={<Content {...props} />} />;
-  }
+  },
 );
 
 export default ConfigureActivitySheet;

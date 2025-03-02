@@ -1,13 +1,13 @@
-import { FlatList } from "react-native";
-import { setAppIcon } from "expo-dynamic-app-icon";
+import { FlatList } from 'react-native';
+import { setAppIcon } from 'expo-dynamic-app-icon';
 
-import Text from "@/ui/Text";
-import Select from "@/ui/Select";
-import Layout from "@/components/Layout";
-import AppIcon from "@/components/AppIcon";
-import usePosthog from "@/hooks/usePosthog";
-import { ISelectOption } from "@/ui/Select/@types";
-import useClientStore, { AppIcon as TAppIcon } from "@/store/client";
+import Text from '@/ui/Text';
+import Select from '@/ui/Select';
+import Layout from '@/components/Layout';
+import AppIcon from '@/components/AppIcon';
+import usePosthog from '@/hooks/usePosthog';
+import { ISelectOption } from '@/ui/Select/@types';
+import useClientStore, { AppIcon as TAppIcon } from '@/store/client';
 
 export default function Appearance() {
   const posthog = usePosthog();
@@ -17,22 +17,22 @@ export default function Appearance() {
   const setClientStore = useClientStore((s) => s.setField);
 
   const onThemeChange = (value: string) => {
-    setClientStore("theme", value as "light" | "dark");
-    posthog.capture("theme_changed", { theme: value });
+    setClientStore('theme', value as 'light' | 'dark');
+    posthog.capture('theme_changed', { theme: value });
   };
 
   const onAppIconChange = (value: TAppIcon) => {
     setAppIcon(value);
-    setClientStore("appIcon", value);
-    posthog.capture("app_icon_changed", { appIcon: value });
+    setClientStore('appIcon', value);
+    posthog.capture('app_icon_changed', { appIcon: value });
   };
 
   /**
    * The options for the theme select input.
    */
   const themeSelectOptions: ISelectOption[] = [
-    { label: "Light", value: "light" },
-    { label: "Dark", value: "dark" },
+    { label: 'Light', value: 'light' },
+    { label: 'Dark', value: 'dark' },
   ];
 
   /**
@@ -40,34 +40,34 @@ export default function Appearance() {
    */
   const appIconOptions = [
     {
-      label: "Default",
-      value: "default",
-      src: require("@/../assets/images/icon.png"),
+      label: 'Default',
+      value: 'default',
+      src: require('@/../assets/images/icon.png'),
     },
     {
-      label: "Angry Hog",
-      value: "angry",
-      src: require("@/../assets/images/dynamic-icons/angry-icon.png"),
+      label: 'Angry Hog',
+      value: 'angry',
+      src: require('@/../assets/images/dynamic-icons/angry-icon.png'),
     },
     {
-      label: "Nerdy Hog",
-      value: "nerd",
-      src: require("@/../assets/images/dynamic-icons/nerd-icon.png"),
+      label: 'Nerdy Hog',
+      value: 'nerd',
+      src: require('@/../assets/images/dynamic-icons/nerd-icon.png'),
     },
     {
-      label: "Blue",
-      value: "happy-blue",
-      src: require("@/../assets/images/dynamic-icons/happy-icon-blue.png"),
+      label: 'Blue',
+      value: 'happy-blue',
+      src: require('@/../assets/images/dynamic-icons/happy-icon-blue.png'),
     },
     {
-      label: "Orange",
-      value: "happy-orange",
-      src: require("@/../assets/images/dynamic-icons/happy-icon-orange.png"),
+      label: 'Orange',
+      value: 'happy-orange',
+      src: require('@/../assets/images/dynamic-icons/happy-icon-orange.png'),
     },
     {
-      label: "Space Hog",
-      value: "space",
-      src: require("@/../assets/images/dynamic-icons/space-icon.png"),
+      label: 'Space Hog',
+      value: 'space',
+      src: require('@/../assets/images/dynamic-icons/space-icon.png'),
     },
   ];
 

@@ -1,29 +1,30 @@
-import { router } from "expo-router";
-import { Linking, View } from "react-native";
+import { router } from 'expo-router';
+import { Linking, View } from 'react-native';
 
-import Text from "@/ui/Text";
-import Button from "@/ui/Button";
-import Layout from "@/components/Layout";
-import usePosthog from "@/hooks/usePosthog";
-import { useDemoLogin } from "@/hooks/api/user";
+import Text from '@/ui/Text';
+import Button from '@/ui/Button';
+import constants from '@/constants';
+import Layout from '@/components/Layout';
+import usePosthog from '@/hooks/usePosthog';
+import { useDemoLogin } from '@/hooks/api/user';
 
 export default function Landing() {
   const posthog = usePosthog();
   const demoMutation = useDemoLogin();
 
   const onContinue = () => {
-    router.push("/onboarding/region");
-    posthog.capture("onboarding_landing_continue");
+    router.push('/onboarding/region');
+    posthog.capture('onboarding_landing_continue');
   };
 
   const onTextClick = () => {
-    Linking.openURL("https://github.com/JS00001/hog-mobile");
-    posthog.capture("onboarding_landing_open_source");
+    Linking.openURL(constants.githubUrl);
+    posthog.capture('onboarding_landing_open_source');
   };
 
   const onDemo = async () => {
     await demoMutation.mutateAsync();
-    posthog.capture("onboarding_landing_demo");
+    posthog.capture('onboarding_landing_demo');
   };
 
   return (
@@ -35,10 +36,10 @@ export default function Landing() {
               Welcome to HogLite!
             </Text>
             <Text className="text-lg text-gray">
-              HogLite is a free and fully{" "}
+              HogLite is a free and fully{' '}
               <Text className="text-red underline" onPress={onTextClick}>
                 open-source
-              </Text>{" "}
+              </Text>{' '}
               PostHog client to view insights, events, and more, all from your
               phone. We're excited to have you on board!
             </Text>

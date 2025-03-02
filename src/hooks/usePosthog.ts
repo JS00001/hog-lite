@@ -1,6 +1,6 @@
-import * as Sentry from "@sentry/react-native";
+import * as Sentry from '@sentry/react-native';
 
-import { usePostHog as usePosthogNative } from "posthog-react-native";
+import { usePostHog as usePosthogNative } from 'posthog-react-native';
 
 const usePosthog = () => {
   const posthog = usePosthogNative();

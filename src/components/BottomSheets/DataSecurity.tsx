@@ -1,13 +1,13 @@
-import { forwardRef } from "react";
-import { View } from "react-native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef } from 'react';
+import { View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { BottomSheetProps } from "./@types";
+import { BottomSheetProps } from './@types';
 
-import Text from "@/ui/Text";
-import BottomSheet from "@/ui/BottomSheet";
-import BottomSheetView from "@/ui/BottomSheet/Containers/View";
-import TeacherHedgehogLeft from "@/assets/TeacherHedgehogLeft";
+import Text from '@/ui/Text';
+import BottomSheet from '@/ui/BottomSheet';
+import BottomSheetView from '@/ui/BottomSheet/Containers/View';
+import TeacherHedgehogLeft from '@/assets/TeacherHedgehogLeft';
 
 type Props = BottomSheetProps;
 
@@ -32,7 +32,7 @@ function Content({}: Props) {
 const DataSecuritySheet = forwardRef<BottomSheetModal, BottomSheetProps>(
   function DataSecuritySheet(props, ref) {
     return <BottomSheet ref={ref} children={<Content {...props} />} />;
-  }
+  },
 );
 
 export default DataSecuritySheet;

@@ -1,5 +1,5 @@
-import axios from "@/lib/axios";
-import { GetQueryRequest, GetQueryResponse } from "@/@types";
+import axios from '@/lib/axios';
+import { GetQueryRequest, GetQueryResponse } from '@/@types';
 
 /**
  * Request:     POST /api/environments/:project_id/query

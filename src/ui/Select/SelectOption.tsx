@@ -1,11 +1,11 @@
-import classNames from "classnames";
-import Feather from "@expo/vector-icons/Feather";
-import { TouchableHighlight, View } from "react-native";
+import classNames from 'classnames';
+import Feather from '@expo/vector-icons/Feather';
+import { TouchableHighlight, View } from 'react-native';
 
-import { ISelectOption } from "./@types";
+import { ISelectOption } from './@types';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
 
 interface Props extends ISelectOption {
   selected: string | null;
@@ -22,7 +22,7 @@ export default function SelectOption({
   const colors = useColors();
 
   const isSelected = value === selected;
-  const containerClasses = classNames(isSelected && "bg-accent");
+  const containerClasses = classNames(isSelected && 'bg-accent');
 
   return (
     <TouchableHighlight

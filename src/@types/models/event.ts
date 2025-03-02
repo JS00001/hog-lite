@@ -32,5 +32,5 @@ export type IEvent = [
   // Current URL or Screen Name
   string,
   // Timestamp
-  string
+  string,
 ];

@@ -1,5 +1,5 @@
-import * as SplashScreen from "expo-splash-screen";
-import { PropsWithChildren, useEffect } from "react";
+import * as SplashScreen from 'expo-splash-screen';
+import { PropsWithChildren, useEffect } from 'react';
 
 // todo: clean
 export default function SplashScreenProvider({ children }: PropsWithChildren) {

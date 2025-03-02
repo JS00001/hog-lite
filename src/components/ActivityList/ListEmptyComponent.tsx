@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from 'react';
+import { View } from 'react-native';
 
-import Text from "@/ui/Text";
-import Skeleton from "@/ui/Skeleton";
-import PanickedHedgehog from "@/assets/PanickedHedgehog";
+import Text from '@/ui/Text';
+import Skeleton from '@/ui/Skeleton';
+import PanickedHedgehog from '@/assets/PanickedHedgehog';
 
 interface Props {
   isLoading: boolean;

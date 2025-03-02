@@ -1,5 +1,5 @@
-import { createJSONStorage } from "zustand/middleware";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PersistedAsyncStorage = createJSONStorage(() => ({
   setItem: async (key: string, value: string) => {

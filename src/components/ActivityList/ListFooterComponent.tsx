@@ -1,5 +1,5 @@
-import useColors from "@/lib/theme";
-import { ActivityIndicator } from "react-native";
+import useColors from '@/lib/theme';
+import { ActivityIndicator } from 'react-native';
 
 interface Props {
   isLoading: boolean;

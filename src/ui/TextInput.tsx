@@ -2,10 +2,10 @@ import {
   TextInput as RNTextInput,
   TextInputProps as RNTextInputProps,
   View,
-} from "react-native";
-import classNames from "classnames";
+} from 'react-native';
+import classNames from 'classnames';
 
-import Text from "@/ui/Text";
+import Text from '@/ui/Text';
 
 interface Props extends RNTextInputProps {
   label: string;
@@ -21,9 +21,9 @@ export default function TextInput({
   ...props
 }: Props) {
   const inputClasses = classNames(
-    "p-3 border border-divider rounded-lg text-ink",
-    "placeholder:text-gray",
-    className
+    'p-3 border border-divider rounded-lg text-ink',
+    'placeholder:text-gray',
+    className,
   );
 
   return (

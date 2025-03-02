@@ -7,27 +7,27 @@ const fs = require('fs');
  * otherwise, the updateVersion is incremented by 1.
  */
 const updateVersion = () => {
-	const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-	const updateVersion = packageJson.updateVersion;
+  const updateVersion = packageJson.updateVersion;
 
-	const date = new Date();
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	const today = `${year}.${month}.${day}`;
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const today = `${year}.${month}.${day}`;
 
-	let newUpdateVersion;
-	if (updateVersion.startsWith(today)) {
-		const count = parseInt(updateVersion.split('.').pop(), 10);
-		newUpdateVersion = `${today}.${count + 1}`;
-	} else {
-		newUpdateVersion = `${today}.1`;
-	}
+  let newUpdateVersion;
+  if (updateVersion.startsWith(today)) {
+    const count = parseInt(updateVersion.split('.').pop(), 10);
+    newUpdateVersion = `${today}.${count + 1}`;
+  } else {
+    newUpdateVersion = `${today}.1`;
+  }
 
-	packageJson.updateVersion = newUpdateVersion;
-	fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
-	console.log(`Update version updated: ${updateVersion} → ${newUpdateVersion}`);
+  packageJson.updateVersion = newUpdateVersion;
+  fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
+  console.log(`Update version updated: ${updateVersion} → ${newUpdateVersion}`);
 };
 
 updateVersion();

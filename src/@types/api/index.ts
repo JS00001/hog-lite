@@ -1,12 +1,12 @@
-export * from "./response/user";
-export * from "./response/query";
-export * from "./response/organization";
-export * from "./response/dashboard";
+export * from './response/user';
+export * from './response/query';
+export * from './response/organization';
+export * from './response/dashboard';
 
-export * from "./request/user";
-export * from "./request/query";
-export * from "./request/organization";
-export * from "./request/dashboard";
+export * from './request/user';
+export * from './request/query';
+export * from './request/organization';
+export * from './request/dashboard';
 
 export namespace API {
   export type Error = {

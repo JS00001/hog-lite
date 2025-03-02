@@ -1,8 +1,8 @@
-import { BottomSheetBackdrop as RNBottomSheetBackdrop } from "@gorhom/bottom-sheet";
-import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
+import { BottomSheetBackdrop as RNBottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { BottomSheetDefaultBackdropProps } from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types';
 
 export default function BottomSheetBackdrop(
-  props: BottomSheetDefaultBackdropProps
+  props: BottomSheetDefaultBackdropProps,
 ) {
   return (
     <RNBottomSheetBackdrop

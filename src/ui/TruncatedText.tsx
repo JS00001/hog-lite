@@ -7,14 +7,14 @@ import {
   TextLayoutEventData,
   View,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import Text from "@/ui/Text";
-import classNames from "classnames";
-import { useCallback, useRef, useState } from "react";
+import Text from '@/ui/Text';
+import classNames from 'classnames';
+import { useCallback, useRef, useState } from 'react';
 
-const WIDTH = Dimensions.get("window").width;
-const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 interface Props extends RNTextProps {
   children: React.ReactNode;
@@ -91,12 +91,12 @@ export default function TruncatedText({
   };
 
   const tooltipClasses = classNames(
-    "absolute p-2 bg-highlight rounded-xl",
-    "border border-divider shadow shadow-primary"
+    'absolute p-2 bg-highlight rounded-xl',
+    'border border-divider shadow shadow-primary',
   );
 
   // We need a key to force layout calculation when we re-open the tooltip
-  const textKey = open ? "open" : "closed";
+  const textKey = open ? 'open' : 'closed';
 
   return (
     <>

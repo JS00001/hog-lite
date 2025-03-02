@@ -1,16 +1,16 @@
-import { forwardRef } from "react";
-import { View } from "react-native";
-import Feather from "@expo/vector-icons/Feather";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef } from 'react';
+import { View } from 'react-native';
+import Feather from '@expo/vector-icons/Feather';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { BottomSheetProps } from "./@types";
+import { BottomSheetProps } from './@types';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
-import BottomSheet from "@/ui/BottomSheet";
-import DataRegions from "@/constants/data-regions";
-import BottomSheetView from "@/ui/BottomSheet/Containers/View";
-import TeacherHedgehogRight from "@/assets/TeacherHedgehogRight";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
+import BottomSheet from '@/ui/BottomSheet';
+import DataRegions from '@/constants/data-regions';
+import BottomSheetView from '@/ui/BottomSheet/Containers/View';
+import TeacherHedgehogRight from '@/assets/TeacherHedgehogRight';
 
 type Props = BottomSheetProps;
 
@@ -55,7 +55,7 @@ function Content({}: Props) {
 const DataRegionSheet = forwardRef<BottomSheetModal, BottomSheetProps>(
   function DataRegionSheet(props, ref) {
     return <BottomSheet ref={ref} children={<Content {...props} />} />;
-  }
+  },
 );
 
 export default DataRegionSheet;

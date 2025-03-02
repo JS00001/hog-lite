@@ -1,4 +1,4 @@
-import { Alert, AlertButton, AlertOptions } from "react-native";
+import { Alert, AlertButton, AlertOptions } from 'react-native';
 
 interface AlertProps {
   title: string;

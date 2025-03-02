@@ -2,37 +2,37 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 import {
   ActivityIndicator,
   Pressable,
   TouchableOpacityProps,
   View,
-} from "react-native";
-import classNames from "classnames";
-import Feather from "@expo/vector-icons/Feather";
+} from 'react-native';
+import classNames from 'classnames';
+import Feather from '@expo/vector-icons/Feather';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
 
 export interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   icon?: keyof typeof Feather.glyphMap;
   size?: keyof typeof SizeClasses;
-  color?: "primary" | "accent" | "danger";
+  color?: 'primary' | 'accent' | 'danger';
 }
 
 const BUTTON_ANIMATION_OFFSET = 3;
 
 const SizeClasses = {
   sm: {
-    container: "min-w-20 h-10 px-4",
-    text: "text-base",
+    container: 'min-w-20 h-10 px-4',
+    text: 'text-base',
     icon: 16,
   },
   lg: {
-    container: "min-w-32 h-14 px-6",
-    text: "text-lg",
+    container: 'min-w-32 h-14 px-6',
+    text: 'text-lg',
     icon: 20,
   },
 };
@@ -41,8 +41,8 @@ export default function Button({
   children,
   loading = false,
   disabled = false,
-  size = "lg",
-  color = "primary",
+  size = 'lg',
+  color = 'primary',
   icon,
   ...props
 }: ButtonProps) {
@@ -59,7 +59,7 @@ export default function Button({
       container: colors.yellow,
       border: colors.shadowAccent,
       shadow: colors.yellow,
-      text: "#000",
+      text: '#000',
     },
     danger: {
       container: colors.primary,
@@ -78,8 +78,8 @@ export default function Button({
   }));
 
   const shadowClasses = classNames(
-    "border rounded-xl",
-    disabled && "opacity-50"
+    'border rounded-xl',
+    disabled && 'opacity-50',
   );
 
   const shadowStyles = {
@@ -88,9 +88,9 @@ export default function Button({
   };
 
   const containerClasses = classNames(
-    "items-center rounded-xl flex-row gap-2",
+    'items-center rounded-xl flex-row gap-2',
     SizeClasses[size].container,
-    icon ? "justify-between" : "justify-center"
+    icon ? 'justify-between' : 'justify-center',
   );
 
   const containerStyles = {
@@ -102,16 +102,16 @@ export default function Button({
   };
 
   const textClasses = classNames(
-    "font-semibold shrink",
+    'font-semibold shrink',
     SizeClasses[size].text,
-    loading && "opacity-10"
+    loading && 'opacity-10',
   );
 
   const textStyles = {
     color: ColorClasses[color].text,
   };
 
-  const iconClasses = classNames(loading && "opacity-10");
+  const iconClasses = classNames(loading && 'opacity-10');
 
   /**
    * When the button is pressed in and out, animate the button to make it look

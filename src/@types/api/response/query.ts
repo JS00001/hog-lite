@@ -1,4 +1,4 @@
-import { API, IEvent } from "@/@types";
+import { API, IEvent } from '@/@types';
 
 export type GetQueryResponse = API.Response<{
   cache_key: string;

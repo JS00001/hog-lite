@@ -1,5 +1,5 @@
-import useAuthStore from "@/store/auth";
-import Redirect from "@/ui/Redirect";
+import useAuthStore from '@/store/auth';
+import Redirect from '@/ui/Redirect';
 
 export default function Index() {
   const loggedIn = useAuthStore((state) => state.apiKey || state.demoing);

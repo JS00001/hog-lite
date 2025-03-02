@@ -1,4 +1,4 @@
-import { IEvent } from "@/@types";
+import { IEvent } from '@/@types';
 
 export interface ActivityListProps {
   data: IEvent[];

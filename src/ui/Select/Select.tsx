@@ -6,23 +6,23 @@ import {
   StyleProp,
   View,
   ViewStyle,
-} from "react-native";
-import classNames from "classnames";
-import * as Haptic from "expo-haptics";
-import { useCallback, useMemo, useRef, useState } from "react";
+} from 'react-native';
+import classNames from 'classnames';
+import * as Haptic from 'expo-haptics';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { ISelectOption } from "./@types";
-import SelectOption from "./SelectOption";
+import { ISelectOption } from './@types';
+import SelectOption from './SelectOption';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
-import Button, { ButtonProps } from "@/ui/Button";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
+import Button, { ButtonProps } from '@/ui/Button';
 
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 // TODO: Cleanup this JSX
-interface Props extends Omit<ButtonProps, "children"> {
+interface Props extends Omit<ButtonProps, 'children'> {
   label?: string;
   value: string | null;
   placeholder: string;
@@ -83,7 +83,7 @@ export default function Select({
   };
 
   const overlayStyle: StyleProp<ViewStyle> = {
-    position: "absolute",
+    position: 'absolute',
     top: position.y,
     left: position.x,
     maxHeight: HEIGHT / 2,
@@ -92,11 +92,11 @@ export default function Select({
   };
 
   const overlayClasses = classNames(
-    "w-full rounded-xl pb-1 z-50",
-    "border border-divider bg-shadow-primary"
+    'w-full rounded-xl pb-1 z-50',
+    'border border-divider bg-shadow-primary',
   );
 
-  const icon = open ? "chevron-up" : "chevron-down";
+  const icon = open ? 'chevron-up' : 'chevron-down';
 
   return (
     <>

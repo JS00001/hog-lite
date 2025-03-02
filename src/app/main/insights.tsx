@@ -1,19 +1,19 @@
-import { FlatList, View } from "react-native";
-import { useCallback, useMemo, useState } from "react";
+import { FlatList, View } from 'react-native';
+import { useCallback, useMemo, useState } from 'react';
 
-import Text from "@/ui/Text";
-import Select from "@/ui/Select";
-import Button from "@/ui/Button";
-import Insight from "@/ui/Insight";
-import Skeleton from "@/ui/Skeleton";
-import { TimePeriod } from "@/@types";
-import Layout from "@/components/Layout";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import { ISelectOption } from "@/ui/Select/@types";
-import PanickedHedgehog from "@/assets/PanickedHedgehog";
-import timePeriodOptions from "@/constants/time-periods";
-import { useGetDashboard, useGetDashboards } from "@/hooks/api/dashboard";
+import Text from '@/ui/Text';
+import Select from '@/ui/Select';
+import Button from '@/ui/Button';
+import Insight from '@/ui/Insight';
+import Skeleton from '@/ui/Skeleton';
+import { TimePeriod } from '@/@types';
+import Layout from '@/components/Layout';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import { ISelectOption } from '@/ui/Select/@types';
+import PanickedHedgehog from '@/assets/PanickedHedgehog';
+import timePeriodOptions from '@/constants/time-periods';
+import { useGetDashboard, useGetDashboards } from '@/hooks/api/dashboard';
 
 enum FetchingState {
   Reloading,
@@ -57,8 +57,8 @@ export default function Insights() {
    * changes, set it
    */
   const onDashboardChange = (value: string) => {
-    setClientStore("dashboard", value);
-    posthog.capture("insights_dashboard_changed");
+    setClientStore('dashboard', value);
+    posthog.capture('insights_dashboard_changed');
   };
 
   /**
@@ -67,8 +67,8 @@ export default function Insights() {
    */
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
-    setClientStore("insightsTimePeriod", value as TimePeriod);
-    posthog.capture("insights_time_period_changed", { timePeriod: value });
+    setClientStore('insightsTimePeriod', value as TimePeriod);
+    posthog.capture('insights_time_period_changed', { timePeriod: value });
   };
 
   /**
@@ -78,7 +78,7 @@ export default function Insights() {
   const onRefetch = () => {
     setFetchState(FetchingState.Reloading);
     dashboardQuery.refetch();
-    posthog.capture("insights_reloaded");
+    posthog.capture('insights_reloaded');
   };
 
   /**

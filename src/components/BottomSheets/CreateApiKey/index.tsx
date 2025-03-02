@@ -1,16 +1,16 @@
-import { forwardRef } from "react";
-import { Linking, View } from "react-native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef } from 'react';
+import { Linking, View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { BottomSheetProps } from "../@types";
+import { BottomSheetProps } from '../@types';
 
-import Text from "@/ui/Text";
-import Button from "@/ui/Button";
-import BottomSheet from "@/ui/BottomSheet";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import TeacherHedgehogRight from "@/assets/TeacherHedgehogRight";
-import BottomSheetScrollView from "@/ui/BottomSheet/Containers/ScrollView";
+import Text from '@/ui/Text';
+import Button from '@/ui/Button';
+import BottomSheet from '@/ui/BottomSheet';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import TeacherHedgehogRight from '@/assets/TeacherHedgehogRight';
+import BottomSheetScrollView from '@/ui/BottomSheet/Containers/ScrollView';
 
 type Props = BottomSheetProps;
 
@@ -20,7 +20,7 @@ function Content({}: Props) {
 
   const onUserSettings = () => {
     Linking.openURL(`${posthogEndpoint}/settings/user-api-keys`);
-    posthog.capture("onboarding_api_key_tutorial_settings_clicked");
+    posthog.capture('onboarding_api_key_tutorial_settings_clicked');
   };
 
   return (
@@ -95,7 +95,7 @@ function Content({}: Props) {
 const CreateApiKeySheet = forwardRef<BottomSheetModal, BottomSheetProps>(
   function CreateApiKeySheet(props, ref) {
     return <BottomSheet ref={ref} children={<Content {...props} />} />;
-  }
+  },
 );
 
 export default CreateApiKeySheet;

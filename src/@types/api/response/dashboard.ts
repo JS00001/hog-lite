@@ -1,5 +1,5 @@
-import { IInsight } from "@/@types/models/insight";
-import { API } from "..";
+import { IInsight } from '@/@types/models/insight';
+import { API } from '..';
 
 export type GetDashboardsResponse = API.Response<{
   count: number;

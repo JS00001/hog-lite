@@ -4,11 +4,11 @@ import {
   View,
   ImageSourcePropType,
   TouchableOpacity,
-} from "react-native";
-import classNames from "classnames";
-import Feather from "@expo/vector-icons/Feather";
+} from 'react-native';
+import classNames from 'classnames';
+import Feather from '@expo/vector-icons/Feather';
 
-import Text from "@/ui/Text";
+import Text from '@/ui/Text';
 
 interface Props {
   src: ImageSourcePropType;
@@ -17,13 +17,13 @@ interface Props {
   onPress: () => void;
 }
 
-const WIDTH = Dimensions.get("window").width;
+const WIDTH = Dimensions.get('window').width;
 
 export default function AppIcon({ src, label, selected, onPress }: Props) {
   const width = (WIDTH - 16) / 4 - 8;
 
   const imageClasses = classNames(
-    "w-20 h-20 rounded-2xl border border-divider"
+    'w-20 h-20 rounded-2xl border border-divider',
   );
 
   return (

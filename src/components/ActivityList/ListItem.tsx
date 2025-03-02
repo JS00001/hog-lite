@@ -1,14 +1,14 @@
-import classNames from "classnames";
-import { useMemo, useState } from "react";
-import Feather from "@expo/vector-icons/Feather";
-import { TouchableOpacity, View } from "react-native";
+import classNames from 'classnames';
+import { useMemo, useState } from 'react';
+import Feather from '@expo/vector-icons/Feather';
+import { TouchableOpacity, View } from 'react-native';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
-import { timeAgo } from "@/lib/utils";
-import useClientStore from "@/store/client";
-import usePosthog from "@/hooks/usePosthog";
-import { EventData, IEvent } from "@/@types";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
+import { timeAgo } from '@/lib/utils';
+import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
+import { EventData, IEvent } from '@/@types';
 
 interface Props {
   event: IEvent;
@@ -21,7 +21,7 @@ export default function ListItem({ event }: Props) {
   const posthog = usePosthog();
   const columns = useClientStore((store) => store.activityColumns);
   const isCompact = useClientStore((store) => {
-    return store.activityDisplayMode === "compact";
+    return store.activityDisplayMode === 'compact';
   });
 
   const data = event[EventData.All];
@@ -31,7 +31,7 @@ export default function ListItem({ event }: Props) {
 
   const toggleExpanded = () => {
     setExpanded(!expanded);
-    posthog.capture("event_expanded", { value: !expanded });
+    posthog.capture('event_expanded', { value: !expanded });
   };
 
   /**
@@ -41,32 +41,32 @@ export default function ListItem({ event }: Props) {
   const eventName = useMemo(() => {
     let event = data.event;
 
-    if (data.event.startsWith("$")) {
+    if (data.event.startsWith('$')) {
       event = data.event.charAt(1).toUpperCase() + data.event.slice(2);
     }
 
-    if (event === "Autocapture") {
+    if (event === 'Autocapture') {
       const element = data.elements?.[0];
-      const text = element?.text ? ` with text "${element.text}"` : "";
+      const text = element?.text ? ` with text "${element.text}"` : '';
 
       switch (data.properties.$event_type) {
-        case "click":
+        case 'click':
           if (element?.tag_name) return `clicked ${element.tag_name}${text}`;
           break;
-        case "touch":
+        case 'touch':
           if (element?.tag_name) return `touched ${element.tag_name}${text}`;
           break;
-        case "submit":
+        case 'submit':
           if (element?.tag_name) return `submitted ${element.tag_name}${text}`;
           break;
-        case "change":
+        case 'change':
           if (element?.tag_name)
             return `typed something into ${element.tag_name}${text}`;
           break;
-        case "focus":
+        case 'focus':
           if (element?.tag_name) return `focused on ${element.tag_name}${text}`;
           break;
-        case "blur":
+        case 'blur':
           if (element?.tag_name)
             return `blurred from ${element.tag_name}${text}`;
           break;
@@ -98,33 +98,33 @@ export default function ListItem({ event }: Props) {
   }, [data.properties]);
 
   const containerClasses = classNames(
-    "flex-row items-center gap-4",
-    "p-3 bg-highlight"
+    'flex-row items-center gap-4',
+    'p-3 bg-highlight',
   );
 
   const eventRowClasses = classNames(
-    "text-sm text-ink",
-    isCompact ? "flex-1" : "w-60"
+    'text-sm text-ink',
+    isCompact ? 'flex-1' : 'w-60',
   );
 
   const personRowClasses = classNames(
-    "text-sm text-ink",
-    isCompact ? "flex-1" : "w-80"
+    'text-sm text-ink',
+    isCompact ? 'flex-1' : 'w-80',
   );
 
   const urlRowClasses = classNames(
-    "text-sm text-ink",
-    isCompact ? "flex-[1.5]" : "w-64"
+    'text-sm text-ink',
+    isCompact ? 'flex-[1.5]' : 'w-64',
   );
 
-  const timeRowClasses = classNames("text-sm text-ink", "w-20");
+  const timeRowClasses = classNames('text-sm text-ink', 'w-20');
 
   const toggleClasses = classNames(
-    "p-1 bg-accent rounded-md",
-    "flex-row items-center"
+    'p-1 bg-accent rounded-md',
+    'flex-row items-center',
   );
 
-  const iconName = expanded ? "minimize-2" : "maximize-2";
+  const iconName = expanded ? 'minimize-2' : 'maximize-2';
 
   return (
     <View>
@@ -135,28 +135,28 @@ export default function ListItem({ event }: Props) {
         </TouchableOpacity>
 
         {/* Event Display */}
-        {columns.includes("event") && (
+        {columns.includes('event') && (
           <Text className={eventRowClasses} numberOfLines={1}>
             {eventName}
           </Text>
         )}
 
         {/* Person Display */}
-        {columns.includes("person") && (
+        {columns.includes('person') && (
           <Text className={personRowClasses} numberOfLines={1}>
             {person.distinct_id}
           </Text>
         )}
 
         {/* URL/Screen Display */}
-        {columns.includes("url") && (
+        {columns.includes('url') && (
           <Text className={urlRowClasses} numberOfLines={1}>
             {eventUrl}
           </Text>
         )}
 
         {/* Timestamp Display */}
-        {columns.includes("timestamp") && (
+        {columns.includes('timestamp') && (
           <Text className={timeRowClasses} numberOfLines={1}>
             {timeAgo(eventTimestamp)}
           </Text>
@@ -177,7 +177,7 @@ export default function ListItem({ event }: Props) {
 
 function EventProperty({ name, value }: { name: string; value: any }) {
   // Dont render object values
-  if (typeof value === "object") {
+  if (typeof value === 'object') {
     return null;
   }
 
@@ -191,13 +191,13 @@ function EventProperty({ name, value }: { name: string; value: any }) {
    * join with a space. Each word should be title case
    */
   const key = (() => {
-    if (name.startsWith("$")) {
+    if (name.startsWith('$')) {
       name = name.charAt(1).toUpperCase() + name.slice(2);
 
       name = name
-        .split("_")
+        .split('_')
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
+        .join(' ');
 
       return name;
     }

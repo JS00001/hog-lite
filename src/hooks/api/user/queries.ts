@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { GET_USER_KEY } from "../keys";
+import { GET_USER_KEY } from '../keys';
 
-import { getUser } from "@/api";
-import useAuthStore from "@/store/auth";
-import { validateResponse } from "@/lib/utils";
-import { getMockUserResponse } from "@/constants/mock-data";
+import { getUser } from '@/api';
+import useAuthStore from '@/store/auth';
+import { validateResponse } from '@/lib/utils';
+import { getMockUserResponse } from '@/constants/mock-data';
 
 export const useGetUser = () => {
   const demoing = useAuthStore((state) => state.demoing);

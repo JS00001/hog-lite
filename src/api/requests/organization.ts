@@ -1,6 +1,6 @@
-import axios from "@/lib/axios";
+import axios from '@/lib/axios';
 
-import { GetOrganizationRequest, GetOrganizationResponse } from "@/@types";
+import { GetOrganizationRequest, GetOrganizationResponse } from '@/@types';
 
 /**
  * Request:     GET /api/organizations/:id

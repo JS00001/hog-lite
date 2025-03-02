@@ -3,16 +3,16 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-} from "react-native";
-import { useMemo } from "react";
-import classNames from "classnames";
-import { router } from "expo-router";
-import Feather from "@expo/vector-icons/Feather";
+} from 'react-native';
+import { useMemo } from 'react';
+import classNames from 'classnames';
+import { router } from 'expo-router';
+import Feather from '@expo/vector-icons/Feather';
 
-import Text from "@/ui/Text";
-import useColors from "@/lib/theme";
-import SafeAreaView from "@/ui/SafeAreaView";
-import HappyHedgehog from "@/assets/HappyHedgehog";
+import Text from '@/ui/Text';
+import useColors from '@/lib/theme';
+import SafeAreaView from '@/ui/SafeAreaView';
+import HappyHedgehog from '@/assets/HappyHedgehog';
 
 interface Props {
   title: string;
@@ -33,11 +33,11 @@ export default function Layout({
 }: Props) {
   const colors = useColors();
 
-  const contentContainerClasses = classNames("gap-4 p-4", className);
+  const contentContainerClasses = classNames('gap-4 p-4', className);
 
-  const titleClasses = classNames("text-4xl font-semibold mb-2 text-ink");
+  const titleClasses = classNames('text-4xl font-semibold mb-2 text-ink');
 
-  const backClasses = classNames("pb-4 self-start pr-8");
+  const backClasses = classNames('pb-4 self-start pr-8');
 
   const ContainerComponent = useMemo(() => {
     if (scrollable) {

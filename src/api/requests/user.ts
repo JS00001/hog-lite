@@ -1,5 +1,5 @@
-import axios from "@/lib/axios";
-import { GetUserResponse, LoginRequest } from "@/@types";
+import axios from '@/lib/axios';
+import { GetUserResponse, LoginRequest } from '@/@types';
 
 /**
  * Request:     GET /api/users/@me

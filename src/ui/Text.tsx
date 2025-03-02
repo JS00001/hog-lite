@@ -1,5 +1,5 @@
-import { forwardRef } from "react";
-import { Text as RNText, TextProps as RNTextProps } from "react-native";
+import { forwardRef } from 'react';
+import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 
 interface Props extends RNTextProps {}
 

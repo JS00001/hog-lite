@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
-import { GET_ORGANIZATION_KEY } from "../keys";
+import { GET_ORGANIZATION_KEY } from '../keys';
 
-import { getOrganization } from "@/api";
-import useAuthStore from "@/store/auth";
-import useClientStore from "@/store/client";
-import { validateResponse } from "@/lib/utils";
-import { getMockOrganizationResponse } from "@/constants/mock-data";
+import { getOrganization } from '@/api';
+import useAuthStore from '@/store/auth';
+import useClientStore from '@/store/client';
+import { validateResponse } from '@/lib/utils';
+import { getMockOrganizationResponse } from '@/constants/mock-data';
 
 export const useGetOrganization = () => {
   const demoing = useAuthStore((state) => state.demoing);
@@ -41,7 +41,7 @@ export const useGetOrganization = () => {
     });
 
     if (firstProject && !projectInOrganization) {
-      setField("project", firstProject.id.toString());
+      setField('project', firstProject.id.toString());
     }
   }, [query.data]);
 
