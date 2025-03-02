@@ -9,7 +9,7 @@ import Button from '@/ui/Button';
 import BottomSheet from '@/ui/BottomSheet';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
-import TeacherHedgehogRight from '@/assets/TeacherHedgehogRight';
+import TeacherHedgehogRight from '@/components/Hedgehogs/TeacherHedgehogRight';
 import BottomSheetScrollView from '@/ui/BottomSheet/Containers/ScrollView';
 
 type Props = BottomSheetProps;

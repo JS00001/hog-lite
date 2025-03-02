@@ -8,6 +8,7 @@ import ListFooterComponent from './ListFooterComponent';
 import ListHeaderComponent from './ListHeaderComponent';
 
 export default function CompactActivityList({
+  error,
   data,
   isLoading,
   isFetchingNextPage,
@@ -22,7 +23,7 @@ export default function CompactActivityList({
       contentContainerClassName="bg-divider gap-px"
       className="rounded-xl border border-divider flex-1 bg-highlight"
       ListHeaderComponent={<ListHeaderComponent />}
-      ListEmptyComponent={<ListEmptyComponent isLoading={isLoading} />}
+      ListEmptyComponent={<ListEmptyComponent error={error} isLoading={isLoading} />}
       ListFooterComponent={<ListFooterComponent isLoading={isFetchingNextPage} />}
       onEndReached={onEndReached}
       renderItem={({ item }) => <ListItem event={item} />}

@@ -11,9 +11,10 @@ import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
-import PanickedHedgehog from '@/assets/PanickedHedgehog';
+import PanickedHedgehog from '@/components/Hedgehogs/PanickedHedgehog';
 import timePeriodOptions from '@/constants/time-periods';
 import { useGetDashboard, useGetDashboards } from '@/hooks/api/dashboard';
+import ErrorMessage from '@/components/ErrorMessage';
 
 enum FetchingState {
   Reloading,
@@ -36,6 +37,8 @@ export default function Insights() {
     dashboardQuery.isRefetching ||
     dashboardsQuery.isLoading ||
     dashboardQuery.isRefetching;
+
+  const actionsError = dashboardQuery.error || dashboardsQuery.error;
 
   const tiles = dashboardQuery.data?.tiles || [];
   const dashboards = dashboardsQuery.data?.results || [];
@@ -97,6 +100,17 @@ export default function Insights() {
           <Skeleton className="w-full h-8" />
         </View>
       ));
+    }
+
+    if (actionsError) {
+      return (
+        <View className="items-center py-32 bg-highlight -mb-px border border-divider rounded-xl">
+          <ErrorMessage
+            error={actionsError}
+            description="Could not fetch activity"
+          />
+        </View>
+      );
     }
 
     return (

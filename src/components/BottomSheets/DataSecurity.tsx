@@ -7,7 +7,7 @@ import { BottomSheetProps } from './@types';
 import Text from '@/ui/Text';
 import BottomSheet from '@/ui/BottomSheet';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
-import TeacherHedgehogLeft from '@/assets/TeacherHedgehogLeft';
+import TeacherHedgehogLeft from '@/components/Hedgehogs/TeacherHedgehogLeft';
 
 type Props = BottomSheetProps;
 

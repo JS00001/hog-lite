@@ -10,7 +10,7 @@ import useColors from '@/lib/theme';
 import BottomSheet from '@/ui/BottomSheet';
 import DataRegions from '@/constants/data-regions';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
-import TeacherHedgehogRight from '@/assets/TeacherHedgehogRight';
+import TeacherHedgehogRight from '@/components/Hedgehogs/TeacherHedgehogRight';
 
 type Props = BottomSheetProps;
 

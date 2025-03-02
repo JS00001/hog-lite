@@ -9,6 +9,7 @@ import ListHeaderComponent from './ListHeaderComponent';
 
 export default function FullActivityList({
   data,
+  error,
   isLoading,
   isFetchingNextPage,
   onEndReached,
@@ -28,7 +29,7 @@ export default function FullActivityList({
         contentContainerClassName="bg-divider gap-px flex-grow"
         className="rounded-xl border border-divider bg-highlight"
         ListHeaderComponent={<ListHeaderComponent />}
-        ListEmptyComponent={<ListEmptyComponent isLoading={isLoading} />}
+      ListEmptyComponent={<ListEmptyComponent error={error} isLoading={isLoading} />}
         ListFooterComponent={<ListFooterComponent isLoading={isFetchingNextPage} />}
         onEndReached={onEndReached}
         renderItem={({ item }) => <ListItem event={item} />}

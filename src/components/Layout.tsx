@@ -12,7 +12,7 @@ import Feather from '@expo/vector-icons/Feather';
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import SafeAreaView from '@/ui/SafeAreaView';
-import HappyHedgehog from '@/assets/HappyHedgehog';
+import HappyHedgehog from '@/components/Hedgehogs/HappyHedgehog';
 
 interface Props {
   title: string;
