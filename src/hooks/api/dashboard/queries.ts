@@ -84,7 +84,10 @@ export const useGetDashboard = () => {
         filters_override: {
           date_from: insightsTimePeriod,
           date_to: null,
+          properties: [],
+          breakdown_filter: null,
         },
+        variablesOverride: {},
       });
       return validateResponse(res);
     },

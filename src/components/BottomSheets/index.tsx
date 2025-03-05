@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { IndividualSheetName } from './@types';
@@ -9,7 +10,6 @@ import ConfigureActivitySheet from './ConfigureActivity';
 import NetworkLoggerSheet from './DevTools/NetworkLogger';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
-import { memo } from 'react';
 
 /**
  * The list of bottom sheets we want to support

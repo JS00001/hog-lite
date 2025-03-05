@@ -135,28 +135,28 @@ export default function ListItem({ event }: Props) {
         </TouchableOpacity>
 
         {/* Event Display */}
-        {columns.includes('event') && (
+        {columns.find((c) => c.key === 'event') && (
           <Text className={eventRowClasses} numberOfLines={1}>
             {eventName}
           </Text>
         )}
 
         {/* Person Display */}
-        {columns.includes('person') && (
+        {columns.find((c) => c.key === 'person') && (
           <Text className={personRowClasses} numberOfLines={1}>
             {person.distinct_id}
           </Text>
         )}
 
         {/* URL/Screen Display */}
-        {columns.includes('url') && (
+        {columns.find((c) => c.key === 'url') && (
           <Text className={urlRowClasses} numberOfLines={1}>
             {eventUrl}
           </Text>
         )}
 
         {/* Timestamp Display */}
-        {columns.includes('timestamp') && (
+        {columns.find((c) => c.key === 'timestamp') && (
           <Text className={timeRowClasses} numberOfLines={1}>
             {timeAgo(eventTimestamp)}
           </Text>

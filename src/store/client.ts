@@ -1,10 +1,18 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { TimePeriod } from '@/@types';
+import { EventData, TimePeriod } from '@/@types';
 import PersistedAsyncStorage from '@/lib/async-store';
 
-export type ActivityColumn = 'event' | 'url' | 'person' | 'timestamp';
+export type ActivityColumnName = 'event' | 'url' | 'person' | 'timestamp';
+
+export type ActivityColumn = {
+  key: ActivityColumnName;
+  dataIndex: EventData;
+  title: string;
+  description: string;
+  visible: boolean;
+};
 
 export type ActivityDisplayMode = 'compact' | 'full';
 
@@ -62,11 +70,40 @@ const useClientStore = create<IClientStore>()(
         dashboard: null,
         appIcon: 'default',
         activityDisplayMode: 'full',
-        activityColumns: ['event', 'url', 'timestamp'],
         activityTimePeriod: '-1dStart',
         insightsTimePeriod: '-7d',
         filterTestAccounts: false,
         posthogEndpoint: 'https://us.posthog.com',
+        activityColumns: [
+          {
+            dataIndex: EventData.Name,
+            key: 'event',
+            title: 'Event',
+            description: 'The name of the event that occurred',
+            visible: true,
+          },
+          {
+            dataIndex: EventData.URL,
+            key: 'url',
+            visible: true,
+            title: 'URL / Screen',
+            description: 'The url/screen where the action occurred',
+          },
+          {
+            dataIndex: EventData.Person,
+            key: 'person',
+            visible: false,
+            title: 'Person',
+            description: 'The person who performed the action',
+          },
+          {
+            dataIndex: EventData.Timestamp,
+            key: 'timestamp',
+            visible: true,
+            title: 'Timestamp',
+            description: 'The time when the activity occurred',
+          },
+        ],
       };
 
       const setField = <T extends keyof IClientState>(
@@ -86,9 +123,48 @@ const useClientStore = create<IClientStore>()(
         setField,
       };
     },
+
     {
+      version: 3,
       name: 'client-storage',
       storage: PersistedAsyncStorage,
+      migrate: (s) => {
+        const state = s as IClientState;
+
+        if (state) {
+          return {
+            ...state,
+            activityColumns: [
+              {
+                key: 'event',
+                title: 'Event',
+                description: 'The name of the event that occurred',
+                visible: true,
+              },
+              {
+                key: 'url',
+                visible: true,
+                title: 'URL / Screen',
+                description: 'The url/screen where the action occurred',
+              },
+              {
+                key: 'person',
+                visible: false,
+                title: 'Person',
+                description: 'The person who performed the action',
+              },
+              {
+                key: 'timestamp',
+                visible: true,
+                title: 'Timestamp',
+                description: 'The time when the activity occurred',
+              },
+            ],
+          };
+        }
+
+        return state;
+      },
     },
   ),
 );

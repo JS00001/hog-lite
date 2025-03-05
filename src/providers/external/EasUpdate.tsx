@@ -56,15 +56,15 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
           'A new update is available. Reload the app now to get the latest features.',
         buttons: [
           {
-            text: 'Reload',
-            onPress: () => {
-              Updates.reloadAsync();
-              posthog.capture('update_reloaded');
-            },
-          },
-          {
             text: 'Later',
             onPress: () => posthog.capture('update_ignored'),
+          },
+          {
+            text: 'Reload',
+            onPress: () => {
+              posthog.capture('update_reloaded');
+              Updates.reloadAsync();
+            },
           },
         ],
       });

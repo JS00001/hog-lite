@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { Linking, View } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
-import { BottomSheetProps } from '../@types';
+import { BottomSheetProps } from './@types';
 
 import Text from '@/ui/Text';
 import Button from '@/ui/Button';

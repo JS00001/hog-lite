@@ -1,15 +1,17 @@
 import { View } from 'react-native';
+import * as Haptic from 'expo-haptics';
 import { forwardRef, useState } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import DraggableFlatlist from 'react-native-draggable-flatlist';
 
-import { BottomSheetProps } from './@types';
+import { BottomSheetProps } from '../@types';
+import ColumnControl from './ColumnControl';
 
 import useClientStore, {
-  ActivityColumn,
+  ActivityColumnName,
   ActivityDisplayMode,
 } from '@/store/client';
 import Text from '@/ui/Text';
-import Switch from '@/ui/Switch';
 import Select from '@/ui/Select';
 import Button from '@/ui/Button';
 import BottomSheet from '@/ui/BottomSheet';
@@ -47,12 +49,16 @@ function Content({ close }: Props) {
    * When a column is toggled, update the state to
    * reflect the change
    */
-  const onToggleColumn = (column: ActivityColumn) => {
-    const newColumns = state.columns.includes(column)
-      ? state.columns.filter((c) => c !== column)
-      : [...state.columns, column];
+  const onToggleColumn = (column: ActivityColumnName) => {
+    const columns = state.columns.map((c) => {
+      if (c.key === column) {
+        return { ...c, visible: !c.visible };
+      }
 
-    setState({ ...state, columns: newColumns });
+      return c;
+    });
+
+    setState({ ...state, columns });
   };
 
   const onSave = () => {
@@ -80,63 +86,36 @@ function Content({ close }: Props) {
 
       <View className="gap-2">
         <Text className=" font-medium text-ink">Visible Columns</Text>
-        <View className="p-4 rounded-xl bg-primary border border-divider gap-4">
-          {/* TODO: Allow draging to reorder these as well, like I want timestamp before url/screen */}
-          <ColumnToggle
-            title="Event"
-            description="The name of the event that occurred"
-            value={state.columns.includes('event')}
-            onValueChange={() => onToggleColumn('event')}
-          />
-          <ColumnToggle
-            title="Person"
-            description="The person who performed the action"
-            value={state.columns.includes('person')}
-            onValueChange={() => onToggleColumn('person')}
-          />
-          <ColumnToggle
-            title="URL / Screen"
-            description="The url/screen where the action occurred"
-            value={state.columns.includes('url')}
-            onValueChange={() => onToggleColumn('url')}
-          />
-          <ColumnToggle
-            title="Timestamp"
-            description="The time when the activity occurred"
-            value={state.columns.includes('timestamp')}
-            onValueChange={() => onToggleColumn('timestamp')}
-          />
-        </View>
+
+        <DraggableFlatlist
+          data={state.columns}
+          scrollEnabled={false}
+          contentContainerClassName="gap-4"
+          className="py-4 pr-4 pl-2 rounded-xl bg-primary border border-divider"
+          renderItem={(props) => {
+            return (
+              <ColumnControl
+                {...props}
+                onValueChange={() => onToggleColumn(props.item.key)}
+              />
+            );
+          }}
+          onDragEnd={({ data }) => {
+            setState({
+              ...state,
+              columns: data,
+            });
+
+            Haptic.impactAsync(Haptic.ImpactFeedbackStyle.Medium);
+          }}
+          keyExtractor={(item) => item.key}
+        />
       </View>
 
       <Button size="sm" color="accent" onPress={onSave}>
         Save
       </Button>
     </BottomSheetView>
-  );
-}
-
-interface ColumnToggleProps {
-  title: string;
-  description: string;
-  value: boolean;
-  onValueChange: () => void;
-}
-
-function ColumnToggle({
-  title,
-  description,
-  value,
-  onValueChange,
-}: ColumnToggleProps) {
-  return (
-    <View className="flex-row items-center justify-between gap-2">
-      <View>
-        <Text className="font-medium text-ink">{title}</Text>
-        <Text className="font-medium text-gray text-sm">{description}</Text>
-      </View>
-      <Switch value={value} onValueChange={onValueChange} />
-    </View>
   );
 }
 

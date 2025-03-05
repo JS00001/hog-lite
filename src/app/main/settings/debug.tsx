@@ -8,11 +8,13 @@ import { createUUID } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function Appearance() {
   const posthog = usePosthog();
 
   const devMode = useClientStore((s) => s.devMode);
+  const openBottomSheet = useBottomSheetStore((s) => s.open);
   const setClientStore = useClientStore((s) => s.setField);
 
   const onToggleDeveloperMode = () => {
@@ -33,6 +35,11 @@ export default function Appearance() {
       uuid,
       user_source: 'debug',
     });
+  };
+
+  const onNetworkPress = () => {
+    posthog.capture('open_network');
+    openBottomSheet('NETWORK_LOGGER');
   };
 
   return (
@@ -72,6 +79,19 @@ export default function Appearance() {
         </View>
         <Button size="sm" color="accent" onPress={onSetUniqueId}>
           Set New Unique ID
+        </Button>
+      </View>
+
+      <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">
+        <View>
+          <Text className="font-medium text-ink">Open Network</Text>
+          <Text className="font-medium text-gray text-sm">
+            On simulators where you cannot press the screen with three fingers,
+            press below to open the network logs
+          </Text>
+        </View>
+        <Button size="sm" color="accent" onPress={onNetworkPress}>
+          Open Network
         </Button>
       </View>
     </Layout>

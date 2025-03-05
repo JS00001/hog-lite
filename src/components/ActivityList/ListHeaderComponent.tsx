@@ -53,17 +53,19 @@ export default function ListHeaderComponent() {
         <Feather name="settings" color={colors.ink} />
       </TouchableOpacity>
 
-      {columns.includes('event') && (
+      {columns.find((c) => c.key === 'event') && (
         <Text className={eventRowClasses}>EVENT</Text>
       )}
 
-      {columns.includes('person') && (
+      {columns.find((c) => c.key === 'person') && (
         <Text className={personRowClasses}>PERSON</Text>
       )}
 
-      {columns.includes('url') && <Text className={urlRowClasses}>URL</Text>}
+      {columns.find((c) => c.key === 'url') && (
+        <Text className={urlRowClasses}>URL</Text>
+      )}
 
-      {columns.includes('timestamp') && (
+      {columns.find((c) => c.key === 'timestamp') && (
         <Text className={timeRowClasses}>TIME</Text>
       )}
     </View>

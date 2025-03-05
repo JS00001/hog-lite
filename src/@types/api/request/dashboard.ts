@@ -11,5 +11,8 @@ export interface GetDashboardRequest {
   filters_override?: {
     date_from: TimePeriod | null;
     date_to: TimePeriod | null;
+    properties: [];
+    breakdown_filter: null;
   };
+  variablesOverride: Record<string, string>;
 }
