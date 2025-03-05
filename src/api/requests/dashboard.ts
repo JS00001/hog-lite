@@ -29,8 +29,7 @@ export const getDashboards = async (data: GetDashboardsRequest) => {
 export const getDashboard = async (data: GetDashboardRequest) => {
   const queryString = qs.stringify({
     filters_override: JSON.stringify(data.filters_override),
-    // TODO: Look at why this server errors as of March 4th, 2025
-    // refresh: 'blocking',
+    refresh: 'blocking',
   });
 
   const url = `/api/environments/${data.project_id}/dashboards/${data.dashboard_id}?${queryString}`;
