@@ -1,8 +1,9 @@
 import { AxiosError } from 'axios';
-import { View } from 'react-native';
+import { Linking, View } from 'react-native';
 
 import Text from '@/ui/Text';
 import AngryHedgehog from '@/components/Hedgehogs/AngryHedgehog';
+import Button from '@/ui/Button';
 
 interface Props {
   error: Error | null;
@@ -32,14 +33,27 @@ export default function ErrorMessage({
 
   const title = description || 'An error occurred';
 
+  const onCheckStatus = () => {
+    Linking.openURL('https://status.posthog.com/history');
+  };
+
   return (
-    <View className="items-center justify-center gap-2">
+    <View className="items-center justify-center gap-2 px-12">
       <AngryHedgehog size={36} />
 
-      <View>
+      <View className="items-center">
         <Text className="font-semibold text-ink text-xl">{title}</Text>
-        <Text className="text-center text-ink">{httpError}</Text>
+        <Text className="text-center text-ink leading-6">{httpError}</Text>
       </View>
+
+      <Button
+        size="sm"
+        className="mt-2"
+        icon="external-link"
+        onPress={onCheckStatus}
+      >
+        Check PostHog's Status
+      </Button>
     </View>
   );
 }

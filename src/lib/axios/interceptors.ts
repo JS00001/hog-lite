@@ -74,6 +74,11 @@ const setupRequestInterceptors = () => {
 
       /** 500 - Internal Server Error */
       if (response.status >= 500) {
+        if (data.detail === 'A server error occurred.') {
+          data.detail =
+            "Oh No! PostHog returned a server error. This is likely a bug on PostHog's end.";
+        }
+
         Toast.show({
           type: 'error',
           text1: 'Internal Server Error',
