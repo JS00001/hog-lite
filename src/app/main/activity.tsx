@@ -14,6 +14,7 @@ import ActivityList from '@/components/ActivityList';
 import timePeriodOptions from '@/constants/time-periods';
 
 enum FetchingState {
+  Refreshing,
   Reloading,
   TimePeriodChange,
 }
@@ -36,6 +37,16 @@ export default function Activity() {
     setFetchState(FetchingState.Reloading);
     query.refetch();
     posthog.capture('activity_reloaded');
+  };
+
+  /**
+   * When the refresh control (swipe down) is triggered, we want to
+   * refetch the data from the server.
+   */
+  const onRefresh = () => {
+    setFetchState(FetchingState.Refreshing);
+    query.refetch();
+    posthog.capture('activity_refreshed');
   };
 
   /**
@@ -71,6 +82,9 @@ export default function Activity() {
   const data = query.data?.results || [];
 
   const actionsDisabled = query.isLoading || query.isRefetching;
+
+  const isRefreshing =
+    actionsDisabled && fetchState === FetchingState.Refreshing;
   const reloadLoading =
     actionsDisabled && fetchState === FetchingState.Reloading;
   const timePeriodLoading =
@@ -113,6 +127,8 @@ export default function Activity() {
         data={data}
         isLoading={query.isLoading}
         isFetchingNextPage={query.isFetchingNextPage}
+        isRefreshing={isRefreshing}
+        onRefresh={onRefresh}
         onEndReached={onEndReached}
       />
     </Layout>

@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
 
 import { ActivityListProps } from './@types';
 
@@ -11,7 +11,9 @@ export default function CompactActivityList({
   error,
   data,
   isLoading,
+  isRefreshing,
   isFetchingNextPage,
+  onRefresh,
   onEndReached,
 }: ActivityListProps) {
   // prettier-ignore
@@ -25,8 +27,13 @@ export default function CompactActivityList({
       ListHeaderComponent={<ListHeaderComponent />}
       ListEmptyComponent={<ListEmptyComponent error={error} isLoading={isLoading} />}
       ListFooterComponent={<ListFooterComponent isLoading={isFetchingNextPage} />}
-      onEndReached={onEndReached}
       renderItem={({ item }) => <ListItem event={item} />}
+      onEndReached={onEndReached}
+      refreshControl={<RefreshControl
+        className='w-full bg-highlight p-4'
+        refreshing={isRefreshing}
+        onRefresh={onRefresh}
+      />}
       // List optimization
       removeClippedSubviews
       initialNumToRender={25}
