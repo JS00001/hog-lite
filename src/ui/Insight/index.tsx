@@ -40,7 +40,7 @@ export default function Insight({ insight }: Props) {
     if (isAggregation) {
       return {
         type: ResultType.Aggregation,
-        data: insight.result as Aggregation,
+        data: insight.result as Aggregation[],
       } as const;
     }
 

@@ -15,7 +15,11 @@ export type Aggregation = {
   count: number;
   aggregated_value?: number;
   label: string;
-}[];
+  labels: string[];
+  filter: {
+    display: 'ActionsBar' | 'BoldNumber';
+  };
+};
 
 /**
  * Retention Result
@@ -45,7 +49,7 @@ export type Funnel = {
   order: number;
 }[];
 
-export type Result = Aggregation | FunnelConversionTime | Funnel | Retention;
+export type Result = Aggregation[] | FunnelConversionTime | Funnel | Retention;
 
 export interface IInsight {
   name: string;

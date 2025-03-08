@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, RefreshControl } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { ActivityListProps } from './@types';
 
@@ -6,6 +6,9 @@ import ListItem from './ListItem';
 import ListEmptyComponent from './ListEmptyComponent';
 import ListFooterComponent from './ListFooterComponent';
 import ListHeaderComponent from './ListHeaderComponent';
+
+import useColors from '@/lib/theme';
+import { RefreshControl } from 'react-native-gesture-handler';
 
 export default function CompactActivityList({
   error,
@@ -16,6 +19,8 @@ export default function CompactActivityList({
   onRefresh,
   onEndReached,
 }: ActivityListProps) {
+  const colors = useColors();
+
   // prettier-ignore
   return (
     <FlatList
@@ -30,7 +35,7 @@ export default function CompactActivityList({
       renderItem={({ item }) => <ListItem event={item} />}
       onEndReached={onEndReached}
       refreshControl={<RefreshControl
-        className='w-full bg-highlight p-4'
+        tintColor={colors.gray}
         refreshing={isRefreshing}
         onRefresh={onRefresh}
       />}

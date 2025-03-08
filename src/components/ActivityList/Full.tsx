@@ -7,6 +7,8 @@ import ListEmptyComponent from './ListEmptyComponent';
 import ListFooterComponent from './ListFooterComponent';
 import ListHeaderComponent from './ListHeaderComponent';
 
+import useColors from '@/lib/theme';
+
 export default function FullActivityList({
   data,
   error,
@@ -16,6 +18,8 @@ export default function FullActivityList({
   onRefresh,
   onEndReached,
 }: ActivityListProps) {
+  const colors = useColors();
+
   // prettier-ignore
   return (
     <ScrollView
@@ -36,7 +40,7 @@ export default function FullActivityList({
         renderItem={({ item }) => <ListItem event={item} />}
         onEndReached={onEndReached}
         refreshControl={<RefreshControl
-          className='w-full bg-highlight p-4'
+          tintColor={colors.gray}
           refreshing={isRefreshing}
           onRefresh={onRefresh}
         />}

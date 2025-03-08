@@ -6,7 +6,7 @@ import Text from '@/ui/Text';
 import { formatNumber } from '@/lib/utils';
 
 interface Props {
-  data: Aggregation;
+  data: Aggregation[];
 }
 
 export default function AggregationCard({ data }: Props) {
@@ -17,7 +17,7 @@ export default function AggregationCard({ data }: Props) {
   }, [data]);
 
   return (
-    <Text className="text-5xl font-bold text-ink">
+    <Text className="text-5xl font-bold text-ink" numberOfLines={1}>
       {formatNumber(aggregatedValue)}
     </Text>
   );

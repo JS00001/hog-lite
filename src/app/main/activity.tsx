@@ -33,20 +33,22 @@ export default function Activity() {
    * When the refetch button is pressed, we want to refetch the data
    * from the server.
    */
-  const onRefetch = () => {
-    setFetchState(FetchingState.Reloading);
-    query.refetch();
+  const onRefetch = async () => {
     posthog.capture('activity_reloaded');
+    setFetchState(FetchingState.Reloading);
+    await query.refetch();
+    setFetchState(null);
   };
 
   /**
    * When the refresh control (swipe down) is triggered, we want to
    * refetch the data from the server.
    */
-  const onRefresh = () => {
-    setFetchState(FetchingState.Refreshing);
-    query.refetch();
+  const onRefresh = async () => {
     posthog.capture('activity_refreshed');
+    setFetchState(FetchingState.Refreshing);
+    await query.refetch();
+    setFetchState(null);
   };
 
   /**
@@ -83,12 +85,13 @@ export default function Activity() {
 
   const actionsDisabled = query.isLoading || query.isRefetching;
 
-  const isRefreshing =
-    actionsDisabled && fetchState === FetchingState.Refreshing;
+  const isRefreshing = fetchState === FetchingState.Refreshing;
   const reloadLoading =
     actionsDisabled && fetchState === FetchingState.Reloading;
   const timePeriodLoading =
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
+
+  console.log(isRefreshing);
 
   return (
     <Layout title="Activity" className="pb-32">
