@@ -91,8 +91,6 @@ export default function Activity() {
   const timePeriodLoading =
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
-  console.log(isRefreshing);
-
   return (
     <Layout title="Activity" className="pb-32">
       <View className="flex-row gap-2 justify-between">
