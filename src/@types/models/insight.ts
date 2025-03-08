@@ -49,6 +49,7 @@ export type Result = Aggregation | FunnelConversionTime | Funnel | Retention;
 
 export interface IInsight {
   name: string;
+  derived_name: string;
   description: string;
   result: Result;
 }

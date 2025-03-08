@@ -100,7 +100,7 @@ export default function Insight({ insight }: Props) {
 
       <View>
         <Text className="text-ink font-medium text-lg" numberOfLines={1}>
-          {insight.name}
+          {insight.name || insight.derived_name}
         </Text>
 
         {insight.description && (
