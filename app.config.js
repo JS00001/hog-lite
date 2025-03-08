@@ -93,6 +93,14 @@ export default {
             image: './assets/images/dynamic-icons/space-icon.png',
             prerendered: true,
           },
+          construction: {
+            image: './assets/images/dynamic-icons/construction-icon.png',
+            prerendered: true,
+          },
+          cowboy: {
+            image: './assets/images/dynamic-icons/cowboy-icon.png',
+            prerendered: true,
+          },
         },
       ],
       'expo-localization',

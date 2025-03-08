@@ -134,18 +134,18 @@ export default function Settings() {
         </View>
         <View className="gap-2 flex-row">
           <Card
-            icon="book-open"
-            title="Feature Requests"
-            description="Request new features or improvements"
+            icon="git-branch"
+            title="Contribute"
+            description="We're open source! Contribute to our project"
             onPress={() => {
-              Linking.openURL(`${constants.githubUrl}/issues/new`);
-              posthog.capture('feature_request_clicked');
+              Linking.openURL(`${constants.githubUrl}`);
+              posthog.capture('contribute_clicked');
             }}
           />
           <Card
             icon="frown"
             title="Report Bug"
-            description="Found a bug? Report it here"
+            description="Found a bug? Want a feature? Let us know!"
             onPress={() => {
               Linking.openURL(`${constants.githubUrl}/issues/new`);
               posthog.capture('bug_report_clicked');
@@ -154,9 +154,9 @@ export default function Settings() {
         </View>
         <View className="gap-2 flex-row">
           <Card
-            icon="git-branch"
-            title="Contribute"
-            description="We're open source! Contribute to our project"
+            icon="share"
+            title="Share with Friends"
+            description="Love HogLite? Share it with your friends!"
             onPress={() => {
               Linking.openURL(`${constants.githubUrl}`);
               posthog.capture('contribute_clicked');
