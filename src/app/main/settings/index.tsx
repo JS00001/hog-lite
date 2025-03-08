@@ -15,10 +15,13 @@ import { useGetOrganization } from '@/hooks/api/organization';
 import Card from '@/ui/Card';
 import { router } from 'expo-router';
 import constants from '@/constants';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function Settings() {
   const posthog = usePosthog();
   const organizationQuery = useGetOrganization();
+
+  const openBottomSheet = useBottomSheetStore((store) => store.open);
 
   const user = useAuthStore((store) => store.user)!;
   const demoing = useAuthStore((store) => store.demoing);
@@ -158,7 +161,7 @@ export default function Settings() {
             title="Share with Friends"
             description="Love HogLite? Share it with your friends!"
             onPress={() => {
-              Linking.openURL(`${constants.githubUrl}`);
+              openBottomSheet('SHARE_WITH_FRIENDS');
               posthog.capture('contribute_clicked');
             }}
           />

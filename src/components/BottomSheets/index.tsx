@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { IndividualSheetName } from './@types';
@@ -5,11 +6,11 @@ import { IndividualSheetName } from './@types';
 import DataSecuritySheet from './DataSecurity';
 import CreateApiKeySheet from './CreateApiKey';
 import DataRegionSheet from './DataRegion';
+import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
 import NetworkLoggerSheet from './DevTools/NetworkLogger';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
-import { memo } from 'react';
 
 /**
  * The list of bottom sheets we want to support
@@ -19,6 +20,7 @@ const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   DATA_SECURITY: DataSecuritySheet,
   CREATE_API_KEY: CreateApiKeySheet,
   DATA_REGION: DataRegionSheet,
+  SHARE_WITH_FRIENDS: ShareWithFriendsSheet,
   CONFIGURE_ACTIVITY: ConfigureActivitySheet,
 };
 

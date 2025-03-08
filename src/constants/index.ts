@@ -29,4 +29,8 @@ export default {
    * The URL for the github repository
    */
   githubUrl: 'https://github.com/JS00001/hog-lite',
+  /**
+   * The URL for the app store listing
+   */
+  appStoreUrl: 'https://apps.apple.com/us/app/hoglite/id6742509573',
 };

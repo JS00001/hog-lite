@@ -1,35 +1,55 @@
 import { forwardRef } from 'react';
-import { View } from 'react-native';
+import { View, Share } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { BottomSheetProps } from './@types';
 
 import Text from '@/ui/Text';
+import Button from '@/ui/Button';
+import constants from '@/constants';
 import BottomSheet from '@/ui/BottomSheet';
+import usePosthog from '@/hooks/usePosthog';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
-import TeacherHedgehogLeft from '@/components/Hedgehogs/TeacherHedgehogLeft';
+import PopupHedgehog from '@/components/Hedgehogs/PopupHedgehog';
 
 type Props = BottomSheetProps;
 
 function Content({}: Props) {
+  const posthog = usePosthog();
+
+  const onShare = () => {
+    posthog.capture('shared_with_friend');
+
+    Share.share({
+      message:
+        'Hey! I found this cool app called HogLite that helps me view my PostHog analytics on the go. You should check it out too!',
+      url: constants.appStoreUrl,
+    });
+  };
+
   return (
     <BottomSheetView className="items-center">
+      <PopupHedgehog size={48} />
+
       <View className="gap-1 items-center">
-        <Text className="text-3xl text-ink font-medium">Hi Friend! 🦔👋</Text>
+        <Text className="text-3xl text-ink font-medium">Hi Friend!</Text>
         <Text className="text-lg text-ink text-center">
-          We don't store any data about you. In-fact, this app doesn't even have
-          a backend! Your API key is stored locally on your device, and this app
-          only communicates directly with the PostHog API.
+          Enoying the app? Know a friend who uses PostHog? Share HogLite with
+          them and help us grow!
         </Text>
       </View>
+
+      <Button color="accent" className="w-full" onPress={onShare}>
+        Share Now!
+      </Button>
     </BottomSheetView>
   );
 }
 
-const DataSecuritySheet = forwardRef<BottomSheetModal, BottomSheetProps>(
-  function DataSecuritySheet(props, ref) {
+const ShareWithFriendsSheet = forwardRef<BottomSheetModal, BottomSheetProps>(
+  function ShareWithFriendsSheet(props, ref) {
     return <BottomSheet ref={ref} children={<Content {...props} />} />;
   },
 );
 
-export default DataSecuritySheet;
+export default ShareWithFriendsSheet;

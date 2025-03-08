@@ -69,16 +69,16 @@ export default function Appearance() {
       value: 'space',
       src: require('@/../assets/images/dynamic-icons/space-icon.png'),
     },
-    {
-      label: 'Cowboy Hog',
-      value: 'cowboy',
-      src: require('@/../assets/images/dynamic-icons/cowboy-icon.png'),
-    },
-    {
-      label: 'Construction Hog',
-      value: 'construction',
-      src: require('@/../assets/images/dynamic-icons/construction-icon.png'),
-    },
+    // {
+    //   label: 'Cowboy Hog',
+    //   value: 'cowboy',
+    //   src: require('@/../assets/images/dynamic-icons/cowboy-icon.png'),
+    // },
+    // {
+    //   label: 'Construction Hog',
+    //   value: 'construction',
+    //   src: require('@/../assets/images/dynamic-icons/construction-icon.png'),
+    // },
   ];
 
   return (
