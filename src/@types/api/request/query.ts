@@ -35,6 +35,8 @@ export interface GetQueryRequest {
     kind: 'EventsQuery';
     /** Limit to results within a specific time range */
     after: TimePeriod;
+    /** The event to filter by */
+    event?: string;
     /** Whether to filter out test users or not */
     filterTestAccounts: boolean;
     /**

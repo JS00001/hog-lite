@@ -78,6 +78,9 @@ function Content({}: Props) {
           <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
             Insight
           </Text>
+          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
+            Event Definitions
+          </Text>
         </View>
       </View>
 

@@ -12,6 +12,7 @@ import usePosthog from '@/hooks/usePosthog';
 import { useGetEvents } from '@/hooks/api/query';
 import ActivityList from '@/components/ActivityList';
 import timePeriodOptions from '@/constants/time-periods';
+import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
 
 enum FetchingState {
   Refreshing,
@@ -24,6 +25,7 @@ export default function Activity() {
 
   const query = useGetEvents();
   const posthog = usePosthog();
+  const eventDefinitionsQuery = useGetEventDefinitions();
 
   const setClientStore = useClientStore((s) => s.setField);
   const timePeriod = useClientStore((s) => s.activityTimePeriod);
