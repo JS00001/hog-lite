@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { GET_DASHBOARD_KEY, GET_DASHBOARDS_KEY } from '../keys';
@@ -24,28 +23,32 @@ export const useGetDashboards = () => {
     enabled: !!project && !!isLoggedIn,
     queryKey: [GET_DASHBOARDS_KEY, project, demoing],
     queryFn: async () => {
+      let data;
+
+      // Either set the response to the mocked data or the actual data
       if (demoing) {
         const res = await getMockDashboardsResponse();
-        return validateResponse(res);
+        data = validateResponse(res);
+      } else {
+        const res = await getDashboards({ project_id: project!, limit: 2000 });
+        data = validateResponse(res);
       }
 
-      const res = await getDashboards({ project_id: project!, limit: 2000 });
-      return validateResponse(res);
+      // When this query re-runs (e.g. when we swap projects), we want to
+      // ensure that the dashboard field is set to the first dashboard in the
+      // new project
+      const firstDashboard = data.results[0];
+      const dashboardInProject = data.results.find((d) => {
+        return d.id.toString() === dashboard;
+      });
+
+      if (firstDashboard && !dashboardInProject) {
+        setField('dashboard', firstDashboard.id.toString());
+      }
+
+      return data;
     },
   });
-
-  // When we swap project, we want to set the dashboard to be the one from the
-  // new project
-  useEffect(() => {
-    const firstDashboard = query.data?.results[0];
-    const dashboardInProject = query.data?.results.find((d) => {
-      return d.id.toString() === dashboard;
-    });
-
-    if (firstDashboard && !dashboardInProject) {
-      setField('dashboard', firstDashboard.id.toString());
-    }
-  }, [query.data]);
 
   return query;
 };
