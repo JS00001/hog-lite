@@ -2270,7 +2270,7 @@ export const getMockEventDefinitionsResponse =
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     return {
-      count: 10,
+      count: 2,
       results: [
         {
           created_at: '2021-08-01T00:00:00Z',
@@ -2281,46 +2281,6 @@ export const getMockEventDefinitionsResponse =
           created_at: '2021-08-01T00:00:00Z',
           id: 'random-uuid',
           name: '$pageleave',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: '$click',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_reloaded',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_loaded',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_start',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_end',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_start',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_end',
-        },
-        {
-          created_at: '2021-08-01T00:00:00Z',
-          id: 'random-uuid',
-          name: 'activity_start',
         },
       ],
     };

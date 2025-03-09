@@ -38,7 +38,7 @@ interface IClientState {
   /** The activity time period that the user prefers to query */
   activityTimePeriod: TimePeriod;
   /** The event definition the user is filtering by in activity */
-  activityEventFilter: string | null;
+  activityEventDefinition: string | 'all';
   /** The insights time period that the user prefers to query */
   insightsTimePeriod: TimePeriod;
   /** Whether the user prefers filtering internal users or not */
@@ -63,7 +63,7 @@ const useClientStore = create<IClientStore>()(
         organization: null,
         dashboard: null,
         appIcon: 'default',
-        activityEventFilter: null,
+        activityEventDefinition: 'all',
         activityDisplayMode: 'full',
         activityColumns: ['event', 'url', 'timestamp'],
         activityTimePeriod: '-1dStart',

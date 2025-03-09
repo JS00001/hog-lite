@@ -3,5 +3,4 @@ export interface GetEventDefinitionsRequest {
   event_type: 'event';
   exclude_hidden: boolean;
   limit: number;
-  offset: number;
 }

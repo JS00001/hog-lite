@@ -1,8 +1,7 @@
 import { View } from 'react-native';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Text from '@/ui/Text';
-import Button from '@/ui/Button';
 import Switch from '@/ui/Switch';
 import Select from '@/ui/Select';
 import { TimePeriod } from '@/@types';
@@ -10,37 +9,47 @@ import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { useGetEvents } from '@/hooks/api/query';
+import { ISelectOption } from '@/ui/Select/@types';
 import ActivityList from '@/components/ActivityList';
 import timePeriodOptions from '@/constants/time-periods';
 import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
 
 enum FetchingState {
   Refreshing,
-  Reloading,
+  EventDefinitionChange,
   TimePeriodChange,
 }
 
 export default function Activity() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
-  const query = useGetEvents();
   const posthog = usePosthog();
+  const query = useGetEvents();
   const eventDefinitionsQuery = useGetEventDefinitions();
 
   const setClientStore = useClientStore((s) => s.setField);
   const timePeriod = useClientStore((s) => s.activityTimePeriod);
+  const eventDefinition = useClientStore((s) => s.activityEventDefinition);
   const filterTestAccounts = useClientStore((s) => s.filterTestAccounts);
 
+  const events = query.data?.results || [];
+  const projectEventDefinitions =
+    eventDefinitionsQuery.data?.results.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    }) || [];
+
   /**
-   * When the refetch button is pressed, we want to refetch the data
-   * from the server.
+   * All of the event definitions that can be filtered by.
+   * Add a custom option called 'All Events' to the beginning.
    */
-  const onRefetch = async () => {
-    posthog.capture('activity_reloaded');
-    setFetchState(FetchingState.Reloading);
-    await query.refetch();
-    setFetchState(null);
-  };
+  const eventDefinitionFilterOptions: ISelectOption[] = useMemo(() => {
+    const eventOptions = projectEventDefinitions.map((e) => ({
+      label: e.name,
+      value: e.name,
+    }));
+
+    return [{ label: 'All Events', value: 'all' }, ...eventOptions];
+  }, [projectEventDefinitions]);
 
   /**
    * When the refresh control (swipe down) is triggered, we want to
@@ -75,6 +84,16 @@ export default function Activity() {
   };
 
   /**
+   * When the event definition select dropdown changes, set it
+   * and refetch the data from the server.
+   */
+  const onEventDefinitionChange = (value: string) => {
+    setFetchState(FetchingState.EventDefinitionChange);
+    setClientStore('activityEventDefinition', value);
+    posthog.capture('event_definition_changed');
+  };
+
+  /**
    * When the 'filter out test accounts' switch is toggled, set it
    * and refetch the data from the server.
    */
@@ -83,15 +102,16 @@ export default function Activity() {
     posthog.capture('activity_filter_test_accounts_changed', { value });
   };
 
-  const data = query.data?.results || [];
-
   const actionsDisabled = query.isLoading || query.isRefetching;
 
   const isRefreshing = fetchState === FetchingState.Refreshing;
-  const reloadLoading =
-    actionsDisabled && fetchState === FetchingState.Reloading;
+
   const timePeriodLoading =
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
+
+  const eventDefinitionsLoading =
+    (actionsDisabled && fetchState === FetchingState.EventDefinitionChange) ||
+    eventDefinitionsQuery.isLoading;
 
   return (
     <Layout title="Activity" className="pb-32">
@@ -105,15 +125,16 @@ export default function Activity() {
           disabled={actionsDisabled}
           onChange={onTimePeriodChange}
         />
-        <Button
+        <Select
           size="sm"
-          icon="rotate-cw"
-          loading={reloadLoading}
+          className="shrink"
+          placeholder="Select event"
+          options={eventDefinitionFilterOptions}
+          value={eventDefinition}
+          loading={eventDefinitionsLoading}
           disabled={actionsDisabled}
-          onPress={onRefetch}
-        >
-          Reload
-        </Button>
+          onChange={onEventDefinitionChange}
+        />
       </View>
 
       <View className="h-12 px-4 rounded-xl bg-highlight border border-divider items-center justify-between flex-row">
@@ -127,7 +148,7 @@ export default function Activity() {
       </View>
 
       <ActivityList
-        data={data}
+        data={events}
         isLoading={query.isLoading}
         isFetchingNextPage={query.isFetchingNextPage}
         isRefreshing={isRefreshing}

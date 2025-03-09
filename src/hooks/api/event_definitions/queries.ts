@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { GET_QUERY_KEY } from '../keys';
+import { GET_EVENT_DEFINITIONS_KEY } from '../keys';
 
 import useAuthStore from '@/store/auth';
 import useClientStore from '@/store/client';
@@ -10,74 +9,58 @@ import { GetEventDefinitionsRequest } from '@/@types';
 import { getEventDefinitions } from '@/api/requests/event_definition';
 import { getMockEventDefinitionsResponse } from '@/constants/mock-data';
 
+// TODO: Paginate this/allow for pagination, right now, this is fine for my use case
 export const useGetEventDefinitions = () => {
-  const PAGINATION_LIMIT = 200;
-
   const demoing = useAuthStore((state) => state.demoing);
   const isLoggedIn = useAuthStore((state) => state.apiKey || state.demoing);
 
   const project = useClientStore((state) => state.project);
   const setField = useClientStore((state) => state.setField);
-  const eventFilter = useClientStore((state) => state.activityEventFilter);
+  const eventFilter = useClientStore((state) => state.activityEventDefinition);
 
   // Craft the payload that we will send to the server
-  const payload: Omit<GetEventDefinitionsRequest, 'offset'> = {
+  const payload: GetEventDefinitionsRequest = {
     project_id: project!,
     event_type: 'event',
     exclude_hidden: true,
-    limit: PAGINATION_LIMIT,
+    limit: 250,
   };
 
   // Derive some stable query keys so we refetch when critical data changes
-  const queryKey = [GET_QUERY_KEY, project, demoing];
+  const queryKey = [GET_EVENT_DEFINITIONS_KEY, project, demoing];
 
-  const query = useInfiniteQuery({
+  const query = useQuery({
     enabled: !!isLoggedIn,
     staleTime: Infinity,
-    initialPageParam: 0,
     queryKey: queryKey,
-    queryFn: async ({ pageParam = 0 }) => {
-      // If in demo mode, return mock data
+    queryFn: async () => {
+      let data;
+
+      // Either set the response to the mocked data or the actual data
       if (demoing) {
         const res = await getMockEventDefinitionsResponse();
-        return validateResponse(res);
+        data = validateResponse(res);
+      } else {
+        const res = await getEventDefinitions({
+          ...payload,
+        });
+
+        data = validateResponse(res);
       }
 
-      const res = await getEventDefinitions({
-        ...payload,
-        offset: pageParam * PAGINATION_LIMIT,
+      // We want to check if our currently selected event is in the current project, if not
+      // we want to reset it
+      const eventInProject = data.results.find((d) => {
+        return d.name === eventFilter;
       });
 
-      return validateResponse(res);
-    },
-    // If we have more pages to fetch, return the next offset
-    getNextPageParam: (lastPage, _, lastPageParam) => {
-      if (lastPage.results.length === PAGINATION_LIMIT) {
-        return lastPageParam / PAGINATION_LIMIT + 1;
+      if (!eventInProject) {
+        setField('activityEventDefinition', 'all');
       }
+
+      return data;
     },
   });
 
-  // Combine all of the results into one flat array
-  const pages = query.data?.pages || [];
-  const results = pages.flatMap((page) => page.results);
-
-  // When we swap project, we want to set the event to be null
-  useEffect(() => {
-    const eventInProject = results.find((d) => {
-      return d.name === eventFilter;
-    });
-
-    if (!eventInProject) {
-      setField('activityEventFilter', null);
-    }
-  }, [query.data]);
-
-  return {
-    ...query,
-    data: {
-      ...query.data,
-      results,
-    },
-  };
+  return query;
 };
