@@ -1,5 +1,6 @@
-import { forwardRef } from 'react';
+import classNames from 'classnames';
 import { Linking, View } from 'react-native';
+import { forwardRef, PropsWithChildren } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { BottomSheetProps } from '../@types';
@@ -60,27 +61,13 @@ function Content({}: Props) {
           needs to have the following scopes (READONLY):
         </Text>
         <View className="gap-1 flex-wrap flex-row">
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            User
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Query
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Organization
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Project
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Dashboard
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Insight
-          </Text>
-          <Text className="border border-divider bg-accent rounded-md py-1 px-2 text-ink font-semibold">
-            Event Definitions
-          </Text>
+          <Permission>User</Permission>
+          <Permission>Query</Permission>
+          <Permission>Organization</Permission>
+          <Permission>Project</Permission>
+          <Permission>Dashboard</Permission>
+          <Permission>Insight</Permission>
+          <Permission>Event Definition</Permission>
         </View>
       </View>
 
@@ -93,6 +80,15 @@ function Content({}: Props) {
       </View>
     </BottomSheetScrollView>
   );
+}
+
+function Permission({ children }: PropsWithChildren) {
+  const classes = classNames(
+    'py-1 px-2 text-ink font-semibold bg-accent',
+    'border border-divider overflow-hidden rounded-md',
+  );
+
+  return <Text className={classes}>{children}</Text>;
 }
 
 const CreateApiKeySheet = forwardRef<BottomSheetModal, BottomSheetProps>(

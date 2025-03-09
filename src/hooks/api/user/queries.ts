@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { GET_USER_KEY } from '../keys';
@@ -17,20 +16,23 @@ export const useGetUser = () => {
     enabled: !!loggedIn,
     queryKey: [GET_USER_KEY],
     queryFn: async () => {
+      let data;
+
+      // Either set the response to the mocked data or the actual data
       if (demoing) {
         const res = await getMockUserResponse();
-        return validateResponse(res);
+        data = validateResponse(res);
+      } else {
+        const res = await getUser();
+        data = validateResponse(res);
       }
 
-      const res = await getUser();
-      return validateResponse(res);
+      // When this query re-runs, we want to ensure the user store is up to date
+      setUser(data);
+
+      return data;
     },
   });
-
-  // When the query data changes, update the auth store for 'global' access
-  useEffect(() => {
-    if (query.data) setUser(query.data);
-  }, [query.data]);
 
   return query;
 };
