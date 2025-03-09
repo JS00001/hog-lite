@@ -67,6 +67,7 @@ function Content({}: Props) {
           <Permission>Project</Permission>
           <Permission>Dashboard</Permission>
           <Permission>Insight</Permission>
+          <Permission>Event Definition</Permission>
         </View>
       </View>
 

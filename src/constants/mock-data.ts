@@ -1,6 +1,7 @@
 import {
   GetDashboardResponse,
   GetDashboardsResponse,
+  GetEventDefinitionsResponse,
   GetOrganizationResponse,
   GetQueryResponse,
   GetUserResponse,
@@ -2263,3 +2264,24 @@ export const getMockActivityResponse = async (
     results: MockActivity[time],
   };
 };
+
+export const getMockEventDefinitionsResponse =
+  async (): Promise<GetEventDefinitionsResponse> => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    return {
+      count: 2,
+      results: [
+        {
+          created_at: '2021-08-01T00:00:00Z',
+          id: 'random-uuid',
+          name: '$pageview',
+        },
+        {
+          created_at: '2021-08-01T00:00:00Z',
+          id: 'random-uuid',
+          name: '$pageleave',
+        },
+      ],
+    };
+  };

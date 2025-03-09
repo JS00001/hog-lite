@@ -35,12 +35,13 @@ export default function Select({
   value,
   options,
   placeholder,
+  className,
   onChange,
   ...props
 }: Props) {
   const selectRef = useRef<View>(null);
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0, width: 0 });
+  const [positionStyle, setPositionStyle] = useState({});
 
   const colors = useColors();
 
@@ -53,10 +54,22 @@ export default function Select({
 
     selectRef.current.measure((_, __, width, height, px, py) => {
       const TOP_OFFSET = 4;
-      setPosition({
-        x: px,
-        y: py + height + TOP_OFFSET,
+
+      // If the element is on the right side of the screen, we should position
+      // the dropdown to the left
+      if (px + width > WIDTH / 2) {
+        setPositionStyle({
+          width,
+          top: py + height + TOP_OFFSET,
+          right: WIDTH - px - width,
+        });
+        return;
+      }
+
+      setPositionStyle({
         width,
+        top: py + height + TOP_OFFSET,
+        left: px,
       });
     });
   }, []);
@@ -84,11 +97,9 @@ export default function Select({
 
   const overlayStyle: StyleProp<ViewStyle> = {
     position: 'absolute',
-    top: position.y,
-    left: position.x,
     maxHeight: HEIGHT / 2,
     minWidth: WIDTH / 1.5,
-    width: position.width,
+    ...positionStyle,
   };
 
   const overlayClasses = classNames(
@@ -100,7 +111,11 @@ export default function Select({
 
   return (
     <>
-      <View ref={selectRef} onLayout={onElementLoad} className="gap-1.5">
+      <View
+        ref={selectRef}
+        onLayout={onElementLoad}
+        className={classNames('gap-1.5', className)}
+      >
         {label && <Text className="font-medium text-ink">{label}</Text>}
 
         <Button {...props} icon={icon} onPress={toggleOpen}>

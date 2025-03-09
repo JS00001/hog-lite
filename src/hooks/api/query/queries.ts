@@ -17,6 +17,7 @@ export const useGetEvents = () => {
 
   const project = useClientStore((state) => state.project);
   const timePeriod = useClientStore((state) => state.activityTimePeriod);
+  const eventFilter = useClientStore((state) => state.activityEventDefinition);
   const filterTestAccounts = useClientStore(
     (state) => state.filterTestAccounts,
   );
@@ -27,9 +28,10 @@ export const useGetEvents = () => {
     query: {
       after: timePeriod,
       kind: 'EventsQuery',
-      filterTestAccounts: filterTestAccounts,
       orderBy: ['timestamp DESC'],
-      // TODO: Select 'person' after event
+      filterTestAccounts: filterTestAccounts,
+      // We need to ensure that we either pass a filter, or undefined
+      event: eventFilter === 'all' ? undefined : eventFilter,
       select: [
         '*',
         'event',
@@ -47,6 +49,7 @@ export const useGetEvents = () => {
     timePeriod,
     filterTestAccounts,
     demoing,
+    eventFilter,
   ];
 
   const query = useInfiniteQuery({

@@ -32,7 +32,7 @@ export default function FullActivityList({
         data={data}
         onEndReachedThreshold={0.75}
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="bg-divider gap-px flex-grow"
+        contentContainerClassName="bg-divider gap-px"
         className="rounded-xl border border-divider bg-highlight"
         ListHeaderComponent={<ListHeaderComponent />}
         ListEmptyComponent={<ListEmptyComponent error={error} isLoading={isLoading} />}

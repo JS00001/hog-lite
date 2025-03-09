@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { router } from 'expo-router';
 import { Linking, View } from 'react-native';
 
 import Text from '@/ui/Text';
@@ -13,7 +14,6 @@ import { ISelectOption } from '@/ui/Select/@types';
 import { useGetOrganization } from '@/hooks/api/organization';
 
 import Card from '@/ui/Card';
-import { router } from 'expo-router';
 import constants from '@/constants';
 import useBottomSheetStore from '@/store/bottom-sheets';
 

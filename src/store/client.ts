@@ -37,6 +37,8 @@ interface IClientState {
   posthogEndpoint: 'https://us.posthog.com' | 'https://eu.posthog.com' | string;
   /** The activity time period that the user prefers to query */
   activityTimePeriod: TimePeriod;
+  /** The event definition the user is filtering by in activity */
+  activityEventDefinition: string | 'all';
   /** The insights time period that the user prefers to query */
   insightsTimePeriod: TimePeriod;
   /** Whether the user prefers filtering internal users or not */
@@ -61,6 +63,7 @@ const useClientStore = create<IClientStore>()(
         organization: null,
         dashboard: null,
         appIcon: 'default',
+        activityEventDefinition: 'all',
         activityDisplayMode: 'full',
         activityColumns: ['event', 'url', 'timestamp'],
         activityTimePeriod: '-1dStart',
