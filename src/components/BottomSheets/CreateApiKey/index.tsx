@@ -1,5 +1,6 @@
-import { forwardRef, PropsWithChildren } from 'react';
+import classNames from 'classnames';
 import { Linking, View } from 'react-native';
+import { forwardRef, PropsWithChildren } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { BottomSheetProps } from '../@types';
@@ -11,7 +12,6 @@ import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import TeacherHedgehogRight from '@/components/Hedgehogs/TeacherHedgehogRight';
 import BottomSheetScrollView from '@/ui/BottomSheet/Containers/ScrollView';
-import classNames from 'classnames';
 
 type Props = BottomSheetProps;
 
