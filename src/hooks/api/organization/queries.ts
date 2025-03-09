@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { GET_ORGANIZATION_KEY } from '../keys';
@@ -22,28 +21,32 @@ export const useGetOrganization = () => {
     enabled: !!isLoggedIn,
     queryKey: [GET_ORGANIZATION_KEY, organization, demoing],
     queryFn: async () => {
+      let data;
+
+      // Either set the response to the mocked data or the actual data
       if (demoing) {
         const res = await getMockOrganizationResponse();
-        return validateResponse(res);
+        data = validateResponse(res);
+      } else {
+        const res = await getOrganization({ id: organization! });
+        data = validateResponse(res);
       }
 
-      const res = await getOrganization({ id: organization! });
-      return validateResponse(res);
+      // When this query re-runs (e.g. when we swap organizations), we want to
+      // ensure that the project field is set to the first project in the new
+      // organization
+      const firstProject = data.projects[0];
+      const projectInOrganization = data.projects.find((p) => {
+        return p.id.toString() === project;
+      });
+
+      if (firstProject && !projectInOrganization) {
+        setField('project', firstProject.id.toString());
+      }
+
+      return data;
     },
   });
-
-  // When we swap organizations, we want to set the project to be the one from the
-  // new organization.
-  useEffect(() => {
-    const firstProject = query.data?.projects[0];
-    const projectInOrganization = query.data?.projects.find((p) => {
-      return p.id.toString() === project;
-    });
-
-    if (firstProject && !projectInOrganization) {
-      setField('project', firstProject.id.toString());
-    }
-  }, [query.data]);
 
   return query;
 };
