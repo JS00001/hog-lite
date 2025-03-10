@@ -5,10 +5,12 @@ import { TouchableOpacity, View } from 'react-native';
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import useClientStore from '@/store/client';
+import usePosthog from '@/hooks/usePosthog';
 import useBottomSheetStore from '@/store/bottom-sheets';
 
 export default function ListHeaderComponent() {
   const colors = useColors();
+  const posthog = usePosthog();
   const openBottomSheet = useBottomSheetStore((s) => s.open);
 
   const columns = useClientStore((store) => store.activityColumns);
@@ -45,6 +47,7 @@ export default function ListHeaderComponent() {
 
   const onPress = () => {
     openBottomSheet('CONFIGURE_ACTIVITY');
+    posthog.capture('activity_settings_opened');
   };
 
   return (

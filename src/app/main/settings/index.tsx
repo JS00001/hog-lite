@@ -162,7 +162,7 @@ export default function Settings() {
             description="Love HogLite? Share it with your friends!"
             onPress={() => {
               openBottomSheet('SHARE_WITH_FRIENDS');
-              posthog.capture('contribute_clicked');
+              posthog.capture('share_with_friends_clicked');
             }}
           />
           <Card

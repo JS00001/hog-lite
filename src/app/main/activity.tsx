@@ -56,7 +56,16 @@ export default function Activity() {
    * refetch the data from the server.
    */
   const onRefresh = async () => {
-    posthog.capture('activity_refreshed');
+    // Call getState so we arent subscribed to the store, we only want the value
+    // on this render cycle.
+    const columns = useClientStore.getState().activityColumns;
+    const displayMode = useClientStore.getState().activityDisplayMode;
+
+    posthog.capture('activity_refreshed', {
+      columns,
+      displayMode,
+    });
+
     setFetchState(FetchingState.Refreshing);
     await query.refetch();
     setFetchState(null);
