@@ -89,6 +89,7 @@ return <Text>Your theme is: {theme}</Text>;
 To help with debugging, we've added debugging tools to the application when running in development mode.
 
 - **Network Requests**: To view network requests, press three fingers on the screen to open the network inspector.
+- **Client Store State**: To view the current state in async storage, press three fingers on the screen, and click 'Client Store'
 
 ## Creating Builds/Releases
 

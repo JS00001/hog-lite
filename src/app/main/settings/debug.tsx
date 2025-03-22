@@ -55,7 +55,8 @@ export default function Appearance() {
           <View className="shrink">
             <Text className="font-medium text-ink">Developer Mode</Text>
             <Text className="font-medium text-gray text-sm">
-              Press three fingers on the screen to view network logs
+              Press three fingers on the screen to view the local state, and
+              network logs.
             </Text>
           </View>
           <Switch value={devMode} onChange={onToggleDeveloperMode} />

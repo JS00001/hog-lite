@@ -23,7 +23,7 @@ export default function GestureDetectorProvider({
   const onTripleFingerTap = (event: GestureTouchEvent) => {
     if (event.numberOfTouches === 3) {
       if (constants.environment === 'development' || devModeEnabled) {
-        openBottomSheet('NETWORK_LOGGER');
+        openBottomSheet('DEV_TOOLS');
       }
     }
   };

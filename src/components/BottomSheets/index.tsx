@@ -7,9 +7,9 @@ import DataSecuritySheet from './DataSecurity';
 import CreateApiKeySheet from './CreateApiKey';
 import DataRegionSheet from './DataRegion';
 import LeaveReviewSheet from './LeaveReview';
+import DevToolsSheet from './DevTools';
 import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
-import NetworkLoggerSheet from './DevTools/NetworkLogger';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
 
@@ -17,7 +17,7 @@ import useBottomSheetStore from '@/store/bottom-sheets';
  * The list of bottom sheets we want to support
  */
 const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
-  NETWORK_LOGGER: NetworkLoggerSheet,
+  DEV_TOOLS: DevToolsSheet,
   DATA_SECURITY: DataSecuritySheet,
   CREATE_API_KEY: CreateApiKeySheet,
   DATA_REGION: DataRegionSheet,
