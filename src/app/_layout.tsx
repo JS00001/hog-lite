@@ -1,5 +1,4 @@
 import { Slot } from 'expo-router';
-
 import Toast from 'react-native-toast-message';
 import * as SplashScreen from 'expo-splash-screen';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -8,18 +7,20 @@ import { startNetworkLogging } from 'react-native-network-logger';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import '@/app/globals.css';
-import toastConfig from '@/lib/toast';
 import AuthProvider from '@/providers/Auth';
-import queryClient from '@/lib/query-client';
 import ThemeProvider from '@/providers/Theme';
-import SplashScreenProvider from '@/providers/SplashScreen';
-import BottomSheetComponent from '@/components/BottomSheets';
-import setupRequestInterceptors from '@/lib/axios/interceptors';
-import GestureDetectorProvider from '@/providers/GestureDetector';
+import PromptProvider from '@/providers/Prompt';
 import SentryProvider from '@/providers/external/Sentry';
 import PosthogProvider from '@/providers/external/Posthog';
+import SplashScreenProvider from '@/providers/SplashScreen';
 import EasUpdateProvider from '@/providers/external/EasUpdate';
+import GestureDetectorProvider from '@/providers/GestureDetector';
+
+import '@/app/globals.css';
+import toastConfig from '@/lib/toast';
+import queryClient from '@/lib/query-client';
+import BottomSheetComponent from '@/components/BottomSheets';
+import setupRequestInterceptors from '@/lib/axios/interceptors';
 
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -45,8 +46,10 @@ export default function RootLayout() {
                     <ThemeProvider>
                       <BottomSheetModalProvider>
                         <GestureDetectorProvider>
-                          <Slot />
-                          <BottomSheetComponent />
+                          <PromptProvider>
+                            <Slot />
+                            <BottomSheetComponent />
+                          </PromptProvider>
                         </GestureDetectorProvider>
                       </BottomSheetModalProvider>
                       <Toast config={toastConfig} />

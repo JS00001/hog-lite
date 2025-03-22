@@ -43,6 +43,8 @@ interface IClientState {
   insightsTimePeriod: TimePeriod;
   /** Whether the user prefers filtering internal users or not */
   filterTestAccounts: boolean;
+  /** The time when the user should be asked to kindly leave a review */
+  reviewPromptTime: number | null;
 }
 
 interface IClientStore extends IClientState {
@@ -70,6 +72,8 @@ const useClientStore = create<IClientStore>()(
         insightsTimePeriod: '-7d',
         filterTestAccounts: false,
         posthogEndpoint: 'https://us.posthog.com',
+        // 3 days after first use, show the 'please review us' prompt
+        reviewPromptTime: new Date().getTime() + 3 * 24 * 60 * 60 * 1000,
       };
 
       const setField = <T extends keyof IClientState>(

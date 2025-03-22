@@ -33,4 +33,9 @@ export default {
    * The URL for the app store listing
    */
   appStoreUrl: 'https://apps.apple.com/us/app/hoglite/id6742509573',
+  /**
+   * The URL to leave a review for the app
+   */
+  reviewUrl:
+    'itms-apps://itunes.apple.com/app/id6742509573?action=write-review',
 };

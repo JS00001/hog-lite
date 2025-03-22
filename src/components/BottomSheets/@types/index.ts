@@ -15,6 +15,7 @@ export interface IndividualSheetProps {
   NETWORK_LOGGER: undefined;
   DATA_SECURITY: undefined;
   DATA_REGION: undefined;
+  LEAVE_REVIEW: undefined;
   SHARE_WITH_FRIENDS: undefined;
   CONFIGURE_ACTIVITY: undefined;
 }

@@ -6,6 +6,7 @@ import { IndividualSheetName } from './@types';
 import DataSecuritySheet from './DataSecurity';
 import CreateApiKeySheet from './CreateApiKey';
 import DataRegionSheet from './DataRegion';
+import LeaveReviewSheet from './LeaveReview';
 import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
 import NetworkLoggerSheet from './DevTools/NetworkLogger';
@@ -20,6 +21,7 @@ const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   DATA_SECURITY: DataSecuritySheet,
   CREATE_API_KEY: CreateApiKeySheet,
   DATA_REGION: DataRegionSheet,
+  LEAVE_REVIEW: LeaveReviewSheet,
   SHARE_WITH_FRIENDS: ShareWithFriendsSheet,
   CONFIGURE_ACTIVITY: ConfigureActivitySheet,
 };
