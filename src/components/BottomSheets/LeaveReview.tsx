@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { View, Linking } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 
@@ -17,6 +17,10 @@ type Props = BottomSheetProps;
 function Content({ close }: Props) {
   const posthog = usePosthog();
 
+  useEffect(() => {
+    posthog.capture('review_prompt_opened');
+  }, []);
+
   const onClose = () => {
     posthog.capture('review_prompt_dismissed');
     close();
@@ -28,7 +32,7 @@ function Content({ close }: Props) {
   };
 
   const onRate = () => {
-    posthog.capture('raview_prompt_rate');
+    posthog.capture('review_prompt_rate');
     Linking.openURL(constants.reviewUrl);
   };
 

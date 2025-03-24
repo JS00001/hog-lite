@@ -2,7 +2,7 @@
   "name": "hoglite-posthog-client",
   "main": "expo-router/entry",
   "version": "1.0.13",
-  "updateVersion": "2025.3.22.1",
+  "updateVersion": "2025.3.24.1",
   "scripts": {
     "start": "expo start",
     "dev": "expo start --dev-client",

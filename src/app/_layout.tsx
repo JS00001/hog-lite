@@ -36,10 +36,10 @@ startNetworkLogging();
 export default function RootLayout() {
   return (
     <SentryProvider>
-      <EasUpdateProvider>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <PosthogProvider>
+      <PosthogProvider>
+        <EasUpdateProvider>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
               <SplashScreenProvider>
                 <SafeAreaProvider>
                   <GestureHandlerRootView style={[{ flex: 1 }]}>
@@ -57,10 +57,10 @@ export default function RootLayout() {
                   </GestureHandlerRootView>
                 </SafeAreaProvider>
               </SplashScreenProvider>
-            </PosthogProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      </EasUpdateProvider>
+            </AuthProvider>
+          </QueryClientProvider>
+        </EasUpdateProvider>
+      </PosthogProvider>
     </SentryProvider>
   );
 }
