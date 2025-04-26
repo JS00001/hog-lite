@@ -7,7 +7,7 @@
 
 ## Introduction
 
-HogLite is a free and open-source [PostHog](https://posthog.com) client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the HogLite app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
+HogLite is an open-source [PostHog](https://posthog.com) client for mobile devices. The app allows users to view their PostHog dashboards, events, and more. This repository contains the code for the HogLite app. The app does not have a custom backend, but rather, directly communicates with [PostHog's](https://posthog.com/) API.
 
 ## Documentation Sections
 

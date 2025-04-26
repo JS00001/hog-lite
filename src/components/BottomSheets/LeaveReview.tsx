@@ -43,7 +43,7 @@ function Content({ close }: Props) {
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink font-medium">Hi Friend!</Text>
         <Text className="text-lg text-ink text-center">
-          I hope you've been enjoying HogLite! This project is free and{' '}
+          I hope you've been enjoying HogLite! This project is{' '}
           <Text className="text-red underline" onPress={onTextClick}>
             open-source
           </Text>{' '}

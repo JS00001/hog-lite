@@ -6,8 +6,8 @@ const appIcon =
   {
     development: './assets/images/dev-icon.png',
     preview: './assets/images/preview-icon.png',
-    production: './assets/images/icon.png',
-  }[appVariant] || './assets/images/icon.png';
+    production: './assets/images/dynamic-icons/space-icon.png',
+  }[appVariant] || './assets/images/dynamic-icons/space-icon.png';
 
 const appBundleIdentifier =
   {
@@ -63,7 +63,7 @@ export default {
           image: './assets/images/splash-icon.png',
           imageWidth: 200,
           resizeMode: 'contain',
-          backgroundColor: '#EEEFE9',
+          backgroundColor: '#191448',
         },
       ],
       [

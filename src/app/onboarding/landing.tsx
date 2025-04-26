@@ -36,7 +36,7 @@ export default function Landing() {
               Welcome to HogLite!
             </Text>
             <Text className="text-lg text-gray">
-              HogLite is a free and fully{' '}
+              HogLite is a fully{' '}
               <Text className="text-red underline" onPress={onTextClick}>
                 open-source
               </Text>{' '}

@@ -45,6 +45,8 @@ interface IClientState {
   filterTestAccounts: boolean;
   /** The time when the user should be asked to kindly leave a review */
   reviewPromptTime: number | null;
+  /** Whether the user has been instructed on how to use the activity page or not */
+  hasSeenActivityOnboarding: boolean;
 }
 
 interface IClientStore extends IClientState {
@@ -74,6 +76,7 @@ const useClientStore = create<IClientStore>()(
         posthogEndpoint: 'https://us.posthog.com',
         // 3 days after first use, show the 'please review us' prompt
         reviewPromptTime: new Date().getTime() + 3 * 24 * 60 * 60 * 1000,
+        hasSeenActivityOnboarding: false,
       };
 
       const setField = <T extends keyof IClientState>(

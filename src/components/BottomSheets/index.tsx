@@ -12,12 +12,14 @@ import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
+import ActivityInstructionSheet from './ActivityInstruction';
 
 /**
  * The list of bottom sheets we want to support
  */
 const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   DEV_TOOLS: DevToolsSheet,
+  ACTIVITY_INSTRUCTION: ActivityInstructionSheet,
   DATA_SECURITY: DataSecuritySheet,
   CREATE_API_KEY: CreateApiKeySheet,
   DATA_REGION: DataRegionSheet,

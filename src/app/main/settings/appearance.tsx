@@ -40,7 +40,12 @@ export default function Appearance() {
    */
   const appIconOptions = [
     {
-      label: 'Default',
+      label: 'Space Hog',
+      value: 'space',
+      src: require('@/../assets/images/dynamic-icons/space-icon.png'),
+    },
+    {
+      label: 'Happy Hog',
       value: 'default',
       src: require('@/../assets/images/icon.png'),
     },
@@ -65,20 +70,15 @@ export default function Appearance() {
       src: require('@/../assets/images/dynamic-icons/happy-icon-orange.png'),
     },
     {
-      label: 'Space Hog',
-      value: 'space',
-      src: require('@/../assets/images/dynamic-icons/space-icon.png'),
+      label: 'Cowboy Hog',
+      value: 'cowboy',
+      src: require('@/../assets/images/dynamic-icons/cowboy-icon.png'),
     },
-    // {
-    //   label: 'Cowboy Hog',
-    //   value: 'cowboy',
-    //   src: require('@/../assets/images/dynamic-icons/cowboy-icon.png'),
-    // },
-    // {
-    //   label: 'Construction Hog',
-    //   value: 'construction',
-    //   src: require('@/../assets/images/dynamic-icons/construction-icon.png'),
-    // },
+    {
+      label: 'Builder Hog',
+      value: 'construction',
+      src: require('@/../assets/images/dynamic-icons/construction-icon.png'),
+    },
   ];
 
   return (

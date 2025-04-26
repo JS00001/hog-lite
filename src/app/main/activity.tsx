@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Text from '@/ui/Text';
 import Switch from '@/ui/Switch';
@@ -13,6 +13,7 @@ import { ISelectOption } from '@/ui/Select/@types';
 import ActivityList from '@/components/ActivityList';
 import timePeriodOptions from '@/constants/time-periods';
 import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
+import useBottomSheetStore from '@/store/bottom-sheets';
 
 enum FetchingState {
   Refreshing,
@@ -28,9 +29,18 @@ export default function Activity() {
   const eventDefinitionsQuery = useGetEventDefinitions();
 
   const setClientStore = useClientStore((s) => s.setField);
+  const openBottomSheet = useBottomSheetStore((store) => store.open);
+
   const timePeriod = useClientStore((s) => s.activityTimePeriod);
   const eventDefinition = useClientStore((s) => s.activityEventDefinition);
   const filterTestAccounts = useClientStore((s) => s.filterTestAccounts);
+  const hasBeenOnboarded = useClientStore((s) => s.hasSeenActivityOnboarding);
+
+  useEffect(() => {
+    if (!hasBeenOnboarded) {
+      openBottomSheet('ACTIVITY_INSTRUCTION');
+    }
+  }, [hasBeenOnboarded]);
 
   const events = query.data?.results || [];
   const projectEventDefinitions =

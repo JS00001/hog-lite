@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { useMemo, useState } from 'react';
 import Feather from '@expo/vector-icons/Feather';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableHighlight, View } from 'react-native';
 
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
@@ -97,10 +97,7 @@ export default function ListItem({ event }: Props) {
     return properties;
   }, [data.properties]);
 
-  const containerClasses = classNames(
-    'flex-row items-center gap-4',
-    'p-3 bg-highlight',
-  );
+  const containerClasses = classNames('flex-row items-center gap-4', 'p-3');
 
   const eventRowClasses = classNames(
     'text-sm text-ink',
@@ -128,40 +125,46 @@ export default function ListItem({ event }: Props) {
 
   return (
     <View>
-      <View className={containerClasses}>
-        {/* Expand/Collapse Button */}
-        <TouchableOpacity className={toggleClasses} onPress={toggleExpanded}>
-          <Feather name={iconName} color={colors.ink} />
-        </TouchableOpacity>
+      <TouchableHighlight
+        className="bg-highlight"
+        underlayColor={colors.accent}
+        onPress={toggleExpanded}
+      >
+        <View className={containerClasses}>
+          {/* Expand/Collapse Button */}
+          <View className={toggleClasses}>
+            <Feather name={iconName} color={colors.ink} />
+          </View>
 
-        {/* Event Display */}
-        {columns.includes('event') && (
-          <Text className={eventRowClasses} numberOfLines={1}>
-            {eventName}
-          </Text>
-        )}
+          {/* Event Display */}
+          {columns.includes('event') && (
+            <Text className={eventRowClasses} numberOfLines={1}>
+              {eventName}
+            </Text>
+          )}
 
-        {/* Person Display */}
-        {columns.includes('person') && (
-          <Text className={personRowClasses} numberOfLines={1}>
-            {person.distinct_id}
-          </Text>
-        )}
+          {/* Person Display */}
+          {columns.includes('person') && (
+            <Text className={personRowClasses} numberOfLines={1}>
+              {person.distinct_id}
+            </Text>
+          )}
 
-        {/* URL/Screen Display */}
-        {columns.includes('url') && (
-          <Text className={urlRowClasses} numberOfLines={1}>
-            {eventUrl}
-          </Text>
-        )}
+          {/* URL/Screen Display */}
+          {columns.includes('url') && (
+            <Text className={urlRowClasses} numberOfLines={1}>
+              {eventUrl}
+            </Text>
+          )}
 
-        {/* Timestamp Display */}
-        {columns.includes('timestamp') && (
-          <Text className={timeRowClasses} numberOfLines={1}>
-            {timeAgo(eventTimestamp)}
-          </Text>
-        )}
-      </View>
+          {/* Timestamp Display */}
+          {columns.includes('timestamp') && (
+            <Text className={timeRowClasses} numberOfLines={1}>
+              {timeAgo(eventTimestamp)}
+            </Text>
+          )}
+        </View>
+      </TouchableHighlight>
 
       {/* Detail View */}
       {expanded && (
