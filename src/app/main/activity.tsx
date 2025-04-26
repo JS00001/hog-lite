@@ -39,6 +39,7 @@ export default function Activity() {
   useEffect(() => {
     if (!hasBeenOnboarded) {
       openBottomSheet('ACTIVITY_INSTRUCTION');
+      setClientStore('hasSeenActivityOnboarding', true);
     }
   }, [hasBeenOnboarded]);
 
