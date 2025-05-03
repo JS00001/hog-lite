@@ -44,7 +44,7 @@ function Content({}: Props) {
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
         <Text className="text-lg text-ink">
-          Click "+ Create personal API key
+          Click "+ Create personal API key"
         </Text>
       </View>
 

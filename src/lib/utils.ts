@@ -66,3 +66,11 @@ export const validateResponse = <T extends any>(res: API.Response<T>) => {
 
   return res as T;
 };
+
+export const titleCase = (str: string) => {
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .join(' ');
+};
