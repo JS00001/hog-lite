@@ -6,6 +6,7 @@ import InsightContainer from './Container';
 
 import Text from '@/ui/Text';
 import { formatNumber } from '@/lib/utils';
+import { useMemo } from 'react';
 
 interface Props {
   data: Aggregation[];
@@ -38,6 +39,12 @@ function SingleValueCard({ data }: { data: Aggregation }) {
 }
 
 function MultiValueCard({ data }: Props) {
+  const aggregatedTotal = useMemo(() => {
+    return data.reduce((acc, item) => {
+      return acc + (item.aggregated_value ?? item.count);
+    }, 0);
+  }, [data]);
+
   return (
     <View className="mb-3">
       {data.map((item, index) => {
@@ -47,12 +54,17 @@ function MultiValueCard({ data }: Props) {
           index === 0 && 'border-t',
         );
 
+        const percentage =
+          (item.aggregated_value ?? item.count) / aggregatedTotal;
+        const percentageString = `${(percentage * 100).toFixed(0)}%`;
+
         return (
           <View className={containerClasses} key={index}>
             <Text className="text-ink font-medium">{item.label}</Text>
             <View className="flex-1 items-end">
               <Text className="text-ink font-medium">
-                {formatNumber(item.aggregated_value ?? item.count)}
+                {formatNumber(item.aggregated_value ?? item.count)} (
+                {percentageString})
               </Text>
             </View>
           </View>
