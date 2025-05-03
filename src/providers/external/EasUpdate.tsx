@@ -63,8 +63,8 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
             text: 'Reload',
             isPreferred: true,
             onPress: () => {
-              Updates.reloadAsync();
               posthog.capture('update_reloaded');
+              Updates.reloadAsync();
             },
           },
         ],

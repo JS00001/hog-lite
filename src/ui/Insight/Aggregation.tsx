@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { View } from 'react-native';
 
 import { Aggregation } from '@/@types';
+import InsightContainer from './Container';
 
 import Text from '@/ui/Text';
 import { formatNumber } from '@/lib/utils';
@@ -11,11 +12,21 @@ interface Props {
 }
 
 export default function AggregationCard({ data }: Props) {
-  if (data.length === 1 && data.at(0)) {
-    return <SingleValueCard data={data.at(0)!} />;
+  const isSingleValue = data.length === 1;
+
+  if (isSingleValue) {
+    return (
+      <InsightContainer type="Total Count">
+        <SingleValueCard data={data.at(0)!} />
+      </InsightContainer>
+    );
   }
 
-  return <MultiValueCard data={data} />;
+  return (
+    <InsightContainer type="Insight Breakdown">
+      <MultiValueCard data={data} />
+    </InsightContainer>
+  );
 }
 
 function SingleValueCard({ data }: { data: Aggregation }) {
@@ -28,11 +39,12 @@ function SingleValueCard({ data }: { data: Aggregation }) {
 
 function MultiValueCard({ data }: Props) {
   return (
-    <View className="bg-primary rounded-lg mb-3 border border-divider">
+    <View className="mb-3">
       {data.map((item, index) => {
         const containerClasses = classNames(
-          'flex-row p-3 gap-2',
-          index !== data.length - 1 && 'border-b border-divider',
+          'flex-row py-3 gap-2',
+          'border-b border-divider',
+          index === 0 && 'border-t',
         );
 
         return (
