@@ -6,10 +6,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import alert from '@/lib/alert';
 import constants from '@/constants';
 import usePosthog from '@/hooks/usePosthog';
+import useClientStore from '@/store/client';
 
 export default function EasUpdateProvider({ children }: PropsWithChildren) {
   const posthog = usePosthog();
   const appState = useRef(AppState.currentState);
+
+  const setField = useClientStore((s) => s.setField);
+  const disableUpdateAlerts = useClientStore((s) => s.disableUpdateAlerts);
 
   /**
    * When the app moves from background to foreground,
@@ -35,7 +39,7 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
     const subscription = AppState.addEventListener('change', checkForUpdates);
 
     return () => subscription.remove();
-  }, []);
+  }, [disableUpdateAlerts]);
 
   /**
    * Check for OTA updates and prompt the user to update if a new version is available.
@@ -47,8 +51,9 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
 
     if (res.isNew && currentUpdate !== res.manifest.id) {
       await AsyncStorage.setItem('currentUpdate', res.manifest.id);
-
       posthog.capture('update_fetched');
+
+      if (disableUpdateAlerts) return;
 
       alert({
         title: 'Update Available',
@@ -56,15 +61,23 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
           'A new update is available. Reload the app now to get the latest features.',
         buttons: [
           {
-            text: 'Later',
-            onPress: () => posthog.capture('update_ignored'),
-          },
-          {
-            text: 'Reload',
+            text: 'Reload Now',
             isPreferred: true,
             onPress: () => {
               posthog.capture('update_reloaded');
               Updates.reloadAsync();
+            },
+          },
+          {
+            text: 'Not Now',
+            onPress: () => posthog.capture('update_ignored'),
+          },
+          {
+            style: 'destructive',
+            text: 'Disable update alerts',
+            onPress: () => {
+              posthog.capture('update_alerts_disabled');
+              setField('disableUpdateAlerts', true);
             },
           },
         ],

@@ -1,5 +1,5 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-import { useCallback, useMemo, useState } from 'react';
 
 import Text from '@/ui/Text';
 import Select from '@/ui/Select';
@@ -12,10 +12,11 @@ import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
-import PanickedHedgehog from '@/components/Hedgehogs/PanickedHedgehog';
-import timePeriodOptions from '@/constants/time-periods';
-import { useGetDashboard, useGetDashboards } from '@/hooks/api/dashboard';
 import ErrorMessage from '@/components/ErrorMessage';
+import useBottomSheetStore from '@/store/bottom-sheets';
+import timePeriodOptions from '@/constants/time-periods';
+import PanickedHedgehog from '@/components/Hedgehogs/PanickedHedgehog';
+import { useGetDashboard, useGetDashboards } from '@/hooks/api/dashboard';
 
 enum FetchingState {
   Reloading,
@@ -31,9 +32,18 @@ export default function Insights() {
   const dashboardQuery = useGetDashboard();
   const dashboardsQuery = useGetDashboards();
 
+  const openBottomSheet = useBottomSheetStore((s) => s.open);
   const setClientStore = useClientStore((s) => s.setField);
   const dashboard = useClientStore((s) => s.dashboard);
   const timePeriod = useClientStore((s) => s.insightsTimePeriod);
+  const hasBeenOnboarded = useClientStore((s) => s.hasSeenInsightsOnboarding);
+
+  useEffect(() => {
+    if (!hasBeenOnboarded) {
+      openBottomSheet('INSIGHTS_INSTRUCTION');
+      setClientStore('hasSeenInsightsOnboarding', true);
+    }
+  }, [hasBeenOnboarded]);
 
   const actionsDisabled =
     dashboardQuery.isLoading ||

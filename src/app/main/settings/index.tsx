@@ -83,6 +83,10 @@ export default function Settings() {
           style: 'destructive',
           onPress: logout,
         },
+        {
+          text: 'Nevermind',
+          style: 'cancel',
+        },
       ],
     });
 

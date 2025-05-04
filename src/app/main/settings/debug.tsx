@@ -1,10 +1,8 @@
-import { Linking, View } from 'react-native';
+import { View } from 'react-native';
 
 import Text from '@/ui/Text';
 import Switch from '@/ui/Switch';
-import Button from '@/ui/Button';
 import constants from '@/constants';
-import { createUUID } from '@/lib/utils';
 import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
@@ -13,6 +11,7 @@ export default function Appearance() {
   const posthog = usePosthog();
 
   const devMode = useClientStore((s) => s.devMode);
+  const disableUpdateAlerts = useClientStore((s) => s.disableUpdateAlerts);
   const setClientStore = useClientStore((s) => s.setField);
 
   const onToggleDeveloperMode = () => {
@@ -20,18 +19,10 @@ export default function Appearance() {
     posthog.capture('toggle_developer_mode', { devMode: !devMode });
   };
 
-  const onGoToGitHub = () => {
-    Linking.openURL(constants.githubUrl);
-    posthog.capture('go_to_github');
-  };
-
-  const onSetUniqueId = () => {
-    const uuid = createUUID();
-
-    posthog.capture('set_unique_id', { uuid });
-    posthog.identify(uuid, {
-      uuid,
-      user_source: 'debug',
+  const onToggleUpdateAlerts = () => {
+    setClientStore('disableUpdateAlerts', !disableUpdateAlerts);
+    posthog.capture('toggle_update_alerts', {
+      disableUpdateAlerts: !disableUpdateAlerts,
     });
   };
 
@@ -64,16 +55,19 @@ export default function Appearance() {
       </View>
 
       <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">
-        <View>
-          <Text className="font-medium text-ink">Generate Unique ID</Text>
-          <Text className="font-medium text-gray text-sm">
-            Only use this if you know what you are doing. This won't change
-            anything in the app.
-          </Text>
+        <View className="flex-row items-center justify-between gap-2">
+          <View className="shrink">
+            <Text className="font-medium text-ink">Update Alerts Enabled?</Text>
+            <Text className="font-medium text-gray text-sm">
+              Toggle whether you receive notifications when OTA updates are
+              available.
+            </Text>
+          </View>
+          <Switch
+            value={!disableUpdateAlerts}
+            onChange={onToggleUpdateAlerts}
+          />
         </View>
-        <Button size="sm" color="accent" onPress={onSetUniqueId}>
-          Set New Unique ID
-        </Button>
       </View>
     </Layout>
   );

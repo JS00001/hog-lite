@@ -44,7 +44,12 @@ export default function LocalStorage() {
       renderItem={({ item }) => {
         const [key, value] = item;
 
-        if (typeof value !== 'object' && typeof value !== 'string') {
+        if (
+          typeof value !== 'object' &&
+          typeof value !== 'string' &&
+          typeof value !== 'number' &&
+          typeof value !== 'boolean'
+        ) {
           return null;
         }
 
@@ -52,7 +57,7 @@ export default function LocalStorage() {
           <View className="w-full p-4 bg-primary border border-divider rounded-xl">
             <Text className="text-ink text-lg font-semibold">{key}</Text>
             <Text className="text-gray">
-              {typeof value === 'object' ? JSON.stringify(value) : value}
+              {typeof value === 'object' ? JSON.stringify(value) : `${value}`}
             </Text>
           </View>
         );

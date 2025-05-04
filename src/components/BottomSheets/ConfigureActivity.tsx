@@ -13,12 +13,14 @@ import Switch from '@/ui/Switch';
 import Select from '@/ui/Select';
 import Button from '@/ui/Button';
 import BottomSheet from '@/ui/BottomSheet';
+import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 
 type Props = BottomSheetProps;
 
 function Content({ close }: Props) {
+  const posthog = usePosthog();
   const setField = useClientStore((store) => store.setField);
   const columns = useClientStore((store) => store.activityColumns);
   const mode = useClientStore((store) => store.activityDisplayMode);
@@ -74,6 +76,7 @@ function Content({ close }: Props) {
         placeholder="Select display mode"
         value={state.mode}
         onChange={(value) => {
+          posthog.capture('configure_activity_display_mode', { mode: value });
           setState({ ...state, mode: value as ActivityDisplayMode });
         }}
       />

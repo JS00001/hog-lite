@@ -14,7 +14,9 @@ export type AppIcon =
   | 'nerd'
   | 'happy-blue'
   | 'happy-orange'
-  | 'space';
+  | 'space'
+  | 'cowboy'
+  | 'construction';
 
 interface IClientState {
   /** The users selected app icon */
@@ -47,6 +49,10 @@ interface IClientState {
   reviewPromptTime: number | null;
   /** Whether the user has been instructed on how to use the activity page or not */
   hasSeenActivityOnboarding: boolean;
+  /** Whether the user has been instructed on how to use the insights page or not */
+  hasSeenInsightsOnboarding: boolean;
+  /** Whether the user has disabled 'update alerts' */
+  disableUpdateAlerts: boolean;
 }
 
 interface IClientStore extends IClientState {
@@ -77,6 +83,8 @@ const useClientStore = create<IClientStore>()(
         // 3 days after first use, show the 'please review us' prompt
         reviewPromptTime: new Date().getTime() + 3 * 24 * 60 * 60 * 1000,
         hasSeenActivityOnboarding: false,
+        hasSeenInsightsOnboarding: false,
+        disableUpdateAlerts: false,
       };
 
       const setField = <T extends keyof IClientState>(

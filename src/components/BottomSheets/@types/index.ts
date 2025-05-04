@@ -19,4 +19,5 @@ export interface IndividualSheetProps {
   LEAVE_REVIEW: undefined;
   SHARE_WITH_FRIENDS: undefined;
   CONFIGURE_ACTIVITY: undefined;
+  INSIGHTS_INSTRUCTION: undefined;
 }

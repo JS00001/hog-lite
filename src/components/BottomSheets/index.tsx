@@ -10,9 +10,10 @@ import LeaveReviewSheet from './LeaveReview';
 import DevToolsSheet from './DevTools';
 import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
+import ActivityInstructionSheet from './ActivityInstruction';
+import InsightsInstructionSheet from './InsightsInstruction';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
-import ActivityInstructionSheet from './ActivityInstruction';
 
 /**
  * The list of bottom sheets we want to support
@@ -26,6 +27,7 @@ const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   LEAVE_REVIEW: LeaveReviewSheet,
   SHARE_WITH_FRIENDS: ShareWithFriendsSheet,
   CONFIGURE_ACTIVITY: ConfigureActivitySheet,
+  INSIGHTS_INSTRUCTION: InsightsInstructionSheet,
 };
 
 /**
