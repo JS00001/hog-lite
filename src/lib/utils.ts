@@ -83,3 +83,16 @@ export const simpleHash = (str: string) => {
   }
   return hash >>> 0; // Ensure non-negative integer
 };
+
+// Format seconds as either s, m, h, or d
+export const secondsToString = (seconds: number) => {
+  if (seconds < 60) {
+    return `${Math.floor(seconds)}s`;
+  } else if (seconds < 3600) {
+    return `${Math.floor(seconds / 60)}m`;
+  } else if (seconds < 86400) {
+    return `${Math.floor(seconds / 3600)}h`;
+  } else {
+    return `${Math.floor(seconds / 86400)}d`;
+  }
+};
