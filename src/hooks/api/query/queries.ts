@@ -6,7 +6,7 @@ import { getQuery } from '@/api';
 import useAuthStore from '@/store/auth';
 import { GetQueryRequest } from '@/@types';
 import useClientStore from '@/store/client';
-import { createUUID, validateResponse } from '@/lib/utils';
+import { createUUID, simpleHash, validateResponse } from '@/lib/utils';
 import { getMockActivityResponse } from '@/constants/mock-data';
 
 export const useGetEvents = () => {
@@ -64,11 +64,20 @@ export const useGetEvents = () => {
         return validateResponse(res);
       }
 
+      // generate a unique hash for the query
+      const hash = simpleHash(
+        payload.project_id +
+          payload.query.after +
+          payload.query.filterTestAccounts +
+          payload.query.event +
+          pageParam,
+      ).toString();
+
       // Generate a unique query id for each request, add the pagination
       // updates, then query
       const res = await getQuery({
         ...payload,
-        client_query_id: createUUID(),
+        client_query_id: hash,
         query: {
           ...payload.query,
           limit: PAGINIATION_LIMIT,

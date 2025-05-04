@@ -74,3 +74,12 @@ export const titleCase = (str: string) => {
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
 };
+
+export const simpleHash = (str: string) => {
+  let hash = 5381;
+
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 33) ^ str.charCodeAt(i); // ^ is bitwise XOR
+  }
+  return hash >>> 0; // Ensure non-negative integer
+};
