@@ -1,10 +1,11 @@
-import { FlatList, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 import { useCallback, useMemo, useState } from 'react';
 
 import Text from '@/ui/Text';
 import Select from '@/ui/Select';
 import Button from '@/ui/Button';
 import Insight from '@/ui/Insight';
+import useColors from '@/lib/theme';
 import Skeleton from '@/ui/Skeleton';
 import { TimePeriod } from '@/@types';
 import Layout from '@/components/Layout';
@@ -18,12 +19,14 @@ import ErrorMessage from '@/components/ErrorMessage';
 
 enum FetchingState {
   Reloading,
+  Refreshing,
   TimePeriodChange,
 }
 
 export default function Insights() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
+  const colors = useColors();
   const posthog = usePosthog();
   const dashboardQuery = useGetDashboard();
   const dashboardsQuery = useGetDashboards();
@@ -85,6 +88,15 @@ export default function Insights() {
   };
 
   /**
+   * When pulling down to refresh, we want to refetch the data
+   */
+  const onRefresh = () => {
+    setFetchState(FetchingState.Refreshing);
+    dashboardQuery.refetch();
+    posthog.capture('insights_refreshed');
+  };
+
+  /**
    * Show a loading state if that is the reason for the empty data,
    * otherwise show a message to the user that no results were found.
    */
@@ -124,8 +136,9 @@ export default function Insights() {
     );
   }, [actionsDisabled]);
 
-  const reloadLoading =
-    actionsDisabled && fetchState === FetchingState.Reloading;
+  const isReloading = actionsDisabled && fetchState === FetchingState.Reloading;
+  const isRefreshing =
+    actionsDisabled && fetchState === FetchingState.Refreshing;
   const timePeriodLoading =
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
@@ -153,7 +166,7 @@ export default function Insights() {
         <Button
           size="sm"
           icon="rotate-cw"
-          loading={reloadLoading}
+          loading={isReloading}
           disabled={actionsDisabled}
           onPress={onRefetch}
         >
@@ -167,6 +180,13 @@ export default function Insights() {
         contentContainerClassName="gap-1 pb-12"
         ListEmptyComponent={ListEmptyComponent}
         renderItem={({ item }) => <Insight insight={item.insight} />}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.gray}
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+          />
+        }
         // List optimization
         removeClippedSubviews
         initialNumToRender={25}
