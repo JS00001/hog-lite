@@ -18,7 +18,14 @@ const setupRequestInterceptors = () => {
    */
   axios.interceptors.request.use(async (config) => {
     const apiKey = useAuthStore.getState().apiKey;
-    const apiUrl = useClientStore.getState().posthogEndpoint;
+    const baseApiUrl = useClientStore.getState().posthogEndpoint;
+
+    // For the stats endpoint exclusively, PostHog uses a unique domain for
+    // live data (live.us.posthog.com or live.eu.posthog.com)
+    const apiUrl =
+      config.url === '/stats'
+        ? baseApiUrl.replace('https://', 'https://live.')
+        : baseApiUrl;
 
     config.baseURL = apiUrl;
 

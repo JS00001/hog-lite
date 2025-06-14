@@ -3,6 +3,7 @@ export * from './response/query';
 export * from './response/organization';
 export * from './response/dashboard';
 export * from './response/event_definitions';
+export * from './response/stats';
 
 export * from './request/user';
 export * from './request/query';

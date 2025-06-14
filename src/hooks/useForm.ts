@@ -23,10 +23,9 @@ const useForm = <TRequest>({
     };
   };
 
-  // Create the form's state, each key should have a value and error entry
   const initialState = Object.fromEntries(
     Object.keys(validators).map((key) => {
-      const initialValue = initialValues?.[key as keyof TRequest];
+      const initialValue = initialValues?.[key as TRequestFields];
       return [key, { value: initialValue ?? '', error: '' }];
     }),
   ) as TState;

@@ -62,7 +62,7 @@ export default function Step1() {
             autoComplete="off"
             label="API Key"
             placeholder="phx_12345"
-            value={form.state.apiKey.value}
+            value={form.state.goose.value}
             error={form.state.apiKey.error}
             onChangeText={(apiKey) => form.setValue('apiKey', apiKey)}
           />

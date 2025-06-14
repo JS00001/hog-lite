@@ -14,6 +14,7 @@ import ActivityList from '@/components/ActivityList';
 import timePeriodOptions from '@/constants/time-periods';
 import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
 import useBottomSheetStore from '@/store/bottom-sheets';
+import { useGetLiveStats } from '@/hooks/api/stats';
 
 enum FetchingState {
   Refreshing,
@@ -26,6 +27,7 @@ export default function Activity() {
 
   const posthog = usePosthog();
   const query = useGetEvents();
+  // const liveStatsQuery = useGetLiveStats();
   const eventDefinitionsQuery = useGetEventDefinitions();
 
   const setClientStore = useClientStore((s) => s.setField);
