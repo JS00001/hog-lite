@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import classNames from 'classnames';
 import { View } from 'react-native';
 
@@ -6,7 +7,6 @@ import InsightContainer from './Container';
 
 import Text from '@/ui/Text';
 import { formatNumber } from '@/lib/utils';
-import { useMemo } from 'react';
 
 interface Props {
   data: Aggregation[];

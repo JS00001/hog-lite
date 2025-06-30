@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
 import classNames from 'classnames';
+import React, { useMemo } from 'react';
+import RNErrorBoundary from 'react-native-error-boundary';
 import { TouchableOpacity, View } from 'react-native';
 
 import FunnelConversionTimeCard from './FunnelConversionTime';
@@ -21,6 +22,17 @@ interface Props {
 }
 
 export default function Insight({ insight }: Props) {
+  // Bug with the react-native-error-boundary package that causes incorrect types
+  const ErrorBoundary: any = RNErrorBoundary;
+
+  return (
+    <ErrorBoundary FallbackComponent={FallbackComponent}>
+      <InsightCard insight={insight} />
+    </ErrorBoundary>
+  );
+}
+
+function InsightCard({ insight }: Props): React.ReactNode {
   const result = useMemo(() => {
     // If the result is an object, it must be a FunnelConversionTime
     if (!Array.isArray(insight.result)) {
@@ -108,6 +120,28 @@ export default function Insight({ insight }: Props) {
             {insight.description}
           </Text>
         )}
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function FallbackComponent() {
+  const containerClasses = classNames(
+    'bg-highlight p-6',
+    'border border-divider rounded-xl',
+  );
+
+  return (
+    <TouchableOpacity className={containerClasses} disabled>
+      <View>
+        <Text className="text-ink font-medium text-lg" numberOfLines={1}>
+          This insight is not yet supported
+        </Text>
+
+        <Text className="text-gray leading-relaxed" numberOfLines={2}>
+          Heads up! Something went wrong while loading this insight. Chances
+          are, we don't support it yet. We're working on it!
+        </Text>
       </View>
     </TouchableOpacity>
   );

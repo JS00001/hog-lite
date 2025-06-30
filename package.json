@@ -1,8 +1,8 @@
 {
   "name": "hoglite-posthog-client",
   "main": "expo-router/entry",
-  "version": "1.0.14",
-  "updateVersion": "2025.5.4.7",
+  "version": "1.0.15",
+  "updateVersion": "2025.6.14.1",
   "scripts": {
     "start": "expo start",
     "dev": "expo start --dev-client",
@@ -58,6 +58,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.7",
+    "react-native-error-boundary": "^2.0.0",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-get-random-values": "^1.11.0",
     "react-native-gifted-charts": "^1.4.58",
