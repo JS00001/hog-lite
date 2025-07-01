@@ -37,7 +37,9 @@ export default function ListEmptyComponent({ error, isLoading }: Props) {
   return (
     <View className="items-center py-32 bg-highlight -mb-px">
       <PanickedHedgehog size={96} />
-      <Text className="text-ink text-xl font-medium">No events found</Text>
+      <Text className="text-ink text-xl font-medium">
+        No events or exceptions found
+      </Text>
       <Text className="text-ink">
         Try changing your filters, or reloading the page.
       </Text>
