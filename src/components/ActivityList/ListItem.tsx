@@ -9,6 +9,7 @@ import { timeAgo } from '@/lib/utils';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { EventData, IEvent } from '@/@types';
+import { QueryType } from './@types';
 
 interface Props {
   event: IEvent;
@@ -29,6 +30,10 @@ export default function ListItem({ event }: Props) {
   const person = event[EventData.Person];
   const eventTimestamp = event[EventData.Timestamp];
 
+  // Exception handling
+  const isException = event[EventData.Name] === '$exception';
+  const exception = data.properties?.$exception_list?.at(0).value;
+
   const toggleExpanded = () => {
     setExpanded(!expanded);
     posthog.capture('event_expanded', { value: !expanded });
@@ -43,6 +48,10 @@ export default function ListItem({ event }: Props) {
 
     if (data.event.startsWith('$')) {
       event = data.event.charAt(1).toUpperCase() + data.event.slice(2);
+    }
+
+    if (isException && exception) {
+      return `Error: ${exception}`;
     }
 
     if (event === 'Autocapture') {
@@ -90,6 +99,11 @@ export default function ListItem({ event }: Props) {
       Url: eventUrl,
     };
 
+    if (isException) {
+      delete properties.Event;
+      properties.ExceptionMessage = exception;
+    }
+
     keys.forEach((key) => {
       properties[key] = data.properties[key];
     });
@@ -97,7 +111,10 @@ export default function ListItem({ event }: Props) {
     return properties;
   }, [data.properties]);
 
-  const containerClasses = classNames('flex-row items-center gap-4', 'p-3');
+  const containerClasses = classNames(
+    'flex-row items-center gap-4 p-3',
+    isException && 'bg-light-red',
+  );
 
   const eventRowClasses = classNames(
     'text-sm text-ink',
@@ -117,8 +134,9 @@ export default function ListItem({ event }: Props) {
   const timeRowClasses = classNames('text-sm text-ink', 'w-20');
 
   const toggleClasses = classNames(
-    'p-1 bg-accent rounded-md',
+    'p-1 rounded-md',
     'flex-row items-center',
+    isException ? 'bg-red' : 'bg-accent',
   );
 
   const iconName = expanded ? 'minimize-2' : 'maximize-2';

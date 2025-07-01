@@ -6,10 +6,11 @@ import { getQuery } from '@/api';
 import useAuthStore from '@/store/auth';
 import { GetQueryRequest } from '@/@types';
 import useClientStore from '@/store/client';
-import { createUUID, simpleHash, validateResponse } from '@/lib/utils';
+import { simpleHash, validateResponse } from '@/lib/utils';
+import { QueryType } from '@/components/ActivityList/@types';
 import { getMockActivityResponse } from '@/constants/mock-data';
 
-export const useGetEvents = () => {
+export const useGetEvents = (type: QueryType) => {
   const PAGINIATION_LIMIT = 100;
 
   const demoing = useAuthStore((state) => state.demoing);
@@ -22,16 +23,28 @@ export const useGetEvents = () => {
     (state) => state.filterTestAccounts,
   );
 
+  // We need to ensure that we either pass a filter, undefined, or exception
+  const event = (() => {
+    if (type === QueryType.Exceptions) {
+      return '$exception';
+    }
+
+    if (eventFilter === QueryType.All) {
+      return undefined;
+    }
+
+    return eventFilter;
+  })();
+
   // Craft the payload that we will send to the server
   const payload: Omit<GetQueryRequest, 'client_query_id'> = {
     project_id: project!,
     query: {
+      event: event,
       after: timePeriod,
       kind: 'EventsQuery',
       orderBy: ['timestamp DESC'],
       filterTestAccounts: filterTestAccounts,
-      // We need to ensure that we either pass a filter, or undefined
-      event: eventFilter === 'all' ? undefined : eventFilter,
       select: [
         '*',
         'event',
@@ -49,7 +62,7 @@ export const useGetEvents = () => {
     timePeriod,
     filterTestAccounts,
     demoing,
-    eventFilter,
+    event,
   ];
 
   const query = useInfiniteQuery({
@@ -84,6 +97,8 @@ export const useGetEvents = () => {
           offset: pageParam * PAGINIATION_LIMIT,
         },
       });
+
+      console.log(res);
 
       return validateResponse(res);
     },

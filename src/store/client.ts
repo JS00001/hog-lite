@@ -51,6 +51,8 @@ interface IClientState {
   hasSeenActivityOnboarding: boolean;
   /** Whether the user has been instructed on how to use the insights page or not */
   hasSeenInsightsOnboarding: boolean;
+  /** Whether the user has been instructed on how to use the exceptions page or not */
+  hasSeenExceptionsOnboarding: boolean;
   /** Whether the user has disabled 'update alerts' */
   disableUpdateAlerts: boolean;
 }
@@ -84,6 +86,7 @@ const useClientStore = create<IClientStore>()(
         reviewPromptTime: new Date().getTime() + 3 * 24 * 60 * 60 * 1000,
         hasSeenActivityOnboarding: false,
         hasSeenInsightsOnboarding: false,
+        hasSeenExceptionsOnboarding: false,
         disableUpdateAlerts: false,
       };
 

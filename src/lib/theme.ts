@@ -16,6 +16,7 @@ const colorPalette = {
     shadowAccent: '#B17816',
     borderDanger: '#E96B30',
     shadowDanger: '#F4A178',
+    lightRed: '#FBECEA',
   },
   dark: {
     ink: '#EEEFE9',
@@ -32,6 +33,7 @@ const colorPalette = {
     shadowAccent: '#926826',
     borderDanger: '#C44003',
     shadowDanger: '#84300B',
+    lightRed: '#3A2626',
   },
 };
 

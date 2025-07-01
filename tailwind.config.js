@@ -20,6 +20,7 @@ module.exports = {
         blue: 'var(--color-blue)',
         green: 'var(--color-green)',
         gray: 'var(--color-gray)',
+        'light-red': 'var(--color-light-red)',
         'shadow-primary': 'var(--color-shadow-primary)',
         'shadow-accent': 'var(--color-shadow-accent)',
         'shadow-danger': 'var(--color-shadow-danger)',

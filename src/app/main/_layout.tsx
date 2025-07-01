@@ -57,6 +57,20 @@ export default function Layout() {
         }}
       />
       <Tabs.Screen
+        name="exceptions"
+        options={{
+          title: 'Exceptions',
+          tabBarIcon: ({ color }) => (
+            <Feather
+              name="alert-triangle"
+              size={24}
+              color={color}
+              className="pb-4"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',

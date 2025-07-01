@@ -66,7 +66,7 @@ function Content({ close }: Props) {
   return (
     <BottomSheetView>
       <Text className="text-3xl font-medium text-ink ">
-        Configure Activity Table
+        Configure Events Table
       </Text>
 
       <Select

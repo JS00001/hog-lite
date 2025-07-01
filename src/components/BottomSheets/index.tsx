@@ -12,6 +12,7 @@ import ShareWithFriendsSheet from './ShareWithFriends';
 import ConfigureActivitySheet from './ConfigureActivity';
 import ActivityInstructionSheet from './ActivityInstruction';
 import InsightsInstructionSheet from './InsightsInstruction';
+import ExceptionInstructionSheet from './ExceptionInstruction';
 
 import useBottomSheetStore from '@/store/bottom-sheets';
 
@@ -28,6 +29,7 @@ const BottomSheets: Record<IndividualSheetName, React.FC<any>> = {
   SHARE_WITH_FRIENDS: ShareWithFriendsSheet,
   CONFIGURE_ACTIVITY: ConfigureActivitySheet,
   INSIGHTS_INSTRUCTION: InsightsInstructionSheet,
+  EXCEPTION_INSTRUCTION: ExceptionInstructionSheet,
 };
 
 /**

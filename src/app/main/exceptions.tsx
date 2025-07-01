@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Text from '@/ui/Text';
 import Switch from '@/ui/Switch';
@@ -9,12 +9,10 @@ import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { useGetEvents } from '@/hooks/api/query';
-import { ISelectOption } from '@/ui/Select/@types';
 import ActivityList from '@/components/ActivityList';
-import useBottomSheetStore from '@/store/bottom-sheets';
 import timePeriodOptions from '@/constants/time-periods';
+import useBottomSheetStore from '@/store/bottom-sheets';
 import { QueryType } from '@/components/ActivityList/@types';
-import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
 
 enum FetchingState {
   Refreshing,
@@ -26,42 +24,23 @@ export default function Activity() {
   const [fetchState, setFetchState] = useState<FetchingState | null>(null);
 
   const posthog = usePosthog();
-  const query = useGetEvents(QueryType.All);
-  const eventDefinitionsQuery = useGetEventDefinitions();
+  const query = useGetEvents(QueryType.Exceptions);
 
   const setClientStore = useClientStore((s) => s.setField);
   const openBottomSheet = useBottomSheetStore((store) => store.open);
 
   const timePeriod = useClientStore((s) => s.activityTimePeriod);
-  const eventDefinition = useClientStore((s) => s.activityEventDefinition);
   const filterTestAccounts = useClientStore((s) => s.filterTestAccounts);
-  const hasBeenOnboarded = useClientStore((s) => s.hasSeenActivityOnboarding);
+  const hasBeenOnboarded = useClientStore((s) => s.hasSeenExceptionsOnboarding);
 
   useEffect(() => {
     if (!hasBeenOnboarded) {
-      openBottomSheet('ACTIVITY_INSTRUCTION');
-      setClientStore('hasSeenActivityOnboarding', true);
+      openBottomSheet('EXCEPTION_INSTRUCTION');
+      setClientStore('hasSeenExceptionsOnboarding', true);
     }
   }, [hasBeenOnboarded]);
 
   const events = query.data?.results || [];
-  const projectEventDefinitions =
-    eventDefinitionsQuery.data?.results.sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    }) || [];
-
-  /**
-   * All of the event definitions that can be filtered by.
-   * Add a custom option called 'All Events' to the beginning.
-   */
-  const eventDefinitionFilterOptions: ISelectOption[] = useMemo(() => {
-    const eventOptions = projectEventDefinitions.map((e) => ({
-      label: e.name,
-      value: e.name,
-    }));
-
-    return [{ label: 'All Events', value: 'all' }, ...eventOptions];
-  }, [projectEventDefinitions]);
 
   /**
    * When the refresh control (swipe down) is triggered, we want to
@@ -73,7 +52,7 @@ export default function Activity() {
     const columns = useClientStore.getState().activityColumns;
     const displayMode = useClientStore.getState().activityDisplayMode;
 
-    posthog.capture('activity_refreshed', {
+    posthog.capture('exceptions_refreshed', {
       columns,
       displayMode,
     });
@@ -91,7 +70,7 @@ export default function Activity() {
     if (!query.hasNextPage) return;
     if (query.isFetchingNextPage) return;
     query.fetchNextPage();
-    posthog.capture('activity_fetched_next_page');
+    posthog.capture('exceptions_fetched_next_page');
   };
 
   /**
@@ -101,17 +80,7 @@ export default function Activity() {
   const onTimePeriodChange = (value: string) => {
     setFetchState(FetchingState.TimePeriodChange);
     setClientStore('activityTimePeriod', value as TimePeriod);
-    posthog.capture('activity_time_period_changed');
-  };
-
-  /**
-   * When the event definition select dropdown changes, set it
-   * and refetch the data from the server.
-   */
-  const onEventDefinitionChange = (value: string) => {
-    setFetchState(FetchingState.EventDefinitionChange);
-    setClientStore('activityEventDefinition', value);
-    posthog.capture('event_definition_changed');
+    posthog.capture('exceptions_time_period_changed');
   };
 
   /**
@@ -120,7 +89,7 @@ export default function Activity() {
    */
   const onFilterTestAccountsChange = (value: boolean) => {
     setClientStore('filterTestAccounts', value);
-    posthog.capture('activity_filter_test_accounts_changed', { value });
+    posthog.capture('exceptions_filter_test_accounts_changed', { value });
   };
 
   const actionsDisabled = query.isLoading || query.isRefetching;
@@ -130,33 +99,17 @@ export default function Activity() {
   const timePeriodLoading =
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
-  const eventDefinitionsLoading =
-    (actionsDisabled && fetchState === FetchingState.EventDefinitionChange) ||
-    eventDefinitionsQuery.isLoading;
-
   return (
-    <Layout title="Activity" className="pb-32">
-      <View className="flex-row gap-2 justify-between">
-        <Select
-          size="sm"
-          placeholder="Select time period"
-          options={timePeriodOptions}
-          value={timePeriod}
-          loading={timePeriodLoading}
-          disabled={actionsDisabled}
-          onChange={onTimePeriodChange}
-        />
-        <Select
-          size="sm"
-          className="shrink"
-          placeholder="Select event"
-          options={eventDefinitionFilterOptions}
-          value={eventDefinition}
-          loading={eventDefinitionsLoading}
-          disabled={actionsDisabled}
-          onChange={onEventDefinitionChange}
-        />
-      </View>
+    <Layout title="Exceptions" className="pb-32">
+      <Select
+        size="sm"
+        placeholder="Select time period"
+        options={timePeriodOptions}
+        value={timePeriod}
+        loading={timePeriodLoading}
+        disabled={actionsDisabled}
+        onChange={onTimePeriodChange}
+      />
 
       <View className="h-12 px-4 rounded-xl bg-highlight border border-divider items-center justify-between flex-row">
         <Text className="font-medium text-ink">

@@ -20,4 +20,5 @@ export interface IndividualSheetProps {
   SHARE_WITH_FRIENDS: undefined;
   CONFIGURE_ACTIVITY: undefined;
   INSIGHTS_INSTRUCTION: undefined;
+  EXCEPTION_INSTRUCTION: undefined;
 }

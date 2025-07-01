@@ -17,6 +17,7 @@
   --color-shadow-accent: #b17816;
   --color-border-danger: #e96b30;
   --color-shadow-danger: #f4a178;
+  --color-light-red: #FBECEA;
 }
 
 .dark {
@@ -34,4 +35,5 @@
   --color-shadow-accent: #926826;
   --color-border-danger: #c44003;
   --color-shadow-danger: #84300b;
+  --color-light-red: #3A2626
 }
