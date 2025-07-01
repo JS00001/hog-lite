@@ -98,8 +98,6 @@ export const useGetEvents = (type: QueryType) => {
         },
       });
 
-      console.log(res);
-
       return validateResponse(res);
     },
     // If we have more pages to fetch, return the next offset
