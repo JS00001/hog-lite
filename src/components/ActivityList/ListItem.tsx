@@ -51,7 +51,7 @@ export default function ListItem({ event }: Props) {
     }
 
     if (isException && exception) {
-      return `Error: ${exception}`;
+      return exception;
     }
 
     if (event === 'Autocapture') {
@@ -134,9 +134,8 @@ export default function ListItem({ event }: Props) {
   const timeRowClasses = classNames('text-sm text-ink', 'w-20');
 
   const toggleClasses = classNames(
-    'p-1 rounded-md',
+    'p-1 rounded-md bg-accent',
     'flex-row items-center',
-    isException ? 'bg-red' : 'bg-accent',
   );
 
   const iconName = expanded ? 'minimize-2' : 'maximize-2';
