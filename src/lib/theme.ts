@@ -2,6 +2,7 @@ import useClientStore from '@/store/client';
 
 const colorPalette = {
   light: {
+    white: '#FFFFFF',
     ink: '#151515',
     primary: '#EEEFE9',
     accent: '#E5E7E0',
@@ -19,6 +20,7 @@ const colorPalette = {
     lightRed: '#FBECEA',
   },
   dark: {
+    white: '#FFFFFF',
     ink: '#EEEFE9',
     primary: '#151515',
     accent: '#3b3b3b',
