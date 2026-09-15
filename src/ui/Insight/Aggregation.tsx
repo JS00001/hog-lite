@@ -9,6 +9,7 @@ import InsightContainer from './Container';
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import { formatNumber } from '@/lib/utils';
+import { t } from '@/i18n';
 
 interface Props {
   data: Aggregation[];
@@ -19,14 +20,14 @@ export default function AggregationCard({ data }: Props) {
 
   if (isSingleValue) {
     return (
-      <InsightContainer type="Total Count">
+      <InsightContainer type={t('totalCount')}>
         <SingleValueCard data={data.at(0)!} />
       </InsightContainer>
     );
   }
 
   return (
-    <InsightContainer type="Insight Breakdown">
+    <InsightContainer type={t('insightBreakdown')}>
       <MultiValueCard data={data} />
     </InsightContainer>
   );
@@ -55,7 +56,7 @@ function MultiValueCard({ data }: Props) {
         <View className="py-1 px-2 bg-blue rounded-lg flex-row gap-1 w-full justify-center items-center -mt-2">
           <Feather name="info" size={12} color={colors.white} />
           <Text className="text-white font-medium text-xs">
-            This insight has no data yet.
+            {t('insightHasNoData')}
           </Text>
         </View>
       )}

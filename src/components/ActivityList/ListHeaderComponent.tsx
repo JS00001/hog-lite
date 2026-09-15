@@ -7,6 +7,7 @@ import useColors from '@/lib/theme';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import useBottomSheetStore from '@/store/bottom-sheets';
+import { t } from '@/i18n';
 
 export default function ListHeaderComponent() {
   const colors = useColors();
@@ -57,17 +58,17 @@ export default function ListHeaderComponent() {
       </TouchableOpacity>
 
       {columns.includes('event') && (
-        <Text className={eventRowClasses}>EVENT</Text>
+        <Text className={eventRowClasses}>{t('eventColumn')}</Text>
       )}
 
       {columns.includes('person') && (
-        <Text className={personRowClasses}>PERSON</Text>
+        <Text className={personRowClasses}>{t('personColumn')}</Text>
       )}
 
       {columns.includes('url') && <Text className={urlRowClasses}>URL</Text>}
 
       {columns.includes('timestamp') && (
-        <Text className={timeRowClasses}>TIME</Text>
+        <Text className={timeRowClasses}>{t('timeColumn')}</Text>
       )}
     </View>
   );

@@ -6,6 +6,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { startNetworkLogging } from 'react-native-network-logger';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useLocales } from 'expo-localization';
 
 import AuthProvider from '@/providers/Auth';
 import ThemeProvider from '@/providers/Theme';
@@ -21,6 +22,7 @@ import toastConfig from '@/lib/toast';
 import queryClient from '@/lib/query-client';
 import BottomSheetComponent from '@/components/BottomSheets';
 import setupRequestInterceptors from '@/lib/axios/interceptors';
+import { setLocale } from '@/i18n';
 
 // Prevent the native splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -34,8 +36,11 @@ setupRequestInterceptors();
 startNetworkLogging();
 
 export default function RootLayout() {
+  const [locale] = useLocales();
+  const language = setLocale(locale.languageCode);
+
   return (
-    <SentryProvider>
+    <SentryProvider key={language}>
       <PosthogProvider>
         <EasUpdateProvider>
           <QueryClientProvider client={queryClient}>

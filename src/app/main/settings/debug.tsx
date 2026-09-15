@@ -6,6 +6,7 @@ import constants from '@/constants';
 import Layout from '@/components/Layout';
 import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
+import { t } from '@/i18n';
 
 export default function Appearance() {
   const posthog = usePosthog();
@@ -27,13 +28,12 @@ export default function Appearance() {
   };
 
   return (
-    <Layout title="Debug" scrollable hasBackButton className="!gap-2">
+    <Layout title={t('debug')} scrollable hasBackButton className="!gap-2">
       <View className="p-4 rounded-xl bg-highlight border border-divider gap-2">
         <View>
-          <Text className="font-medium text-ink">Current App Version</Text>
+          <Text className="font-medium text-ink">{t('currentAppVersion')}</Text>
           <Text className="font-medium text-gray text-sm">
-            The version of the app you are currently using. Formatted as "binary
-            version - update version"
+            {t('currentAppVersionDescription')}
           </Text>
         </View>
         <Text className="text-ink text-3xl font-semibold">
@@ -44,10 +44,9 @@ export default function Appearance() {
       <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">
         <View className="flex-row items-center justify-between gap-2">
           <View className="shrink">
-            <Text className="font-medium text-ink">Developer Mode</Text>
+            <Text className="font-medium text-ink">{t('developerMode')}</Text>
             <Text className="font-medium text-gray text-sm">
-              Press three fingers on the screen to view the local state, and
-              network logs.
+              {t('developerModeDescription')}
             </Text>
           </View>
           <Switch value={devMode} onChange={onToggleDeveloperMode} />
@@ -57,10 +56,11 @@ export default function Appearance() {
       <View className="p-4 rounded-xl bg-highlight border border-divider gap-4">
         <View className="flex-row items-center justify-between gap-2">
           <View className="shrink">
-            <Text className="font-medium text-ink">Update Alerts Enabled?</Text>
+            <Text className="font-medium text-ink">
+              {t('updateAlertsEnabled')}
+            </Text>
             <Text className="font-medium text-gray text-sm">
-              Toggle whether you receive notifications when OTA updates are
-              available.
+              {t('updateAlertsDescription')}
             </Text>
           </View>
           <Switch

@@ -5,6 +5,7 @@ import Text from '@/ui/Text';
 import Skeleton from '@/ui/Skeleton';
 import ErrorMessage from '@/components/ErrorMessage';
 import PanickedHedgehog from '@/components/Hedgehogs/PanickedHedgehog';
+import { t } from '@/i18n';
 
 interface Props {
   error?: Error;
@@ -29,7 +30,7 @@ export default function ListEmptyComponent({ error, isLoading }: Props) {
   if (error) {
     return (
       <View className="items-center py-32 bg-highlight -mb-px">
-        <ErrorMessage error={error} description="Could not fetch activity" />
+        <ErrorMessage error={error} description={t('couldNotFetchActivity')} />
       </View>
     );
   }
@@ -37,12 +38,8 @@ export default function ListEmptyComponent({ error, isLoading }: Props) {
   return (
     <View className="items-center py-32 bg-highlight -mb-px">
       <PanickedHedgehog size={96} />
-      <Text className="text-ink text-xl font-medium">
-        No events or exceptions found
-      </Text>
-      <Text className="text-ink">
-        Try changing your filters, or reloading the page.
-      </Text>
+      <Text className="text-ink text-xl font-medium">{t('noEventsFound')}</Text>
+      <Text className="text-ink">{t('tryChangingFilters')}</Text>
     </View>
   );
 }

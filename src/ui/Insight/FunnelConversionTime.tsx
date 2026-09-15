@@ -7,6 +7,7 @@ import InsightContainer from './Container';
 
 import Text from '@/ui/Text';
 import { secondsToString } from '@/lib/utils';
+import { t } from '@/i18n';
 
 interface Props {
   data: FunnelConversionTime;
@@ -50,17 +51,20 @@ export default function FunnelConversionTimeCard({ data }: Props) {
       const percentage = (count / totalDataPoints) * 100;
 
       return {
-        key: `${secondsToString(start)} to ${secondsToString(end)}`,
+        key: t('timeRange', {
+          start: secondsToString(start),
+          end: secondsToString(end),
+        }),
         value: `${count} (${percentage.toFixed(1)}%)`,
       };
     });
 
     // Return all bins after the total average
-    return [{ key: 'Average Time', value: averageConversionTime }, ...bins];
+    return [{ key: t('averageTime'), value: averageConversionTime }, ...bins];
   }, [data.bins]);
 
   return (
-    <InsightContainer type="Conversion Time">
+    <InsightContainer type={t('conversionTime')}>
       <View className="mb-3">
         {formattedBins.map((item, index) => {
           const containerClasses = classNames(

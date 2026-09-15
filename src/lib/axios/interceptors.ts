@@ -7,6 +7,7 @@ import { API } from '@/@types';
 import useAuthStore from '@/store/auth';
 import { httpLogger } from '@/lib/logger';
 import useClientStore from '@/store/client';
+import { t } from '@/i18n';
 
 /**
  * Setup request and response interceptors for axios
@@ -44,8 +45,8 @@ const setupRequestInterceptors = () => {
       if (!response) {
         Toast.show({
           type: 'error',
-          text1: 'Network Error',
-          text2: 'Please check your internet connection and try again.',
+          text1: t('networkError'),
+          text2: t('networkErrorDescription'),
         });
 
         return Promise.reject(error);
@@ -55,8 +56,8 @@ const setupRequestInterceptors = () => {
       if (response.status === 401) {
         Toast.show({
           type: 'error',
-          text1: 'Authorization Failed',
-          text2: 'Invalid API key. Maybe the wrong region?',
+          text1: t('authorizationFailed'),
+          text2: t('authorizationFailedDescription'),
         });
 
         useAuthStore.getState().logout();
@@ -66,23 +67,21 @@ const setupRequestInterceptors = () => {
       if (response.status === 429) {
         Toast.show({
           type: 'error',
-          text1: 'Rate Limit Exceeded',
-          text2:
-            'PostHog has rate limits in place that we cannot control. Please wait before trying again.',
+          text1: t('rateLimitExceeded'),
+          text2: t('rateLimitDescription'),
         });
       }
 
       /** 500 - Internal Server Error */
       if (response.status >= 500) {
         if (data.detail === 'A server error occurred.') {
-          data.detail =
-            "Oh No! PostHog returned a server error. This is likely a bug on PostHog's end.";
+          data.detail = t('posthogServerError');
         }
 
         Toast.show({
           type: 'error',
-          text1: 'Internal Server Error',
-          text2: 'An unexpected error occurred. Please try again later.',
+          text1: t('internalServerError'),
+          text2: t('internalServerErrorDescription'),
         });
       }
 

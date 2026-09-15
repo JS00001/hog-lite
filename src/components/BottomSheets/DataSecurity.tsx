@@ -8,6 +8,7 @@ import Text from '@/ui/Text';
 import BottomSheet from '@/ui/BottomSheet';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 import TeacherHedgehogLeft from '@/components/Hedgehogs/TeacherHedgehogLeft';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -17,12 +18,10 @@ function Content({}: Props) {
       <TeacherHedgehogLeft size={64} />
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink font-medium">
-          No, we store nothing!
+          {t('dataSecurityTitle')}
         </Text>
         <Text className="text-lg text-ink text-center">
-          We don't store any data about you. In-fact, this app doesn't even have
-          a backend! Your API key is stored locally on your device, and this app
-          only communicates directly with the PostHog API.
+          {t('dataSecurityDescription')}
         </Text>
       </View>
     </BottomSheetView>

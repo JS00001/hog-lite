@@ -7,6 +7,7 @@ import constants from '@/constants';
 import Layout from '@/components/Layout';
 import usePosthog from '@/hooks/usePosthog';
 import { useDemoLogin } from '@/hooks/api/user';
+import { t } from '@/i18n';
 
 export default function Landing() {
   const posthog = usePosthog();
@@ -28,29 +29,28 @@ export default function Landing() {
   };
 
   return (
-    <Layout title="Welcome, Friend" className="justify-center" hedgehog>
+    <Layout title={t('welcomeTitle')} className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <View className="gap-1">
             <Text className="text-2xl font-medium text-ink">
-              Welcome to HogLite!
+              {t('welcomeHeading')}
             </Text>
             <Text className="text-lg text-gray">
-              HogLite is a fully{' '}
+              {t('welcomeIntroBeforeLink')}
               <Text className="text-red underline" onPress={onTextClick}>
-                open-source
-              </Text>{' '}
-              PostHog client to view insights, events, and more, all from your
-              phone. We're excited to have you on board!
+                {t('welcomeOpenSource')}
+              </Text>
+              {t('welcomeIntroAfterLink')}
             </Text>
           </View>
 
           <View className="gap-1">
             <Button size="sm" color="accent" onPress={onContinue}>
-              Get Started
+              {t('getStarted')}
             </Button>
             <Button size="sm" onPress={onDemo}>
-              Explore with Sample Data
+              {t('exploreSampleData')}
             </Button>
           </View>
         </View>

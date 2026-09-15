@@ -11,6 +11,7 @@ import usePosthog from '@/hooks/usePosthog';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 import PopupHedgehog from '@/components/Hedgehogs/PopupHedgehog';
 import constants from '@/constants';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -32,39 +33,31 @@ function Content({ close }: Props) {
 
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink font-medium">
-          The Insights Screen
+          {t('insightsScreenTitle')}
         </Text>
         <Text className="text-lg text-ink text-center">
-          Welcome to the Insights Screen! I'd like to share some tips on how to
-          use it!
+          {t('insightsScreenIntro')}
         </Text>
       </View>
 
       <View className="w-full gap-2">
         <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-          <Text className="text-lg text-ink">
-            Switch between all of the dashboards for your project by clicking
-            the dropdown at the top.
-          </Text>
+          <Text className="text-lg text-ink">{t('insightsDashboardTip')}</Text>
         </View>
         <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-          <Text className="text-lg text-ink">
-            We currently support viewing aggregations, funnels, conversion time
-            funnels, and breakdowns. Want to view an insight we don't yet
-            support?
-          </Text>
+          <Text className="text-lg text-ink">{t('insightsSupportTip')}</Text>
           <Button
             size="sm"
             onPress={() => Linking.openURL(`${constants.githubUrl}/issues/new`)}
           >
-            Request a new feature
+            {t('requestFeature')}
           </Button>
         </View>
       </View>
 
       <View className="gap-2 items-center flex-row">
         <Button className="flex-1" size="sm" color="accent" onPress={onClose}>
-          Thanks! Close instructions
+          {t('closeInstructions')}
         </Button>
       </View>
     </BottomSheetView>

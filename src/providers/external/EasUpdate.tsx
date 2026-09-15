@@ -7,6 +7,7 @@ import alert from '@/lib/alert';
 import constants from '@/constants';
 import usePosthog from '@/hooks/usePosthog';
 import useClientStore from '@/store/client';
+import { t } from '@/i18n';
 
 export default function EasUpdateProvider({ children }: PropsWithChildren) {
   const posthog = usePosthog();
@@ -56,12 +57,11 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
       if (disableUpdateAlerts) return;
 
       alert({
-        title: 'Update Available',
-        message:
-          'A new update is available. Reload the app now to get the latest features.',
+        title: t('updateAvailable'),
+        message: t('updateAvailableDescription'),
         buttons: [
           {
-            text: 'Reload Now',
+            text: t('reloadNow'),
             isPreferred: true,
             onPress: () => {
               posthog.capture('update_reloaded');
@@ -69,12 +69,12 @@ export default function EasUpdateProvider({ children }: PropsWithChildren) {
             },
           },
           {
-            text: 'Not Now',
+            text: t('notNow'),
             onPress: () => posthog.capture('update_ignored'),
           },
           {
             style: 'destructive',
-            text: 'Disable update alerts',
+            text: t('disableUpdateAlerts'),
             onPress: () => {
               posthog.capture('update_alerts_disabled');
               setField('disableUpdateAlerts', true);

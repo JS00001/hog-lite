@@ -8,6 +8,7 @@ import AppIcon from '@/components/AppIcon';
 import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
 import useClientStore, { AppIcon as TAppIcon } from '@/store/client';
+import { t } from '@/i18n';
 
 export default function Appearance() {
   const posthog = usePosthog();
@@ -31,8 +32,8 @@ export default function Appearance() {
    * The options for the theme select input.
    */
   const themeSelectOptions: ISelectOption[] = [
-    { label: 'Light', value: 'light' },
-    { label: 'Dark', value: 'dark' },
+    { label: t('light'), value: 'light' },
+    { label: t('dark'), value: 'dark' },
   ];
 
   /**
@@ -40,53 +41,53 @@ export default function Appearance() {
    */
   const appIconOptions = [
     {
-      label: 'Space Hog',
+      label: t('spaceHog'),
       value: 'space',
       src: require('@/../assets/images/dynamic-icons/space-icon.png'),
     },
     {
-      label: 'Happy Hog',
+      label: t('happyHog'),
       value: 'default',
       src: require('@/../assets/images/icon.png'),
     },
     {
-      label: 'Angry Hog',
+      label: t('angryHog'),
       value: 'angry',
       src: require('@/../assets/images/dynamic-icons/angry-icon.png'),
     },
     {
-      label: 'Nerdy Hog',
+      label: t('nerdyHog'),
       value: 'nerd',
       src: require('@/../assets/images/dynamic-icons/nerd-icon.png'),
     },
     {
-      label: 'Blue',
+      label: t('blue'),
       value: 'happy-blue',
       src: require('@/../assets/images/dynamic-icons/happy-icon-blue.png'),
     },
     {
-      label: 'Orange',
+      label: t('orange'),
       value: 'happy-orange',
       src: require('@/../assets/images/dynamic-icons/happy-icon-orange.png'),
     },
     {
-      label: 'Cowboy Hog',
+      label: t('cowboyHog'),
       value: 'cowboy',
       src: require('@/../assets/images/dynamic-icons/cowboy-icon.png'),
     },
     {
-      label: 'Builder Hog',
+      label: t('builderHog'),
       value: 'construction',
       src: require('@/../assets/images/dynamic-icons/construction-icon.png'),
     },
   ];
 
   return (
-    <Layout title="Appearance" hasBackButton>
+    <Layout title={t('appearance')} hasBackButton>
       <Select
         size="sm"
-        label="Theme"
-        placeholder="Select theme"
+        label={t('theme')}
+        placeholder={t('selectTheme')}
         value={theme}
         options={themeSelectOptions}
         onChange={onThemeChange}
@@ -98,7 +99,7 @@ export default function Appearance() {
         numColumns={4}
         scrollEnabled={false}
         ListHeaderComponent={
-          <Text className="text-ink font-medium pb-2">App Icon</Text>
+          <Text className="text-ink font-medium pb-2">{t('appIcon')}</Text>
         }
         contentContainerClassName="gap-4"
         columnWrapperClassName="gap-2"

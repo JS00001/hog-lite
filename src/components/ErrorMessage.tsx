@@ -4,6 +4,7 @@ import { Linking, View } from 'react-native';
 import Text from '@/ui/Text';
 import AngryHedgehog from '@/components/Hedgehogs/AngryHedgehog';
 import Button from '@/ui/Button';
+import { t } from '@/i18n';
 
 interface Props {
   error: Error | null;
@@ -31,7 +32,7 @@ export default function ErrorMessage({
     return error?.message;
   })();
 
-  const title = description || 'An error occurred';
+  const title = description || t('genericError');
 
   const onCheckStatus = () => {
     Linking.openURL('https://status.posthog.com/history');
@@ -52,7 +53,7 @@ export default function ErrorMessage({
         icon="external-link"
         onPress={onCheckStatus}
       >
-        Check PostHog's Status
+        {t('checkPosthogStatus')}
       </Button>
     </View>
   );

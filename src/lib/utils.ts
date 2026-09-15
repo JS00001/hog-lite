@@ -1,6 +1,7 @@
 import { API } from '@/@types';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import { getLocale, t } from '@/i18n';
 
 export const createUUID = () => {
   return uuidv4();
@@ -17,13 +18,13 @@ export const timeAgo = (date: string) => {
   const days = hours / 24;
 
   if (seconds < 60) {
-    return 'Just now';
+    return t('justNow');
   } else if (minutes < 60) {
-    return `${Math.floor(minutes)}m ago`;
+    return t('minutesAgo', { count: Math.floor(minutes) });
   } else if (hours < 24) {
-    return `${Math.floor(hours)}h ago`;
+    return t('hoursAgo', { count: Math.floor(hours) });
   } else {
-    return `${Math.floor(days)}d ago`;
+    return t('daysAgo', { count: Math.floor(days) });
   }
 };
 
@@ -31,7 +32,7 @@ export const timeAgo = (date: string) => {
  * Format a number to a readable string
  */
 export const formatNumber = (num: number) => {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return new Intl.NumberFormat(getLocale()).format(num);
 };
 
 /**
@@ -46,10 +47,10 @@ export const formatDate = (date: string) => {
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
-    hour12: true,
+    hour12: getLocale() === 'en',
   };
 
-  return d.toLocaleString('en-US', options);
+  return d.toLocaleString(getLocale() === 'ja' ? 'ja-JP' : 'en-US', options);
 };
 
 /**
@@ -87,12 +88,12 @@ export const simpleHash = (str: string) => {
 // Format seconds as either s, m, h, or d
 export const secondsToString = (seconds: number) => {
   if (seconds < 60) {
-    return `${Math.floor(seconds)}s`;
+    return t('secondsShort', { count: Math.floor(seconds) });
   } else if (seconds < 3600) {
-    return `${Math.floor(seconds / 60)}m`;
+    return t('minutesShort', { count: Math.floor(seconds / 60) });
   } else if (seconds < 86400) {
-    return `${Math.floor(seconds / 3600)}h`;
+    return t('hoursShort', { count: Math.floor(seconds / 3600) });
   } else {
-    return `${Math.floor(seconds / 86400)}d`;
+    return t('daysShort', { count: Math.floor(seconds / 86400) });
   }
 };

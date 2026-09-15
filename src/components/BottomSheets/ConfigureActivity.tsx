@@ -16,6 +16,7 @@ import BottomSheet from '@/ui/BottomSheet';
 import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -32,16 +33,14 @@ function Content({ close }: Props) {
 
   const displayOptions: ISelectOption[] = [
     {
-      label: 'Full',
+      label: t('full'),
       value: 'full',
-      description:
-        'Gives each column more space to breathe, but may require scrolling horizontally',
+      description: t('fullDescription'),
     },
     {
-      label: 'Compact',
+      label: t('compact'),
       value: 'compact',
-      description:
-        'Fit all data in the width of the screen without scrolling horizontally',
+      description: t('compactDescription'),
     },
   ];
 
@@ -66,14 +65,14 @@ function Content({ close }: Props) {
   return (
     <BottomSheetView>
       <Text className="text-3xl font-medium text-ink ">
-        Configure Events Table
+        {t('configureEventsTable')}
       </Text>
 
       <Select
         size="sm"
-        label="Display Mode"
+        label={t('displayMode')}
         options={displayOptions}
-        placeholder="Select display mode"
+        placeholder={t('selectDisplayMode')}
         value={state.mode}
         onChange={(value) => {
           posthog.capture('configure_activity_display_mode', { mode: value });
@@ -82,30 +81,30 @@ function Content({ close }: Props) {
       />
 
       <View className="gap-2">
-        <Text className=" font-medium text-ink">Visible Columns</Text>
+        <Text className=" font-medium text-ink">{t('visibleColumns')}</Text>
         <View className="p-4 rounded-xl bg-primary border border-divider gap-4">
           {/* TODO: Allow draging to reorder these as well, like I want timestamp before url/screen */}
           <ColumnToggle
-            title="Event"
-            description="The name of the event that occurred"
+            title={t('event')}
+            description={t('eventDescription')}
             value={state.columns.includes('event')}
             onValueChange={() => onToggleColumn('event')}
           />
           <ColumnToggle
-            title="Person"
-            description="The person who performed the action"
+            title={t('person')}
+            description={t('personDescription')}
             value={state.columns.includes('person')}
             onValueChange={() => onToggleColumn('person')}
           />
           <ColumnToggle
-            title="URL / Screen"
-            description="The url/screen where the action occurred"
+            title={t('urlScreen')}
+            description={t('urlScreenDescription')}
             value={state.columns.includes('url')}
             onValueChange={() => onToggleColumn('url')}
           />
           <ColumnToggle
-            title="Timestamp"
-            description="The time when the activity occurred"
+            title={t('timestamp')}
+            description={t('timestampDescription')}
             value={state.columns.includes('timestamp')}
             onValueChange={() => onToggleColumn('timestamp')}
           />
@@ -113,7 +112,7 @@ function Content({ close }: Props) {
       </View>
 
       <Button size="sm" color="accent" onPress={onSave}>
-        Save
+        {t('save')}
       </Button>
     </BottomSheetView>
   );
