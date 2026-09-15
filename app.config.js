@@ -38,6 +38,7 @@ export default {
       bundleIdentifier: appBundleIdentifier,
       infoPlist: {
         CFBundleDisplayName: appDisplayName,
+        CFBundleLocalizations: ['en', 'ja'],
       },
       config: {
         usesNonExemptEncryption: false,

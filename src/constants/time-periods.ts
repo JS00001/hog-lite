@@ -1,16 +1,17 @@
 import { ISelectOption } from '@/ui/Select/@types';
+import { t } from '@/i18n';
 
-const timePeriodOptions: ISelectOption[] = [
-  { label: 'Today', value: 'dStart' },
-  { label: 'Yesterday', value: '-1dStart' },
-  { label: 'Last 24 hours', value: '-24h' },
-  { label: 'Last 7 days', value: '-7d' },
-  { label: 'Last 30 days', value: '-30d' },
-  { label: 'Last 90 days', value: '-90d' },
-  { label: 'Last 180 days', value: '-180d' },
-  { label: 'This month', value: 'mStart' },
-  { label: 'Year to date', value: 'yStart' },
-  { label: 'All time', value: 'all' },
+const getTimePeriodOptions = (): ISelectOption[] => [
+  { label: t('today'), value: 'dStart' },
+  { label: t('yesterday'), value: '-1dStart' },
+  { label: t('last24Hours'), value: '-24h' },
+  { label: t('last7Days'), value: '-7d' },
+  { label: t('last30Days'), value: '-30d' },
+  { label: t('last90Days'), value: '-90d' },
+  { label: t('last180Days'), value: '-180d' },
+  { label: t('thisMonth'), value: 'mStart' },
+  { label: t('yearToDate'), value: 'yStart' },
+  { label: t('allTime'), value: 'all' },
 ];
 
-export default timePeriodOptions;
+export default getTimePeriodOptions;

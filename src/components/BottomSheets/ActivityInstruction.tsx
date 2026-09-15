@@ -10,6 +10,7 @@ import BottomSheet from '@/ui/BottomSheet';
 import usePosthog from '@/hooks/usePosthog';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 import PopupHedgehog from '@/components/Hedgehogs/PopupHedgehog';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -31,32 +32,25 @@ function Content({ close }: Props) {
 
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink font-medium">
-          The Activity Screen
+          {t('activityScreenTitle')}
         </Text>
         <Text className="text-lg text-ink text-center">
-          Welcome to the Activity Screen! I'd like to share some tips on how to
-          use it!
+          {t('activityScreenIntro')}
         </Text>
       </View>
 
       <View className="w-full gap-2">
         <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-          <Text className="text-lg text-ink">
-            Click the "Gear" icon in the top left of the table to configure
-            columns, display mode, and more!
-          </Text>
+          <Text className="text-lg text-ink">{t('activityGearTip')}</Text>
         </View>
         <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-          <Text className="text-lg text-ink">
-            Click anywhere on any row to open all of the properties of a
-            specific event.
-          </Text>
+          <Text className="text-lg text-ink">{t('activityRowTip')}</Text>
         </View>
       </View>
 
       <View className="gap-2 items-center flex-row">
         <Button className="flex-1" size="sm" color="accent" onPress={onClose}>
-          Thanks! Close instructions
+          {t('closeInstructions')}
         </Button>
       </View>
     </BottomSheetView>

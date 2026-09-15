@@ -10,6 +10,7 @@ import Text from '@/ui/Text';
 import Button from '@/ui/Button';
 import BottomSheet from '@/ui/BottomSheet';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
+import { t } from '@/i18n';
 
 const HEIGHT = Dimensions.get('window').height;
 
@@ -28,7 +29,9 @@ function Content({}: Props) {
 
   return (
     <BottomSheetView style={{ height: HEIGHT * 0.8 }}>
-      <Text className="text-3xl font-semibold text-ink">Developer Tools</Text>
+      <Text className="text-3xl font-semibold text-ink">
+        {t('developerTools')}
+      </Text>
 
       <View className="flex-row items-center gap-2">
         <Button
@@ -37,7 +40,7 @@ function Content({}: Props) {
           color={screen === Screens.NetworkLogger ? 'accent' : 'primary'}
           onPress={() => setScreen(Screens.NetworkLogger)}
         >
-          Network Logs
+          {t('networkLogs')}
         </Button>
         <Button
           size="sm"
@@ -45,7 +48,7 @@ function Content({}: Props) {
           color={screen === Screens.LocalStorage ? 'accent' : 'primary'}
           onPress={() => setScreen(Screens.LocalStorage)}
         >
-          Client Store
+          {t('clientStore')}
         </Button>
       </View>
       <ScreenComponent />

@@ -16,6 +16,7 @@ import {
   Retention,
 } from '@/@types';
 import Text from '@/ui/Text';
+import { t } from '@/i18n';
 
 interface Props {
   insight: IInsight;
@@ -135,12 +136,11 @@ function FallbackComponent() {
     <TouchableOpacity className={containerClasses} disabled>
       <View>
         <Text className="text-ink font-medium text-lg" numberOfLines={1}>
-          This insight is not yet supported
+          {t('unsupportedInsightTitle')}
         </Text>
 
         <Text className="text-gray leading-relaxed" numberOfLines={2}>
-          Heads up! Something went wrong while loading this insight. Chances
-          are, we don't support it yet. We're working on it!
+          {t('unsupportedInsightDescription')}
         </Text>
       </View>
     </TouchableOpacity>

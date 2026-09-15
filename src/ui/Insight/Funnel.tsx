@@ -8,6 +8,7 @@ import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import { formatNumber } from '@/lib/utils';
 import InsightContainer from './Container';
+import { t } from '@/i18n';
 
 interface Props {
   data: Funnel;
@@ -18,7 +19,7 @@ export default function FunnelCard({ data }: Props) {
   const barClasses = classNames('bg-blue h-4 rounded');
 
   return (
-    <InsightContainer type="Insight Funnel">
+    <InsightContainer type={t('insightFunnel')}>
       <View className="gap-4 pb-4">
         {data.map((step) => {
           // calculate the % of the step compared to the first step
@@ -30,7 +31,8 @@ export default function FunnelCard({ data }: Props) {
                 <Text className="text-ink font-medium">{step.custom_name}</Text>
                 <Feather name="arrow-right" size={12} color={colors.ink} />
                 <Text className="text-gray">
-                  {formatNumber(step.count)} Users ({percentage.toFixed(0)}%)
+                  {formatNumber(step.count)}
+                  {t('usersSuffix')} ({percentage.toFixed(0)}%)
                 </Text>
               </View>
 

@@ -8,9 +8,10 @@ import { BottomSheetProps } from './@types';
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import BottomSheet from '@/ui/BottomSheet';
-import DataRegions from '@/constants/data-regions';
+import getDataRegions from '@/constants/data-regions';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 import TeacherHedgehogRight from '@/components/Hedgehogs/TeacherHedgehogRight';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -22,18 +23,17 @@ function Content({}: Props) {
       <TeacherHedgehogRight size={64} />
       <View className="gap-1 items-center">
         <Text className="text-3xl text-ink font-medium">
-          What's a data region?
+          {t('dataRegionQuestion')}
         </Text>
         <Text className="text-lg text-ink text-center">
-          The data region is the area where your PostHog data is stored. See the
-          below chart to understand which data region is best for you.
+          {t('dataRegionDescription')}
         </Text>
       </View>
 
       <View className="w-full border-b border-divider my-2" />
 
       <View className="gap-8 w-full">
-        {DataRegions.map((region) => (
+        {getDataRegions().map((region) => (
           <View key={region.title} className="gap-4">
             <Text className="text-2xl text-ink font-medium">
               {region.title}

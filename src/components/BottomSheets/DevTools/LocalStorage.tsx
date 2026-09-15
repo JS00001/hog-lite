@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Text from '@/ui/Text';
 import useColors from '@/lib/theme';
 import ErrorMessage from '@/components/ErrorMessage';
+import { t } from '@/i18n';
 
 export default function LocalStorage() {
   const colors = useColors();
@@ -13,7 +14,7 @@ export default function LocalStorage() {
     queryKey: ['localStorage'],
     queryFn: async () => {
       const data = await AsyncStorage.getItem('client-storage');
-      if (!data) throw new Error('No data found');
+      if (!data) throw new Error(t('noLocalData'));
       return JSON.parse(data).state;
     },
   });
@@ -28,10 +29,7 @@ export default function LocalStorage() {
 
   if (query.isError) {
     return (
-      <ErrorMessage
-        error={query.error}
-        description="Could not fetch local storage data"
-      />
+      <ErrorMessage error={query.error} description={t('localStorageError')} />
     );
   }
 

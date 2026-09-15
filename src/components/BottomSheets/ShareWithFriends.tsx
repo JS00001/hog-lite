@@ -11,6 +11,7 @@ import BottomSheet from '@/ui/BottomSheet';
 import usePosthog from '@/hooks/usePosthog';
 import BottomSheetView from '@/ui/BottomSheet/Containers/View';
 import PopupHedgehog from '@/components/Hedgehogs/PopupHedgehog';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -21,8 +22,7 @@ function Content({}: Props) {
     posthog.capture('shared_with_friend');
 
     Share.share({
-      message:
-        'Hey! I found this cool app called HogLite that helps me view my PostHog analytics on the go. You should check it out too!',
+      message: t('shareMessage'),
       url: constants.appStoreUrl,
     });
   };
@@ -32,15 +32,12 @@ function Content({}: Props) {
       <PopupHedgehog size={48} />
 
       <View className="gap-1 items-center">
-        <Text className="text-3xl text-ink font-medium">Hi Friend!</Text>
-        <Text className="text-lg text-ink text-center">
-          Enoying the app? Know a friend who uses PostHog? Share HogLite with
-          them and help us grow!
-        </Text>
+        <Text className="text-3xl text-ink font-medium">{t('hiFriend')}</Text>
+        <Text className="text-lg text-ink text-center">{t('sharePrompt')}</Text>
       </View>
 
       <Button color="accent" className="w-full" onPress={onShare}>
-        Share Now!
+        {t('shareNow')}
       </Button>
     </BottomSheetView>
   );

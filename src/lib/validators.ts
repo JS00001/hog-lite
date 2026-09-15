@@ -1,38 +1,42 @@
 import { z } from 'zod';
+import { t } from '@/i18n';
 
-// prettier-ignore
 const validators = {
   /**
    * Posthog API Key
    */
-  posthogApiKey: z
-    .string({
-      required_error: 'API Key is required',
-      invalid_type_error: 'Must be a string',
-    })
-    .regex(/phx_[a-zA-Z0-9]{5,}/, {
-      message: 'Invalid API Key',
-    }),
+  get posthogApiKey() {
+    return z
+      .string({
+        required_error: t('apiKeyRequired'),
+        invalid_type_error: t('mustBeAString'),
+      })
+      .regex(/phx_[a-zA-Z0-9]{5,}/, {
+        message: t('invalidApiKey'),
+      });
+  },
   /**
    * Validate a https url
    */
-  url: z
-    .string({
-      required_error: 'URL is required',
-      invalid_type_error: 'Must be a string',
-    })
-    .url({
-      message: 'Must be a valid URL',
-    }),
+  get url() {
+    return z
+      .string({
+        required_error: t('urlRequired'),
+        invalid_type_error: t('mustBeAString'),
+      })
+      .url({
+        message: t('validUrlRequired'),
+      });
+  },
   /**
    * Validate a string
    */
-  string: z
-    .string({
-      required_error: 'Field is required',
-      invalid_type_error: 'Must be a string',
-    }),
-
+  get string() {
+    return z.string({
+      required_error: t('fieldRequired'),
+      invalid_type_error: t('mustBeAString'),
+    });
+  },
 };
 
 export default validators;

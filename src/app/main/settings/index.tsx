@@ -16,6 +16,7 @@ import { useGetOrganization } from '@/hooks/api/organization';
 import Card from '@/ui/Card';
 import constants from '@/constants';
 import useBottomSheetStore from '@/store/bottom-sheets';
+import { t } from '@/i18n';
 
 export default function Settings() {
   const posthog = usePosthog();
@@ -70,21 +71,20 @@ export default function Settings() {
    */
   const onLogout = () => {
     alert({
-      title: 'Are you sure?',
-      message:
-        'Are you sure you want to logout? You will need to re-enter your API key to login again.',
+      title: t('logoutTitle'),
+      message: t('logoutMessage'),
       buttons: [
         {
-          text: 'Cancel',
+          text: t('cancel'),
           style: 'cancel',
         },
         {
-          text: 'Logout',
+          text: t('logout'),
           style: 'destructive',
           onPress: logout,
         },
         {
-          text: 'Nevermind',
+          text: t('nevermind'),
           style: 'cancel',
         },
       ],
@@ -95,12 +95,12 @@ export default function Settings() {
   };
 
   return (
-    <Layout title="Settings" className="pb-32" scrollable>
+    <Layout title={t('navSettings')} className="pb-32" scrollable>
       {/* Selections */}
       <Select
         size="sm"
-        label="Project"
-        placeholder="Select project"
+        label={t('project')}
+        placeholder={t('selectProject')}
         value={project}
         options={projectSelectOptions}
         disabled={organizationQuery.isLoading}
@@ -108,8 +108,8 @@ export default function Settings() {
       />
       <Select
         size="sm"
-        label="Organization"
-        placeholder="Select organization"
+        label={t('organization')}
+        placeholder={t('selectOrganization')}
         value={organization}
         options={organizationSelectOptions}
         loading={organizationQuery.isLoading}
@@ -117,13 +117,13 @@ export default function Settings() {
       />
 
       <View className="gap-2">
-        <Text className="text-ink font-medium">Other Settings</Text>
+        <Text className="text-ink font-medium">{t('otherSettings')}</Text>
 
         <View className="gap-2 flex-row">
           <Card
             icon="user"
-            title="Account"
-            description="View your current PostHog account"
+            title={t('account')}
+            description={t('accountDescription')}
             onPress={() => {
               router.push('/main/settings/account');
               posthog.capture('account_settings_clicked');
@@ -131,8 +131,8 @@ export default function Settings() {
           />
           <Card
             icon="sun"
-            title="Appearance"
-            description="Change the appearance of the app"
+            title={t('appearance')}
+            description={t('appearanceDescription')}
             onPress={() => {
               router.push('/main/settings/appearance');
               posthog.capture('appearance_settings_clicked');
@@ -142,8 +142,8 @@ export default function Settings() {
         <View className="gap-2 flex-row">
           <Card
             icon="git-branch"
-            title="Contribute"
-            description="We're open source! Contribute to our project"
+            title={t('contribute')}
+            description={t('contributeDescription')}
             onPress={() => {
               Linking.openURL(`${constants.githubUrl}`);
               posthog.capture('contribute_clicked');
@@ -151,8 +151,8 @@ export default function Settings() {
           />
           <Card
             icon="frown"
-            title="Report Bug"
-            description="Found a bug? Want a feature? Let us know!"
+            title={t('reportBug')}
+            description={t('reportBugDescription')}
             onPress={() => {
               Linking.openURL(`${constants.githubUrl}/issues/new`);
               posthog.capture('bug_report_clicked');
@@ -162,8 +162,8 @@ export default function Settings() {
         <View className="gap-2 flex-row">
           <Card
             icon="share"
-            title="Share with Friends"
-            description="Love HogLite? Share it with your friends!"
+            title={t('shareWithFriends')}
+            description={t('shareWithFriendsDescription')}
             onPress={() => {
               openBottomSheet('SHARE_WITH_FRIENDS');
               posthog.capture('share_with_friends_clicked');
@@ -171,8 +171,8 @@ export default function Settings() {
           />
           <Card
             icon="code"
-            title="Debug"
-            description="View and enable debugging features"
+            title={t('debug')}
+            description={t('debugDescription')}
             onPress={() => {
               router.push('/main/settings/debug');
               posthog.capture('debug_settings_clicked');
@@ -182,7 +182,7 @@ export default function Settings() {
       </View>
 
       <Button color="danger" onPress={onLogout}>
-        Logout
+        {t('logout')}
       </Button>
     </Layout>
   );

@@ -4,6 +4,7 @@ import Feather from '@expo/vector-icons/Feather';
 import useColors from '@/lib/theme';
 import Redirect from '@/ui/Redirect';
 import useAuthStore from '@/store/auth';
+import { t } from '@/i18n';
 
 export default function Layout() {
   const colors = useColors();
@@ -36,7 +37,7 @@ export default function Layout() {
       <Tabs.Screen
         name="insights"
         options={{
-          title: 'Insights',
+          title: t('navInsights'),
           tabBarIcon: ({ color }) => (
             <Feather
               name="bar-chart"
@@ -50,7 +51,7 @@ export default function Layout() {
       <Tabs.Screen
         name="activity"
         options={{
-          title: 'Activity',
+          title: t('navActivity'),
           tabBarIcon: ({ color }) => (
             <Feather name="radio" size={24} color={color} className="pb-4" />
           ),
@@ -59,7 +60,7 @@ export default function Layout() {
       <Tabs.Screen
         name="exceptions"
         options={{
-          title: 'Exceptions',
+          title: t('navExceptions'),
           tabBarIcon: ({ color }) => (
             <Feather
               name="alert-triangle"
@@ -73,7 +74,7 @@ export default function Layout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: t('navSettings'),
           tabBarIcon: ({ color }) => (
             <Feather name="settings" size={24} color={color} className="pb-4" />
           ),

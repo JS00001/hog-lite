@@ -1,26 +1,26 @@
-const DataRegions = [
+import { t } from '@/i18n';
+
+const getDataRegions = () => [
   {
-    title: 'United States',
+    title: t('unitedStates'),
     benefits: [
-      'Faster if you and your users are based in the US',
-      'Easier to comply with some US regulations',
-      'Hosted in Virginia, USA',
+      t('usRegionFast'),
+      t('usRegionCompliance'),
+      t('usRegionHosting'),
     ],
   },
   {
-    title: 'European Union',
+    title: t('europeanUnion'),
     benefits: [
-      'Faster if you and your users are based in Europe',
-      'Keeps data in the EU to comply with GDPR requirements',
-      'Hosted in Frankfurt, Germany',
+      t('euRegionFast'),
+      t('euRegionCompliance'),
+      t('euRegionHosting'),
     ],
   },
   {
-    title: 'Custom Endpoint',
-    benefits: [
-      'Only use if your organization hosts their own PostHog instance on their own domain',
-    ],
+    title: t('customEndpoint'),
+    benefits: [t('customRegionDescription')],
   },
 ];
 
-export default DataRegions;
+export default getDataRegions;

@@ -10,9 +10,10 @@ import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { useGetEvents } from '@/hooks/api/query';
 import ActivityList from '@/components/ActivityList';
-import timePeriodOptions from '@/constants/time-periods';
+import getTimePeriodOptions from '@/constants/time-periods';
 import useBottomSheetStore from '@/store/bottom-sheets';
 import { QueryType } from '@/components/ActivityList/@types';
+import { t } from '@/i18n';
 
 enum FetchingState {
   Refreshing,
@@ -100,11 +101,11 @@ export default function Activity() {
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
   return (
-    <Layout title="Exceptions" className="pb-32">
+    <Layout title={t('navExceptions')} className="pb-32">
       <Select
         size="sm"
-        placeholder="Select time period"
-        options={timePeriodOptions}
+        placeholder={t('selectTimePeriod')}
+        options={getTimePeriodOptions()}
         value={timePeriod}
         loading={timePeriodLoading}
         disabled={actionsDisabled}
@@ -112,9 +113,7 @@ export default function Activity() {
       />
 
       <View className="h-12 px-4 rounded-xl bg-highlight border border-divider items-center justify-between flex-row">
-        <Text className="font-medium text-ink">
-          Filter out internal and test users
-        </Text>
+        <Text className="font-medium text-ink">{t('filterTestUsers')}</Text>
         <Switch
           value={filterTestAccounts}
           onValueChange={onFilterTestAccountsChange}

@@ -8,6 +8,7 @@ import validators from '@/lib/validators';
 import { useLogin } from '@/hooks/api/user';
 import usePosthog from '@/hooks/usePosthog';
 import useBottomSheetStore from '@/store/bottom-sheets';
+import { t } from '@/i18n';
 
 export default function Step1() {
   const login = useLogin();
@@ -54,13 +55,13 @@ export default function Step1() {
   };
 
   return (
-    <Layout title="API Key" className="justify-center" hedgehog>
+    <Layout title={t('apiKey')} className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl overflow-hidden">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <TextInput
             autoCorrect={false}
             autoComplete="off"
-            label="API Key"
+            label={t('apiKey')}
             placeholder="phx_12345"
             value={form.state.apiKey.value}
             error={form.state.apiKey.error}
@@ -75,14 +76,14 @@ export default function Step1() {
               disabled={!form.state.apiKey.value}
               onPress={onSubmit}
             >
-              Login
+              {t('login')}
             </Button>
 
             <Button size="sm" onPress={onCreateApiKey}>
-              How do I get this?
+              {t('howDoIGetThis')}
             </Button>
             <Button size="sm" onPress={onDataSecurity}>
-              Do you store my API key?
+              {t('doYouStoreMyApiKey')}
             </Button>
           </View>
         </View>

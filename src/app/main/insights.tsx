@@ -14,9 +14,10 @@ import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
 import ErrorMessage from '@/components/ErrorMessage';
 import useBottomSheetStore from '@/store/bottom-sheets';
-import timePeriodOptions from '@/constants/time-periods';
+import getTimePeriodOptions from '@/constants/time-periods';
 import PanickedHedgehog from '@/components/Hedgehogs/PanickedHedgehog';
 import { useGetDashboard, useGetDashboards } from '@/hooks/api/dashboard';
+import { t } from '@/i18n';
 
 enum FetchingState {
   Reloading,
@@ -129,7 +130,7 @@ export default function Insights() {
         <View className="items-center py-32 bg-highlight -mb-px border border-divider rounded-xl">
           <ErrorMessage
             error={actionsError}
-            description="Could not fetch activity"
+            description={t('couldNotFetchActivity')}
           />
         </View>
       );
@@ -138,10 +139,10 @@ export default function Insights() {
     return (
       <View className="items-center py-32 bg-highlight -mb-px border border-divider rounded-xl">
         <PanickedHedgehog size={96} />
-        <Text className="text-ink text-xl font-medium">No insights found</Text>
-        <Text className="text-ink">
-          Try changing your filters, or reloading the page.
+        <Text className="text-ink text-xl font-medium">
+          {t('noInsightsFound')}
         </Text>
+        <Text className="text-ink">{t('tryChangingFilters')}</Text>
       </View>
     );
   }, [actionsDisabled]);
@@ -153,10 +154,10 @@ export default function Insights() {
     actionsDisabled && fetchState === FetchingState.TimePeriodChange;
 
   return (
-    <Layout title="Insights" className="pb-20">
+    <Layout title={t('navInsights')} className="pb-20">
       <Select
         size="sm"
-        placeholder="Select dashboard"
+        placeholder={t('selectDashboard')}
         options={dashboardOptions}
         disabled={actionsDisabled}
         value={dashboard}
@@ -166,8 +167,8 @@ export default function Insights() {
       <View className="flex-row gap-2 justify-between">
         <Select
           size="sm"
-          placeholder="Select time period"
-          options={timePeriodOptions}
+          placeholder={t('selectTimePeriod')}
+          options={getTimePeriodOptions()}
           value={timePeriod}
           disabled={actionsDisabled}
           loading={timePeriodLoading}
@@ -180,7 +181,7 @@ export default function Insights() {
           disabled={actionsDisabled}
           onPress={onRefetch}
         >
-          Reload
+          {t('reload')}
         </Button>
       </View>
 

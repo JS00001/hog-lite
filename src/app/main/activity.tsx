@@ -12,9 +12,10 @@ import { useGetEvents } from '@/hooks/api/query';
 import { ISelectOption } from '@/ui/Select/@types';
 import ActivityList from '@/components/ActivityList';
 import useBottomSheetStore from '@/store/bottom-sheets';
-import timePeriodOptions from '@/constants/time-periods';
+import getTimePeriodOptions from '@/constants/time-periods';
 import { QueryType } from '@/components/ActivityList/@types';
 import { useGetEventDefinitions } from '@/hooks/api/event_definitions';
+import { t } from '@/i18n';
 
 enum FetchingState {
   Refreshing,
@@ -60,7 +61,7 @@ export default function Activity() {
       value: e.name,
     }));
 
-    return [{ label: 'All Events', value: 'all' }, ...eventOptions];
+    return [{ label: t('allEvents'), value: 'all' }, ...eventOptions];
   }, [projectEventDefinitions]);
 
   /**
@@ -135,12 +136,12 @@ export default function Activity() {
     eventDefinitionsQuery.isLoading;
 
   return (
-    <Layout title="Activity" className="pb-32">
+    <Layout title={t('navActivity')} className="pb-32">
       <View className="flex-row gap-2 justify-between">
         <Select
           size="sm"
-          placeholder="Select time period"
-          options={timePeriodOptions}
+          placeholder={t('selectTimePeriod')}
+          options={getTimePeriodOptions()}
           value={timePeriod}
           loading={timePeriodLoading}
           disabled={actionsDisabled}
@@ -149,7 +150,7 @@ export default function Activity() {
         <Select
           size="sm"
           className="shrink"
-          placeholder="Select event"
+          placeholder={t('selectEvent')}
           options={eventDefinitionFilterOptions}
           value={eventDefinition}
           loading={eventDefinitionsLoading}
@@ -159,9 +160,7 @@ export default function Activity() {
       </View>
 
       <View className="h-12 px-4 rounded-xl bg-highlight border border-divider items-center justify-between flex-row">
-        <Text className="font-medium text-ink">
-          Filter out internal and test users
-        </Text>
+        <Text className="font-medium text-ink">{t('filterTestUsers')}</Text>
         <Switch
           value={filterTestAccounts}
           onValueChange={onFilterTestAccountsChange}

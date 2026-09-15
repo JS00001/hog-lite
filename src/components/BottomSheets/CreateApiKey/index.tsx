@@ -12,6 +12,7 @@ import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import TeacherHedgehogRight from '@/components/Hedgehogs/TeacherHedgehogRight';
 import BottomSheetScrollView from '@/ui/BottomSheet/Containers/ScrollView';
+import { t } from '@/i18n';
 
 type Props = BottomSheetProps;
 
@@ -29,36 +30,27 @@ function Content({}: Props) {
       <TeacherHedgehogRight size={64} />
 
       <Text className="text-3xl font-medium text-ink ">
-        Create an account API Key
+        {t('createApiKey')}
       </Text>
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-        <Text className="text-lg  text-ink">
-          Start by navigating to your account settings by clicking the button
-          below.
-        </Text>
+        <Text className="text-lg  text-ink">{t('createApiKeyStart')}</Text>
         <Button size="sm" color="accent" onPress={onUserSettings}>
-          Go to settings
+          {t('goToSettings')}
         </Button>
       </View>
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-        <Text className="text-lg text-ink">
-          Click "+ Create personal API key"
-        </Text>
+        <Text className="text-lg text-ink">{t('createPersonalApiKey')}</Text>
       </View>
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-        <Text className="text-lg text-ink">
-          Give your key a label - this is just for you, usually to describe the
-          key's purpose.
-        </Text>
+        <Text className="text-lg text-ink">{t('apiKeyLabelInstruction')}</Text>
       </View>
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
         <Text className="text-lg  text-ink">
-          Choose the scopes for your key. For this client to work, the API key
-          needs to have the following scopes (READONLY):
+          {t('apiKeyScopesInstruction')}
         </Text>
         <View className="gap-1 flex-wrap flex-row">
           <Permission>User</Permission>
@@ -72,11 +64,7 @@ function Content({}: Props) {
       </View>
 
       <View className="w-full gap-3 p-4 bg-primary border border-divider rounded-xl">
-        <Text className="text-lg text-ink">
-          At the top of the list, you should see your brand new key. Immediately
-          copy its value and paste it here, as you'll never be able to see it
-          again.
-        </Text>
+        <Text className="text-lg text-ink">{t('apiKeyCopyInstruction')}</Text>
       </View>
     </BottomSheetScrollView>
   );

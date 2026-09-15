@@ -11,6 +11,7 @@ import useClientStore from '@/store/client';
 import usePosthog from '@/hooks/usePosthog';
 import { ISelectOption } from '@/ui/Select/@types';
 import useBottomSheetStore from '@/store/bottom-sheets';
+import { t } from '@/i18n';
 
 export default function Region() {
   const posthog = usePosthog();
@@ -38,7 +39,7 @@ export default function Region() {
     const isCustomInputEmpty = form.state.posthogEndpoint.value === '';
 
     if (isCustomInput && isCustomInputEmpty) {
-      form.setError('posthogEndpoint', 'URL is required');
+      form.setError('posthogEndpoint', t('urlRequired'));
       return;
     }
 
@@ -75,25 +76,25 @@ export default function Region() {
   };
 
   const regionOptions: ISelectOption[] = [
-    { label: 'United States', value: 'https://us.posthog.com' },
-    { label: 'European Union', value: 'https://eu.posthog.com' },
-    { label: 'Custom Endpoint', value: 'custom-endpoint' },
+    { label: t('unitedStates'), value: 'https://us.posthog.com' },
+    { label: t('europeanUnion'), value: 'https://eu.posthog.com' },
+    { label: t('customEndpoint'), value: 'custom-endpoint' },
   ];
 
   return (
-    <Layout title="Data Region" className="justify-center" hedgehog>
+    <Layout title={t('dataRegion')} className="justify-center" hedgehog>
       <View className="bg-divider pb-1 rounded-xl">
         <View className="bg-highlight rounded-xl p-4 gap-4">
           <Select
-            label="Data Region"
-            placeholder="Select a region"
+            label={t('dataRegion')}
+            placeholder={t('selectRegion')}
             options={regionOptions}
             value={form.state.selection.value}
             onChange={onSelectChange}
           />
           {form.state.selection.value === 'custom-endpoint' && (
             <TextInput
-              label="Custom Endpoint"
+              label={t('customEndpoint')}
               placeholder="https://us.posthog.com"
               value={form.state.posthogEndpoint.value}
               error={form.state.posthogEndpoint.error}
@@ -108,11 +109,11 @@ export default function Region() {
               disabled={!form.state.posthogEndpoint.value}
               onPress={onSubmit}
             >
-              Continue
+              {t('continue')}
             </Button>
 
             <Button size="sm" onPress={onExplain}>
-              What is this?
+              {t('whatIsThis')}
             </Button>
           </View>
         </View>
