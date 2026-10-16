@@ -68,7 +68,9 @@ function MultiValueCard({ data }: Props) {
         );
 
         const percentage =
-          (item.aggregated_value ?? item.count) / aggregatedTotal;
+          aggregatedTotal === 0
+            ? 0
+            : (item.aggregated_value ?? item.count) / aggregatedTotal;
         const percentageString = `${(percentage * 100).toFixed(0)}%`;
 
         return (
