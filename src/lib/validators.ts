@@ -10,7 +10,7 @@ const validators = {
       required_error: 'API Key is required',
       invalid_type_error: 'Must be a string',
     })
-    .regex(/phx_[a-zA-Z0-9]{5,}/, {
+    .regex(/ph[cx]_[a-zA-Z0-9]{5,}/, {
       message: 'Invalid API Key',
     }),
   /**
